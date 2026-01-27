@@ -448,10 +448,11 @@
     </a>
 
     <script>
-    console.log("🚀 Pekcon EN High-Ticket Engine Started");
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("🚀 Pekcon EN High-Ticket Engine Started");
 
-    // --- NAVBAR ve UI ---
-    const navToggle = document.getElementById('navToggle');
+        // --- NAVBAR ve UI ---
+        const navToggle = document.getElementById('navToggle');
     const navMenu = document.querySelector('.nav-menu');
     if (navToggle) {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
@@ -557,9 +558,10 @@
                 submitBtn.disabled = false;
             });
         });
+    } else {
+        console.error("❌ Form not found!");
     }
-    
-    // ... Lightbox kodları buranın altında kalabilir ...
+    }); // DOMContentLoaded end
 </script>
 
     <div id="lightbox" class="lightbox">
