@@ -448,11 +448,10 @@
     </a>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("🚀 Pekcon EN High-Ticket Engine Started");
+    console.log("🚀 Pekcon EN High-Ticket Engine Started");
 
-        // --- NAVBAR ve UI ---
-        const navToggle = document.getElementById('navToggle');
+    // --- NAVBAR ve UI ---
+    const navToggle = document.getElementById('navToggle');
     const navMenu = document.querySelector('.nav-menu');
     if (navToggle) {
         navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
@@ -465,14 +464,13 @@
         if (window.pageYOffset > 100) navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
     });
 
-    // --- DYNAMIC DROPDOWN LOGIC (New Addition) ---
+    // --- DYNAMIC DROPDOWN LOGIC ---
     const productCategorySelect = document.getElementById('productCategory');
     const cargoContainerOptions = document.getElementById('cargo-container-options');
     const cargoTypeSelect = document.getElementById('cargoType');
 
     if (productCategorySelect && cargoContainerOptions) {
         productCategorySelect.addEventListener('change', function() {
-            // "Standart_Konteyner" değeri HTML'deki value ile BİREBİR aynı olmalı
             if (this.value === 'Standart_Konteyner') {
                 cargoContainerOptions.style.display = 'block';
                 cargoTypeSelect.setAttribute('required', 'required');
@@ -485,22 +483,20 @@
     }
 
     // --- HIGH TICKET FORM LOGIC ---
-    const highTicketForm = document.getElementById('pekconHighTicketForm'); // YENİ ID BURADA!
+    const highTicketForm = document.getElementById('pekconHighTicketForm');
 
     if (highTicketForm) {
         highTicketForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
             console.log("🖱️ Form Submitted! Processing...");
 
             const submitBtn = highTicketForm.querySelector('button[type="submit"]');
             const statusMsg = document.getElementById('statusMessage');
-            
-            // 1. VERİLERİ AL
+
             const transaction = document.getElementById('transactionType').value;
             const category = document.getElementById('productCategory').value;
-            // Düzeltme: Değişkeni burada tanımlıyoruz
-            const cargoDetail = document.getElementById('cargoType') ? document.getElementById('cargoType').value : ''; 
-            
+            const cargoDetail = document.getElementById('cargoType') ? document.getElementById('cargoType').value : '';
+
             const name = document.getElementById('userName').value;
             const phone = document.getElementById('userPhone').value;
             const email = document.getElementById('userEmail').value;
@@ -508,33 +504,25 @@
             submitBtn.disabled = true;
             submitBtn.innerHTML = "Sending...";
 
-            // 2. GOOGLE DATA LAYER PUSH (Düzeltilmiş)
+            // GOOGLE DATA LAYER PUSH
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 'event': 'lead_form_submit',
-                'user_data': {
-                    'email': email,
-                    'phone_number': phone
-                },
-                'lead_details': {
-                    'transaction_type': transaction,
-                    'product_category': category,
-                    'cargo_type_detail': cargoDetail // Detay verisi temizce eklendi
-                },
-                'value': 1000 
+                'user_data': { 'email': email, 'phone_number': phone },
+                'lead_details': { 'transaction_type': transaction, 'product_category': category, 'cargo_type_detail': cargoDetail },
+                'value': 1000
             });
+            console.log("✅ DataLayer OK: " + transaction + " | " + category);
 
-            // 3. GOOGLE SHEETS'E GÖNDER 📨
+            // GOOGLE SHEETS'E GÖNDER
             const formData = new FormData(highTicketForm);
-            // Cargo detail'i manuel ekle (eğer boş değilse)
             if (cargoDetail) {
                 formData.set('cargoType', cargoDetail);
             }
 
-            // Debug: Log sent form data
             console.log("📤 Sent form data:");
             for (let [key, value] of formData.entries()) {
-                console.log(`   ${key}: ${value}`);
+                console.log("   " + key + ": " + value);
             }
 
             fetch("https://script.google.com/macros/s/AKfycbx42MBI1igYtqdQwHASOQVHwN7pThSTm_ZzDff_z0A9RzNr56M8vsUD0_7pYSlXx9n0/exec", {
@@ -547,7 +535,7 @@
             })
             .then(() => {
                 statusMsg.innerHTML = "✅ We received your request! Our team will contact you shortly.";
-                statusMsg.style.color = "#4ade80"; 
+                statusMsg.style.color = "#4ade80";
                 highTicketForm.reset();
                 setTimeout(() => { submitBtn.innerHTML = "SEND QUOTE"; submitBtn.disabled = false; }, 3000);
             })
@@ -558,10 +546,7 @@
                 submitBtn.disabled = false;
             });
         });
-    } else {
-        console.error("❌ Form not found!");
     }
-    }); // DOMContentLoaded end
 </script>
 
     <div id="lightbox" class="lightbox">
