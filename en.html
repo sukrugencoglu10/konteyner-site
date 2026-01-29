@@ -114,6 +114,9 @@
         <input type="email" id="userEmail" name="userEmail" placeholder="Your Email Address" required>
     </div>
 
+    <!-- Google Click ID Tracking -->
+    <input type="hidden" id="gclid_field" name="gclid_field" value="">
+
     <button type="submit" class="btn btn-primary btn-block" style="font-weight: 700;">
         SEND QUOTE 
     </button>
@@ -449,6 +452,30 @@
 
     <script>
     console.log("🚀 Pekcon EN High-Ticket Engine Started");
+
+    // ==========================================
+    // 🎯 GCLID TRACKING - Google Ads Conversion Tracking
+    // ==========================================
+    function captureGclid() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gclid = urlParams.get('gclid');
+
+        if (gclid) {
+            // GCLID from URL, save it
+            document.getElementById('gclid_field').value = gclid;
+            localStorage.setItem('gclid', gclid);
+            console.log('✅ GCLID captured from URL:', gclid);
+        } else if (localStorage.getItem('gclid')) {
+            // Use previously saved GCLID
+            document.getElementById('gclid_field').value = localStorage.getItem('gclid');
+            console.log('✅ GCLID loaded from storage:', localStorage.getItem('gclid'));
+        } else {
+            console.log('ℹ️ No GCLID found (organic traffic)');
+        }
+    }
+
+    // Capture GCLID when page loads
+    window.addEventListener('DOMContentLoaded', captureGclid);
 
     // --- NAVBAR ve UI ---
     const navToggle = document.getElementById('navToggle');

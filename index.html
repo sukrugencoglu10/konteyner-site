@@ -120,6 +120,9 @@
         <input type="email" id="userEmail" name="userEmail" placeholder="E-posta Adresiniz" required>
     </div>
 
+    <!-- Google Click ID Tracking -->
+    <input type="hidden" id="gclid_field" name="gclid_field" value="">
+
     <button type="submit" class="btn btn-primary btn-block" style="font-weight: 700;">
         TEKLİF GÖNDER 
     </button>
@@ -438,6 +441,30 @@
 
     <script>
     console.log("🚀 Pekcon Growth Engine Başlatıldı v3.0");
+
+    // ==========================================
+    // 🎯 GCLID TRACKING - Google Ads Conversion Tracking
+    // ==========================================
+    function captureGclid() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const gclid = urlParams.get('gclid');
+
+        if (gclid) {
+            // URL'den gclid geldi, kaydet
+            document.getElementById('gclid_field').value = gclid;
+            localStorage.setItem('gclid', gclid);
+            console.log('✅ GCLID captured from URL:', gclid);
+        } else if (localStorage.getItem('gclid')) {
+            // Önceden kaydedilmiş gclid var, kullan
+            document.getElementById('gclid_field').value = localStorage.getItem('gclid');
+            console.log('✅ GCLID loaded from storage:', localStorage.getItem('gclid'));
+        } else {
+            console.log('ℹ️ No GCLID found (organic traffic)');
+        }
+    }
+
+    // Sayfa yüklendiğinde gclid'yi yakala
+    window.addEventListener('DOMContentLoaded', captureGclid);
 
     // --- NAVBAR ve UI İŞLEMLERİ (Mevcut kodların korundu) ---
     const navToggle = document.getElementById('navToggle');
