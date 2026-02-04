@@ -768,35 +768,9 @@
             }, 500);
         });
 
-        // ===== EMBEDDED DASHBOARD - Mini Preview =====
-        // Dashboard'u katalog sayfasının sağ alt köşesinde göster
-        window.addEventListener('load', function() {
-            const trackerPreview = document.createElement('div');
-            trackerPreview.id = 'tracker-preview';
-            trackerPreview.style.cssText = `
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                width: 400px;
-                height: 300px;
-                border: 2px solid #FF6B00;
-                z-index: 9999;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 0 20px rgba(0,0,0,0.5);
-                background: #0f0f0f;
-            `;
-
-            const iframe = document.createElement('iframe');
-            iframe.id = 'dashboardFrame';
-            iframe.src = 'dashboard/index.html';
-            iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
-
-            trackerPreview.appendChild(iframe);
-            document.body.appendChild(trackerPreview);
-
-            console.log('📊 Embedded Dashboard eklendi!');
-        });
+        // ===== KÖSTEBEK TÜNELİ 2.0 - Ayrı Pencere Modu =====
+        // Dashboard artık ayrı pencerede açılıyor (openExecutiveDashboard butonu ile)
+        // Embedded iframe kaldırıldı - sadece popup dashboard kullanılıyor
     </script>
 </body>
 </html>

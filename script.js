@@ -627,7 +627,7 @@
             });
         }
 
-        // ===== DASHBOARD ENTEGRASYONU =====
+        // ===== DASHBOARD ENTEGRASYONU - FÜZ E MODU 🚀 =====
         // Katalog sayfalarından dashboard'a veri gönderme fonksiyonu
         function sendDataToDashboard(pageNumber, productTitle, action = 'incelendi') {
             const data = {
@@ -635,44 +635,27 @@
                 payload: {
                     page: pageNumber,
                     title: productTitle,
-                    action: action, // ← YENİ: ilgileniyor, tıklandı, 🔥 HOT LEAD
+                    action: action,
                     timestamp: new Date().toLocaleTimeString(),
-                    isHotLead: action.includes('HOT LEAD') // ← HOT LEAD flag
+                    isHotLead: action.includes('HOT LEAD')
                 }
             };
 
-            // 1. EMBEDDED IFRAME Dashboard'a gönder (sağ alt köşe)
-            const dashboardFrame = document.getElementById('dashboardFrame');
-            if (dashboardFrame && dashboardFrame.contentWindow) {
-                dashboardFrame.contentWindow.postMessage(data, '*');
-                console.log('📊 Iframe Dashboard\'a veri gönderildi:', productTitle);
-            }
-
-            // 2. KÖSTEBEK TÜNELİ 2.0 - Ayrı penceredeki Dashboard'a gönder
+            // 1. KRİTİK NOKTA: Ayrı pencerede açık olan dashboard'a gönder
             if (dashboardWindow && !dashboardWindow.closed) {
-                try {
-                    dashboardWindow.postMessage(data, '*');
-                    console.log('🚀 Köstebek Tüneli 2.0 → Veri fırlatıldı:', productTitle);
-                } catch (e) {
-                    console.warn('⚠️ Dashboard penceresine veri gönderilemedi:', e);
-                }
+                dashboardWindow.postMessage(data, '*');
+                console.log('🚀 Veri Yeni Sekmeye Fırlatıldı:', productTitle);
+            } else {
+                console.warn('⚠️ Dashboard sekmesi kapalı veya henüz açılmadı!');
             }
 
-            // 3. Yan sekme/parent window için de gönder (backward compatibility)
-            window.parent.postMessage(data, '*');
-            window.postMessage(data, '*');
-
-            // GTM DataLayer'ı da besleyelim (Growth Engineer farkı!)
+            // 2. GTM'i beslemeye devam (Bu kalsın, Growth Engineer kuralı!)
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 'event': 'pdf_interaction',
                 'page_number': pageNumber,
-                'product_name': productTitle,
-                'action': action, // ← Action bilgisi GTM'e
-                'is_hot_lead': action.includes('HOT LEAD')
+                'product_name': productTitle
             });
-
-            console.log('📊 Dashboard\'a veri gönderildi:', data);
         }
 
         // Test için otomatik veri gönderimi (isteğe bağlı - silinebilir)

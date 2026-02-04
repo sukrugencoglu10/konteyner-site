@@ -724,7 +724,36 @@
             }, 500);
         });
 
-        // ===== DASHBOARD INTEGRATION =====
+        // ===== MOLE TUNNEL 2.0 - Dashboard Window Management =====
+        let dashboardWindow = null;
+
+        // Open dashboard in separate window
+        function openExecutiveDashboard() {
+            if (dashboardWindow && !dashboardWindow.closed) {
+                dashboardWindow.focus(); // Already open? Just focus
+                console.log('📊 Dashboard already open - focusing...');
+                return;
+            }
+
+            dashboardWindow = window.open(
+                'dashboard/index.html',
+                'PekconExecutiveDashboard',
+                'width=1400,height=900,resizable=yes,scrollbars=yes,menubar=no,toolbar=no'
+            );
+
+            if (!dashboardWindow) {
+                alert('⚠️ Pop-up blocker is active! Please allow pop-ups for this site.');
+                console.error('❌ Pop-up blocked by browser');
+            } else {
+                console.log('✅ Dashboard opened in new window!');
+
+                dashboardWindow.addEventListener('load', function() {
+                    console.log('✅ Dashboard loaded, data flow ready!');
+                });
+            }
+        }
+
+        // ===== DASHBOARD INTEGRATION - MISSILE MODE 🚀 =====
         // Function to send data from catalog pages to dashboard
         function sendDataToDashboard(pageNumber, productTitle, action = 'viewed') {
             const data = {
@@ -732,34 +761,27 @@
                 payload: {
                     page: pageNumber,
                     title: productTitle,
-                    action: action, // ← NEW: interested, clicked, 🔥 HOT LEAD
+                    action: action,
                     timestamp: new Date().toLocaleTimeString(),
-                    isHotLead: action.includes('HOT LEAD') // ← HOT LEAD flag
+                    isHotLead: action.includes('HOT LEAD')
                 }
             };
 
-            // Send data to embedded Dashboard (iframe)
-            const dashboardFrame = document.getElementById('dashboardFrame');
-            if (dashboardFrame && dashboardFrame.contentWindow) {
-                dashboardFrame.contentWindow.postMessage(data, '*');
-                console.log('📊 Data sent to iframe Dashboard:', productTitle);
+            // 1. CRITICAL POINT: Send to dashboard opened in separate window
+            if (dashboardWindow && !dashboardWindow.closed) {
+                dashboardWindow.postMessage(data, '*');
+                console.log('🚀 Data Sent to New Tab:', productTitle);
+            } else {
+                console.warn('⚠️ Dashboard tab is closed or not opened yet!');
             }
 
-            // Also send to parent/window for backward compatibility
-            window.parent.postMessage(data, '*');
-            window.postMessage(data, '*');
-
-            // Feed GTM DataLayer (Growth Engineer touch!)
+            // 2. Keep feeding GTM (This stays, Growth Engineer rule!)
             window.dataLayer = window.dataLayer || [];
             window.dataLayer.push({
                 'event': 'pdf_interaction',
                 'page_number': pageNumber,
-                'product_name': productTitle,
-                'action': action, // ← Action info to GTM
-                'is_hot_lead': action.includes('HOT LEAD')
+                'product_name': productTitle
             });
-
-            console.log('📊 Data sent to Dashboard:', data);
         }
 
         // Auto data sending for testing (optional - can be removed)
@@ -831,35 +853,9 @@
             console.log('✅ Hover Tracking + Hot Lead system active!');
         });
 
-        // ===== EMBEDDED DASHBOARD - Mini Preview =====
-        // Show dashboard in bottom-right corner of catalog page
-        window.addEventListener('load', function() {
-            const trackerPreview = document.createElement('div');
-            trackerPreview.id = 'tracker-preview';
-            trackerPreview.style.cssText = `
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                width: 400px;
-                height: 300px;
-                border: 2px solid #FF6B00;
-                z-index: 9999;
-                border-radius: 10px;
-                overflow: hidden;
-                box-shadow: 0 0 20px rgba(0,0,0,0.5);
-                background: #0f0f0f;
-            `;
-
-            const iframe = document.createElement('iframe');
-            iframe.id = 'dashboardFrame';
-            iframe.src = 'dashboard/index.html';
-            iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
-
-            trackerPreview.appendChild(iframe);
-            document.body.appendChild(trackerPreview);
-
-            console.log('📊 Embedded Dashboard added!');
-        });
+        // ===== MOLE TUNNEL 2.0 - Separate Window Mode =====
+        // Dashboard now opens in separate window (via openExecutiveDashboard button)
+        // Embedded iframe removed - only popup dashboard used
 
     </script>
 </body>
