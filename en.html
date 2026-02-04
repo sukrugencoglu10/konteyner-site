@@ -654,6 +654,108 @@
                 console.log('✅ Lightbox setup complete!');
             }, 500);
         });
+
+        // ===== DASHBOARD INTEGRATION =====
+        // Function to send data from catalog pages to dashboard
+        function sendDataToDashboard(pageNumber, productTitle, action = 'viewed') {
+            const data = {
+                source: 'KATALOG_TRACKER',
+                payload: {
+                    page: pageNumber,
+                    title: productTitle,
+                    action: action, // ← NEW: interested, clicked, 🔥 HOT LEAD
+                    timestamp: new Date().toLocaleTimeString(),
+                    isHotLead: action.includes('HOT LEAD') // ← HOT LEAD flag
+                }
+            };
+
+            // Send data for iframe or separate tab/window communication
+            // Using broad scope for cross-window/tab communication
+            window.parent.postMessage(data, '*');
+            window.postMessage(data, '*');
+
+            // Feed GTM DataLayer (Growth Engineer touch!)
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'pdf_interaction',
+                'page_number': pageNumber,
+                'product_name': productTitle,
+                'action': action, // ← Action info to GTM
+                'is_hot_lead': action.includes('HOT LEAD')
+            });
+
+            console.log('📊 Data sent to Dashboard:', data);
+        }
+
+        // Auto data sending for testing (optional - can be removed)
+        // Send initial data when page loads
+        window.addEventListener('load', function() {
+            // Example: Homepage view
+            sendDataToDashboard(1, "Homepage - Container Catalog");
+        });
+
+        // ===== HOVER TRACKING + HOT LEAD SYSTEM =====
+        // Advanced tracking for user behavior analysis
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            const hoverTimers = {}; // Separate timer for each card
+            const HOT_LEAD_THRESHOLD = 10000; // 10 seconds = Hot Lead
+
+            productCards.forEach((card, index) => {
+                const productTitle = card.querySelector('h3')?.textContent || 'Product ' + (index + 1);
+                const cardId = 'product_' + index;
+
+                // 1. HOVER START - User hovers over product
+                card.addEventListener('mouseenter', function() {
+                    console.log('👀 Hover started:', productTitle);
+
+                    // Send "interested" message after 3 seconds
+                    setTimeout(() => {
+                        sendDataToDashboard(index + 2, productTitle, 'interested');
+                    }, 3000);
+
+                    // HOT LEAD alert after 10 seconds
+                    hoverTimers[cardId] = setTimeout(() => {
+                        console.log('🔥 HOT LEAD DETECTED:', productTitle);
+                        sendDataToDashboard(index + 2, productTitle, '🔥 HOT LEAD - 10 sec view!');
+
+                        // Special GTM hot lead event
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'hot_lead_detected',
+                            'product_name': productTitle,
+                            'dwell_time': 10,
+                            'lead_quality': 'hot'
+                        });
+                    }, HOT_LEAD_THRESHOLD);
+                });
+
+                // 2. HOVER END - User leaves product
+                card.addEventListener('mouseleave', function() {
+                    // Clear timer (if 10 seconds not reached)
+                    if (hoverTimers[cardId]) {
+                        clearTimeout(hoverTimers[cardId]);
+                        delete hoverTimers[cardId];
+                    }
+                    console.log('👋 Hover ended:', productTitle);
+                });
+
+                // 3. CLICK - Product clicked (legacy system)
+                card.addEventListener('click', function() {
+                    sendDataToDashboard(index + 2, productTitle, 'clicked');
+
+                    // GTM click event
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'product_clicked',
+                        'product_name': productTitle
+                    });
+                });
+            });
+
+            console.log('✅ Hover Tracking + Hot Lead system active!');
+        });
+
     </script>
 </body>
 

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pekcon - Real-Time Catalog Insights Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="logo-section">
+                <div class="logo-icon">P</div>
+                <h1>Pekcon Analytics</h1>
+            </div>
+            <div class="header-subtitle">Real-Time Catalog Insights</div>
+        </header>
+
+        <!-- Stat Cards Row -->
+        <section class="stat-cards">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Toplam Görüntülenme</div>
+                    <div class="stat-value" id="totalViews">0</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Ort. Okuma Derinliği</div>
+                    <div class="stat-value" id="avgDepth">0</div>
+                    <div class="stat-unit">sayfa</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon pulse-container">
+                    <div class="pulse-dot"></div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-label">Canlı Kullanıcı</div>
+                    <div class="stat-value live-users" id="liveUsers">0</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <section class="main-grid">
+            <!-- Live Feed -->
+            <div class="panel live-feed-panel">
+                <div class="panel-header">
+                    <h2>Canlı Aktivite</h2>
+                    <div class="live-indicator">
+                        <span class="live-dot"></span>
+                        <span>CANLI</span>
+                    </div>
+                </div>
+                <div class="live-feed" id="liveFeed">
+                    <!-- Dynamic content will be injected here -->
+                </div>
+            </div>
+
+            <!-- Interest Chart -->
+            <div class="panel chart-panel">
+                <div class="panel-header">
+                    <h2>Popüler Katalog Sayfaları</h2>
+                    <div class="chart-legend">
+                        <span class="legend-item">
+                            <span class="legend-color"></span>
+                            Görüntülenme
+                        </span>
+                    </div>
+                </div>
+                <div class="chart-container" id="chartContainer">
+                    <!-- Chart will be rendered here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

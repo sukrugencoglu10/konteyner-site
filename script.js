@@ -595,6 +595,108 @@
                 console.log('✅ Lightbox kurulumu tamamlandı!');
             }, 500);
         });
+
+        // ===== DASHBOARD ENTEGRASYONU =====
+        // Katalog sayfalarından dashboard'a veri gönderme fonksiyonu
+        function sendDataToDashboard(pageNumber, productTitle, action = 'incelendi') {
+            const data = {
+                source: 'KATALOG_TRACKER',
+                payload: {
+                    page: pageNumber,
+                    title: productTitle,
+                    action: action, // ← YENİ: ilgileniyor, tıklandı, 🔥 HOT LEAD
+                    timestamp: new Date().toLocaleTimeString(),
+                    isHotLead: action.includes('HOT LEAD') // ← HOT LEAD flag
+                }
+            };
+
+            // Eğer dashboard bir iframe içindeyse veya yan sekmede açıksa veriyi gönder
+            // Biz şimdilik yan sekme/ana pencere iletişimi için geniş kapsamlı gönderiyoruz
+            window.parent.postMessage(data, '*');
+            window.postMessage(data, '*');
+
+            // GTM DataLayer'ı da besleyelim (Growth Engineer farkı!)
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'pdf_interaction',
+                'page_number': pageNumber,
+                'product_name': productTitle,
+                'action': action, // ← Action bilgisi GTM'e
+                'is_hot_lead': action.includes('HOT LEAD')
+            });
+
+            console.log('📊 Dashboard\'a veri gönderildi:', data);
+        }
+
+        // Test için otomatik veri gönderimi (isteğe bağlı - silinebilir)
+        // Sayfa yüklendiğinde ilk veriyi gönder
+        window.addEventListener('load', function() {
+            // Örnek: Ana sayfa görüntüleme
+            sendDataToDashboard(1, "Ana Sayfa - Konteyner Katalog");
+        });
+
+        // ===== HOVER TRACKING + HOT LEAD SİSTEMİ =====
+        // Kullanıcı davranış analizi için gelişmiş tracking
+        document.addEventListener('DOMContentLoaded', function() {
+            const productCards = document.querySelectorAll('.product-card');
+            const hoverTimers = {}; // Her kart için ayrı timer
+            const HOT_LEAD_THRESHOLD = 10000; // 10 saniye = Hot Lead
+
+            productCards.forEach((card, index) => {
+                const productTitle = card.querySelector('h3')?.textContent || 'Ürün ' + (index + 1);
+                const cardId = 'product_' + index;
+
+                // 1. HOVER START - Kullanıcı ürün üzerine geldi
+                card.addEventListener('mouseenter', function() {
+                    console.log('👀 Hover başladı:', productTitle);
+
+                    // İlk 3 saniyede "ilgileniyor" mesajı gönder
+                    setTimeout(() => {
+                        sendDataToDashboard(index + 2, productTitle, 'ilgileniyor');
+                    }, 3000);
+
+                    // 10 saniye sonra HOT LEAD uyarısı
+                    hoverTimers[cardId] = setTimeout(() => {
+                        console.log('🔥 HOT LEAD TESPİT EDİLDİ:', productTitle);
+                        sendDataToDashboard(index + 2, productTitle, '🔥 HOT LEAD - 10 saniye baktı!');
+
+                        // GTM'e özel hot lead eventi
+                        window.dataLayer = window.dataLayer || [];
+                        window.dataLayer.push({
+                            'event': 'hot_lead_detected',
+                            'product_name': productTitle,
+                            'dwell_time': 10,
+                            'lead_quality': 'hot'
+                        });
+                    }, HOT_LEAD_THRESHOLD);
+                });
+
+                // 2. HOVER END - Kullanıcı üründen ayrıldı
+                card.addEventListener('mouseleave', function() {
+                    // Timer'ı temizle (10 saniye dolmadıysa)
+                    if (hoverTimers[cardId]) {
+                        clearTimeout(hoverTimers[cardId]);
+                        delete hoverTimers[cardId];
+                    }
+                    console.log('👋 Hover bitti:', productTitle);
+                });
+
+                // 3. CLICK - Ürüne tıklandı (eski sistem)
+                card.addEventListener('click', function() {
+                    sendDataToDashboard(index + 2, productTitle, 'tıklandı');
+
+                    // GTM'e tıklama eventi
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'product_clicked',
+                        'product_name': productTitle
+                    });
+                });
+            });
+
+            console.log('✅ Hover Tracking + Hot Lead sistemi aktif!');
+        });
+
     </script>
 </body>
 </html>
