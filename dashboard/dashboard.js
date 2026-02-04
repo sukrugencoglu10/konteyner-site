@@ -65,18 +65,18 @@ console.log("🎧 Katalog Listener aktif - KATALOG_TRACKER verisi bekleniyor..."
 // Dashboard Data Management
 class DashboardData {
     constructor() {
-        this.totalViews = 26;
-        this.avgDepth = 3.2;
-        this.liveUsers = 2;
+        this.totalViews = 0;
+        this.avgDepth = 0;
+        this.liveUsers = 0;
         this.feedItems = [];
         this.pageViews = {}; // Sayfa bazlı görüntülenme sayısı
         this.userSessions = new Set(); // Benzersiz kullanıcılar
         this.chartData = [
-            { label: "20' DC", value: 5, pageNumber: null },
-            { label: "40' HC", value: 8, pageNumber: null },
-            { label: "Reefer", value: 3, pageNumber: null },
-            { label: "Open Top", value: 6, pageNumber: null },
-            { label: "Flat Rack", value: 4, pageNumber: null }
+            { label: "20' DC", value: 0, pageNumber: null },
+            { label: "40' HC", value: 0, pageNumber: null },
+            { label: "Reefer", value: 0, pageNumber: null },
+            { label: "Open Top", value: 0, pageNumber: null },
+            { label: "Flat Rack", value: 0, pageNumber: null }
         ];
     }
 
@@ -157,14 +157,6 @@ class DashboardUI {
         this.renderChart();
         this.setupRealDataListener(); // Gerçek veri dinleyicisi
         this.updateStatsDisplay(); // İlk render
-        this.addDemoFeedItems(); // Demo veriler
-    }
-
-    // Demo feed itemları ekle (başlangıçta görünür olsun)
-    addDemoFeedItems() {
-        this.addFeedItem("20' DC Konteyner", "inceledi");
-        setTimeout(() => this.addFeedItem("40' HC Konteyner", "inceledi"), 1000);
-        setTimeout(() => this.addFeedItem("Reefer Konteyner", "inceledi"), 2000);
     }
 
     // Update stat cards with animation
@@ -231,7 +223,7 @@ class DashboardUI {
 
         const maxValue = Math.max(...this.data.chartData.map(d => d.value), 1);
 
-        this.data.chartData.forEach(item => {
+        this.data.chartData.forEach((item, index) => {
             const barContainer = document.createElement('div');
             barContainer.className = 'chart-bar';
 
@@ -239,7 +231,7 @@ class DashboardUI {
 
             barContainer.innerHTML = `
                 <div class="bar-wrapper">
-                    <div class="bar" style="height: ${heightPercent}%">
+                    <div class="bar bar-animate" style="height: ${heightPercent}%; animation-delay: ${index * 0.1}s">
                         <span class="bar-value">${item.value}</span>
                     </div>
                 </div>
