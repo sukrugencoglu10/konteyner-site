@@ -596,6 +596,37 @@
             }, 500);
         });
 
+        // ===== KÖSTEBEK TÜNELİ 2.0 - Dashboard Pencere Referansı =====
+        let dashboardWindow = null;
+
+        // Dashboard'u yeni pencerede aç
+        function openExecutiveDashboard() {
+            if (dashboardWindow && !dashboardWindow.closed) {
+                dashboardWindow.focus(); // Zaten açıksa focus ver
+                console.log('🎯 Dashboard zaten açık, focus verildi');
+                return;
+            }
+
+            dashboardWindow = window.open(
+                'dashboard/index.html',
+                'PekconExecutiveDashboard',
+                'width=1400,height=900,resizable=yes,scrollbars=yes'
+            );
+
+            if (!dashboardWindow) {
+                alert('⚠️ Pop-up engelleyici aktif! Dashboard açılamadı.\n\nLütfen tarayıcı ayarlarından pop-up iznini verin.');
+                console.error('❌ Pop-up blocked!');
+                return;
+            }
+
+            console.log('✅ Dashboard penceresi açıldı!');
+
+            // Dashboard yüklenene kadar bekle (handshake)
+            dashboardWindow.addEventListener('load', function() {
+                console.log('✅ Dashboard yüklendi, veri akışı hazır!');
+            });
+        }
+
         // ===== DASHBOARD ENTEGRASYONU =====
         // Katalog sayfalarından dashboard'a veri gönderme fonksiyonu
         function sendDataToDashboard(pageNumber, productTitle, action = 'incelendi') {
@@ -610,14 +641,24 @@
                 }
             };
 
-            // Embedded Dashboard'a veri gönder (iframe içinde)
+            // 1. EMBEDDED IFRAME Dashboard'a gönder (sağ alt köşe)
             const dashboardFrame = document.getElementById('dashboardFrame');
             if (dashboardFrame && dashboardFrame.contentWindow) {
                 dashboardFrame.contentWindow.postMessage(data, '*');
                 console.log('📊 Iframe Dashboard\'a veri gönderildi:', productTitle);
             }
 
-            // Yan sekme/parent window için de gönder (backward compatibility)
+            // 2. KÖSTEBEK TÜNELİ 2.0 - Ayrı penceredeki Dashboard'a gönder
+            if (dashboardWindow && !dashboardWindow.closed) {
+                try {
+                    dashboardWindow.postMessage(data, '*');
+                    console.log('🚀 Köstebek Tüneli 2.0 → Veri fırlatıldı:', productTitle);
+                } catch (e) {
+                    console.warn('⚠️ Dashboard penceresine veri gönderilemedi:', e);
+                }
+            }
+
+            // 3. Yan sekme/parent window için de gönder (backward compatibility)
             window.parent.postMessage(data, '*');
             window.postMessage(data, '*');
 
