@@ -427,9 +427,10 @@
         </div>
     </footer>
 
-    <a href="https://wa.me/905543545201?text=Merhaba,%20konteyner%20hakkında%20bilgi%20almak%20istiyorum." 
-       class="whatsapp-float" 
-       target="_blank" 
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/905543545201?text=Merhaba,%20konteyner%20hakkında%20bilgi%20almak%20istiyorum."
+       class="whatsapp-float"
+       target="_blank"
        rel="noopener noreferrer"
        aria-label="WhatsApp ile iletişime geç"
        onclick="gtag('event', 'conversion', {'send_to': 'AW-10974974305/3AH9COjd9OcbEOGio_Eo'});">
@@ -438,6 +439,74 @@
         </svg>
         <span class="whatsapp-tooltip">WhatsApp ile Yaz</span>
     </a>
+
+    <!-- 📊 Executive Dashboard Button (Köstebek Tüneli 2.0) -->
+    <button onclick="openExecutiveDashboard()"
+            class="dashboard-launch-btn"
+            title="Canlı Takip Panelini Aç"
+            aria-label="Executive Dashboard">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+        </svg>
+        <span class="dashboard-tooltip">📊 Canlı Takip</span>
+    </button>
+
+    <style>
+        /* Dashboard Launch Button Styles */
+        .dashboard-launch-btn {
+            position: fixed;
+            bottom: 90px; /* WhatsApp'ın üstünde */
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B00, #ff8c3a);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-launch-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+            background: linear-gradient(135deg, #ff8c3a, #FF6B00);
+        }
+
+        .dashboard-launch-btn:active {
+            transform: scale(0.95);
+        }
+
+        .dashboard-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #1a1a1a;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .dashboard-launch-btn:hover .dashboard-tooltip {
+            opacity: 1;
+        }
+
+        /* Responsive: Mobilde gizle */
+        @media (max-width: 768px) {
+            .dashboard-launch-btn {
+                display: none;
+            }
+        }
+    </style>
 
     <script>
     console.log("🚀 Pekcon Growth Engine Başlatıldı v3.0");
