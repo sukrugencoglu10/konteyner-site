@@ -1,69 +1,82 @@
-// ===== KATALOG VERİ DİNLEYİCİSİ (LISTENER) =====
-// Katalog sayfasından gelen verileri yakala ve dashboard'u güncelle
+// ===== KRİTİK: KATALOG VERİ DİNLEYİCİSİ (EN ÜSTTE OLMALI) =====
+// Bu listener, katalog sayfasından gelen postMessage verilerini yakalar
 window.addEventListener('message', function(event) {
-    // Sadece bizim katalogdan gelen veriyi kabul et
-    if (event.data.source !== 'KATALOG_TRACKER') return;
+    // Güvenlik: Sadece bizim katalogdan gelen veriyi kabul et
+    if (!event.data || event.data.source !== 'KATALOG_TRACKER') {
+        return;
+    }
 
     const data = event.data.payload;
     console.log("📥 Dashboard veriyi yakaladı:", data);
 
-    // Dashboard UI instance'ına eriş
-    if (window.dashboard) {
-        // ===== HOT LEAD KONTROLÜ =====
-        if (data.isHotLead || (data.action && data.action.includes('HOT LEAD'))) {
-            console.log("🔥🔥🔥 HOT LEAD TESPİT EDİLDİ! 🔥🔥🔥");
-            window.dashboard.showHotLeadAlert(data);
-        }
-
-        // 1. Canlı akış (Live Feed) kısmına ekleme yap
-        const action = data.action || 'inceleniyor';
-        const feedText = `${data.page}. sayfa: ${data.title}`;
-        window.dashboard.addFeedItem(feedText, action);
-
-        // 2. Sayfa görüntülenme sayısını artır
-        window.dashboard.data.incrementPageView(data.page);
-
-        // 3. Grafikteki ilgili çubuğu yükselt
-        const chartIndex = window.dashboard.data.findChartIndexByTitle(data.title);
-        if (chartIndex !== -1) {
-            window.dashboard.updateChart(chartIndex, 1);
-        }
-
-        // 4. Kullanıcı session tracking
-        if (data.userId) {
-            window.dashboard.data.userSessions.add(data.userId);
-        }
-
-        // 5. İstatistikleri güncelle
-        window.dashboard.updateStats(
-            window.dashboard.data.totalViews,
-            window.dashboard.calculateAvgDepth(),
-            window.dashboard.data.userSessions.size || 1
-        );
-
-        console.log("✅ Dashboard güncellendi!");
-    } else {
+    // Dashboard henüz yüklenmemişse bekle
+    if (!window.dashboard) {
         console.warn("⚠️ Dashboard henüz hazır değil, veri bekletiliyor...");
+        // 500ms sonra tekrar dene
+        setTimeout(() => {
+            if (window.dashboard) {
+                processIncomingData(data);
+            }
+        }, 500);
+        return;
     }
+
+    processIncomingData(data);
 });
+
+// Gelen veriyi işle
+function processIncomingData(data) {
+    // ===== HOT LEAD KONTROLÜ =====
+    if (data.isHotLead || (data.action && data.action.includes('HOT LEAD'))) {
+        console.log("🔥🔥🔥 HOT LEAD TESPİT EDİLDİ! 🔥🔥🔥");
+        window.dashboard.showHotLeadAlert(data);
+    }
+
+    // 1. Canlı akış (Live Feed) kısmına ekleme yap
+    const feedText = `${data.title}`;
+    window.dashboard.addFeedItem(feedText, data.action || 'inceleniyor');
+
+    // 2. Sayfa görüntülenme sayısını artır
+    window.dashboard.data.incrementPageView(data.page);
+
+    // 3. Grafikteki ilgili çubuğu yükselt
+    const chartIndex = window.dashboard.data.findChartIndexByTitle(data.title);
+    if (chartIndex !== -1) {
+        window.dashboard.updateChart(chartIndex, 1);
+    }
+
+    // 4. Kullanıcı session tracking
+    if (data.userId) {
+        window.dashboard.data.userSessions.add(data.userId);
+    }
+
+    // 5. İstatistikleri güncelle
+    window.dashboard.updateStats(
+        window.dashboard.data.totalViews,
+        window.dashboard.calculateAvgDepth(),
+        window.dashboard.data.userSessions.size || 1
+    );
+
+    console.log("✅ Dashboard güncellendi!");
+}
 
 console.log("🎧 Katalog Listener aktif - KATALOG_TRACKER verisi bekleniyor...");
 
 // Dashboard Data Management
 class DashboardData {
     constructor() {
-        this.totalViews = 0;
-        this.avgDepth = 0;
-        this.liveUsers = 0;
+        this.totalViews = 26;
+        this.avgDepth = 3.2;
+        this.liveUsers = 2;
         this.feedItems = [];
         this.pageViews = {}; // Sayfa bazlı görüntülenme sayısı
         this.userSessions = new Set(); // Benzersiz kullanıcılar
         this.chartData = [
-            { label: "20' DC", value: 0, pageNumber: null },
-            { label: "40' HC", value: 0, pageNumber: null },
-            { label: "Reefer", value: 0, pageNumber: null },
-            { label: "Open Top", value: 0, pageNumber: null },
-            { label: "Flat Rack", value: 0, pageNumber: null }
+            { label: "20' DC", value: 5, pageNumber: null },
+            { label: "40' HC", value: 8, pageNumber: null },
+            { label: "Reefer", value: 3, pageNumber: null },
+            { label: "Open Top", value: 6, pageNumber: null },
+            { label: "Flat Rack", value: 4, pageNumber: null }
         ];
     }
 
@@ -144,6 +157,14 @@ class DashboardUI {
         this.renderChart();
         this.setupRealDataListener(); // Gerçek veri dinleyicisi
         this.updateStatsDisplay(); // İlk render
+        this.addDemoFeedItems(); // Demo veriler
+    }
+
+    // Demo feed itemları ekle (başlangıçta görünür olsun)
+    addDemoFeedItems() {
+        this.addFeedItem("20' DC Konteyner", "inceledi");
+        setTimeout(() => this.addFeedItem("40' HC Konteyner", "inceledi"), 1000);
+        setTimeout(() => this.addFeedItem("Reefer Konteyner", "inceledi"), 2000);
     }
 
     // Update stat cards with animation
