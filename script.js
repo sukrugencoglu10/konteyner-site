@@ -610,8 +610,14 @@
                 }
             };
 
-            // Eğer dashboard bir iframe içindeyse veya yan sekmede açıksa veriyi gönder
-            // Biz şimdilik yan sekme/ana pencere iletişimi için geniş kapsamlı gönderiyoruz
+            // Embedded Dashboard'a veri gönder (iframe içinde)
+            const dashboardFrame = document.getElementById('dashboardFrame');
+            if (dashboardFrame && dashboardFrame.contentWindow) {
+                dashboardFrame.contentWindow.postMessage(data, '*');
+                console.log('📊 Iframe Dashboard\'a veri gönderildi:', productTitle);
+            }
+
+            // Yan sekme/parent window için de gönder (backward compatibility)
             window.parent.postMessage(data, '*');
             window.postMessage(data, '*');
 
