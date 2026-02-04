@@ -669,8 +669,14 @@
                 }
             };
 
-            // Send data for iframe or separate tab/window communication
-            // Using broad scope for cross-window/tab communication
+            // Send data to embedded Dashboard (iframe)
+            const dashboardFrame = document.getElementById('dashboardFrame');
+            if (dashboardFrame && dashboardFrame.contentWindow) {
+                dashboardFrame.contentWindow.postMessage(data, '*');
+                console.log('📊 Data sent to iframe Dashboard:', productTitle);
+            }
+
+            // Also send to parent/window for backward compatibility
             window.parent.postMessage(data, '*');
             window.postMessage(data, '*');
 
@@ -754,6 +760,36 @@
             });
 
             console.log('✅ Hover Tracking + Hot Lead system active!');
+        });
+
+        // ===== EMBEDDED DASHBOARD - Mini Preview =====
+        // Show dashboard in bottom-right corner of catalog page
+        window.addEventListener('load', function() {
+            const trackerPreview = document.createElement('div');
+            trackerPreview.id = 'tracker-preview';
+            trackerPreview.style.cssText = `
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                width: 400px;
+                height: 300px;
+                border: 2px solid #FF6B00;
+                z-index: 9999;
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(0,0,0,0.5);
+                background: #0f0f0f;
+            `;
+
+            const iframe = document.createElement('iframe');
+            iframe.id = 'dashboardFrame';
+            iframe.src = 'dashboard/index.html';
+            iframe.style.cssText = 'width: 100%; height: 100%; border: none;';
+
+            trackerPreview.appendChild(iframe);
+            document.body.appendChild(trackerPreview);
+
+            console.log('📊 Embedded Dashboard added!');
         });
 
     </script>
