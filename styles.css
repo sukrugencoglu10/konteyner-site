@@ -366,7 +366,7 @@ body {
 
 /* Features Section */
 .features {
-    padding: 5rem 0;
+    padding: 3rem 0;
     background: var(--bg-white);
 }
 
@@ -496,7 +496,7 @@ body {
 
 /* Products Section */
 .products {
-    padding: 5rem 0;
+    padding: 1rem 0 5rem 0;
     background: var(--bg-white);
 }
 
