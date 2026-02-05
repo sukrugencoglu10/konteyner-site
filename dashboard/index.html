@@ -17,7 +17,7 @@
                 <div class="logo-icon">P</div>
                 <h1>Pekcon Analytics</h1>
             </div>
-            <div class="header-subtitle">Real-Time Catalog Insights</div>
+            <div class="header-subtitle">Real-Time Interaction Tracking • v3.0</div>
         </header>
 
         <!-- Stat Cards Row -->
@@ -30,7 +30,7 @@
                     </svg>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Toplam Görüntülenme</div>
+                    <div class="stat-label">Toplam Etkileşim</div>
                     <div class="stat-value" id="totalViews">0</div>
                 </div>
             </div>
@@ -40,14 +40,11 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                         <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
                     </svg>
                 </div>
                 <div class="stat-content">
-                    <div class="stat-label">Ort. Okuma Derinliği</div>
+                    <div class="stat-label">Ort. Grup Aktivitesi</div>
                     <div class="stat-value" id="avgDepth">0</div>
-                    <div class="stat-unit">sayfa</div>
                 </div>
             </div>
 
@@ -57,13 +54,109 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                         <circle cx="9" cy="7" r="4"/>
-                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                     </svg>
                 </div>
                 <div class="stat-content">
                     <div class="stat-label">Canlı Kullanıcı</div>
-                    <div class="stat-value live-users" id="liveUsers">0</div>
+                    <div class="stat-value live-users" id="liveUsers">1</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Group Tracking Cards - FÜTÜRİSTİK TASARIM -->
+        <section class="group-tracking-section">
+            <div class="section-title">
+                <span class="title-icon">📊</span>
+                <h2>Gruplandırılmış Etkileşimler</h2>
+                <div class="live-badge">
+                    <span class="live-dot-small"></span>
+                    CANLI
+                </div>
+            </div>
+
+            <div class="group-cards-grid">
+                <!-- NAVBAR Grubu -->
+                <div class="group-card group-navbar" data-category="navbar">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">🧭</div>
+                    <div class="group-info">
+                        <h3>Navbar</h3>
+                        <div class="group-counter" id="navbarCount">0</div>
+                        <div class="group-last-activity" id="navbarLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="navbarBar"></div>
+                    </div>
+                </div>
+
+                <!-- FORM Grubu -->
+                <div class="group-card group-form" data-category="form">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">📝</div>
+                    <div class="group-info">
+                        <h3>Form Seçimleri</h3>
+                        <div class="group-counter" id="formCount">0</div>
+                        <div class="group-last-activity" id="formLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="formBar"></div>
+                    </div>
+                </div>
+
+                <!-- PRODUCT Grubu -->
+                <div class="group-card group-product" data-category="product">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">📦</div>
+                    <div class="group-info">
+                        <h3>Ürün Etkileşimleri</h3>
+                        <div class="group-counter" id="productCount">0</div>
+                        <div class="group-last-activity" id="productLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="productBar"></div>
+                    </div>
+                </div>
+
+                <!-- SCROLL Grubu -->
+                <div class="group-card group-scroll" data-category="scroll">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">📜</div>
+                    <div class="group-info">
+                        <h3>Scroll Aktiviteleri</h3>
+                        <div class="group-counter" id="scrollCount">0</div>
+                        <div class="group-last-activity" id="scrollLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="scrollBar"></div>
+                    </div>
+                </div>
+
+                <!-- WHATSAPP Grubu -->
+                <div class="group-card group-whatsapp" data-category="whatsapp">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">💬</div>
+                    <div class="group-info">
+                        <h3>WhatsApp</h3>
+                        <div class="group-counter" id="whatsappCount">0</div>
+                        <div class="group-last-activity" id="whatsappLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="whatsappBar"></div>
+                    </div>
+                </div>
+
+                <!-- SOCIAL Grubu -->
+                <div class="group-card group-social" data-category="social">
+                    <div class="group-card-glow"></div>
+                    <div class="group-icon">🌐</div>
+                    <div class="group-info">
+                        <h3>Sosyal Medya</h3>
+                        <div class="group-counter" id="socialCount">0</div>
+                        <div class="group-last-activity" id="socialLast">Bekleniyor...</div>
+                    </div>
+                    <div class="group-bar">
+                        <div class="group-bar-fill" id="socialBar"></div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -73,30 +166,17 @@
             <!-- Live Feed -->
             <div class="panel live-feed-panel">
                 <div class="panel-header">
-                    <h2>Canlı Aktivite</h2>
+                    <h2>🔴 Canlı Aktivite Akışı</h2>
                     <div class="live-indicator">
                         <span class="live-dot"></span>
                         <span>CANLI</span>
                     </div>
                 </div>
                 <div class="live-feed" id="liveFeed">
-                    <!-- Dynamic content will be injected here -->
-                </div>
-            </div>
-
-            <!-- Interest Chart -->
-            <div class="panel chart-panel">
-                <div class="panel-header">
-                    <h2>Popüler Katalog Sayfaları</h2>
-                    <div class="chart-legend">
-                        <span class="legend-item">
-                            <span class="legend-color"></span>
-                            Görüntülenme
-                        </span>
+                    <div class="feed-empty">
+                        <div class="empty-icon">📡</div>
+                        <p>Web sitesinde gezinti başladığında etkileşimler burada görünecek...</p>
                     </div>
-                </div>
-                <div class="chart-container" id="chartContainer">
-                    <!-- Chart will be rendered here -->
                 </div>
             </div>
         </section>

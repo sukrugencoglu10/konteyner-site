@@ -1,7 +1,5 @@
 // ===== KRİTİK: KATALOG VERİ DİNLEYİCİSİ (EN ÜSTTE OLMALI) =====
-// Bu listener, katalog sayfasından gelen postMessage verilerini yakalar
 window.addEventListener('message', function(event) {
-    // Güvenlik: Sadece bizim katalogdan gelen veriyi kabul et
     if (!event.data || event.data.source !== 'KATALOG_TRACKER') {
         return;
     }
@@ -9,10 +7,8 @@ window.addEventListener('message', function(event) {
     const data = event.data.payload;
     console.log("📥 Dashboard veriyi yakaladı:", data);
 
-    // Dashboard henüz yüklenmemişse bekle
     if (!window.dashboard) {
         console.warn("⚠️ Dashboard henüz hazır değil, veri bekletiliyor...");
-        // 500ms sonra tekrar dene
         setTimeout(() => {
             if (window.dashboard) {
                 processIncomingData(data);
@@ -26,108 +22,60 @@ window.addEventListener('message', function(event) {
 
 // Gelen veriyi işle
 function processIncomingData(data) {
-    // ===== HOT LEAD KONTROLÜ =====
+    // HOT LEAD KONTROLÜ
     if (data.isHotLead || (data.action && data.action.includes('HOT LEAD'))) {
         console.log("🔥🔥🔥 HOT LEAD TESPİT EDİLDİ! 🔥🔥🔥");
         window.dashboard.showHotLeadAlert(data);
     }
 
-    // 1. Canlı akış (Live Feed) kısmına ekleme yap
-    const feedText = `${data.title}`;
-    window.dashboard.addFeedItem(feedText, data.action || 'inceleniyor');
+    // Kategori bazlı işleme
+    const category = data.category || 'other';
+    const item = data.item || data.title || 'Bilinmeyen';
+    const action = data.action || 'etkileşim';
 
-    // 2. Sayfa görüntülenme sayısını artır
-    window.dashboard.data.incrementPageView(data.page);
+    // 1. Grup sayacını artır
+    window.dashboard.incrementGroupCounter(category);
 
-    // 3. Grafikteki ilgili çubuğu yükselt
-    const chartIndex = window.dashboard.data.findChartIndexByTitle(data.title);
-    if (chartIndex !== -1) {
-        window.dashboard.updateChart(chartIndex, 1);
-    }
+    // 2. Canlı akışa ekle
+    window.dashboard.addFeedItem(item, action, category);
 
-    // 4. Kullanıcı session tracking
-    if (data.userId) {
-        window.dashboard.data.userSessions.add(data.userId);
-    }
-
-    // 5. İstatistikleri güncelle
-    window.dashboard.updateStats(
-        window.dashboard.data.totalViews,
-        window.dashboard.calculateAvgDepth(),
-        window.dashboard.data.userSessions.size || 1
-    );
+    // 3. İstatistikleri güncelle
+    window.dashboard.data.totalViews++;
+    window.dashboard.updateStatsDisplay();
 
     console.log("✅ Dashboard güncellendi!");
 }
 
 console.log("🎧 Katalog Listener aktif - KATALOG_TRACKER verisi bekleniyor...");
 
-// Dashboard Data Management
+// ===== DASHBOARD DATA CLASS =====
 class DashboardData {
     constructor() {
         this.totalViews = 0;
         this.avgDepth = 0;
-        this.liveUsers = 0;
+        this.liveUsers = 1;
         this.feedItems = [];
-        this.pageViews = {}; // Sayfa bazlı görüntülenme sayısı
-        this.userSessions = new Set(); // Benzersiz kullanıcılar
-        this.chartData = [
-            { label: "20' DC", value: 0, pageNumber: null },
-            { label: "40' HC", value: 0, pageNumber: null },
-            { label: "Reefer", value: 0, pageNumber: null },
-            { label: "Open Top", value: 0, pageNumber: null },
-            { label: "Flat Rack", value: 0, pageNumber: null }
-        ];
-    }
 
-    updateStats(views, depth, users) {
-        this.totalViews = views;
-        this.avgDepth = depth;
-        this.liveUsers = users;
-    }
-
-    addFeedItem(page, action = "inceledi") {
-        const timestamp = new Date();
-        const item = {
-            id: Date.now(),
-            page: page,
-            action: action,
-            time: this.formatTime(timestamp)
+        // Grup bazlı sayaçlar
+        this.groupCounters = {
+            navbar: 0,
+            form: 0,
+            product: 0,
+            scroll: 0,
+            whatsapp: 0,
+            social: 0,
+            page: 0
         };
 
-        this.feedItems.unshift(item);
-        if (this.feedItems.length > 20) {
-            this.feedItems.pop();
-        }
-
-        return item;
-    }
-
-    incrementPageView(pageNumber) {
-        if (!this.pageViews[pageNumber]) {
-            this.pageViews[pageNumber] = 0;
-        }
-        this.pageViews[pageNumber]++;
-        this.totalViews++;
-    }
-
-    updateChartData(pageIndex, value) {
-        if (pageIndex >= 0 && pageIndex < this.chartData.length) {
-            this.chartData[pageIndex].value = value;
-        }
-    }
-
-    // Sayfa numarasına göre chart'taki hangi kategoriye ait olduğunu bul
-    findChartIndexByTitle(title) {
-        const titleLower = title.toLowerCase();
-
-        if (titleLower.includes("20") && titleLower.includes("dc")) return 0;
-        if (titleLower.includes("40") && titleLower.includes("hc")) return 1;
-        if (titleLower.includes("reefer") || titleLower.includes("soğutma")) return 2;
-        if (titleLower.includes("open top") || titleLower.includes("açık üst")) return 3;
-        if (titleLower.includes("flat rack") || titleLower.includes("düz")) return 4;
-
-        return -1; // Kategorize edilemedi
+        // Grup bazlı son aktiviteler
+        this.groupLastActivity = {
+            navbar: null,
+            form: null,
+            product: null,
+            scroll: null,
+            whatsapp: null,
+            social: null
+        };
     }
 
     formatTime(date) {
@@ -138,7 +86,7 @@ class DashboardData {
     }
 }
 
-// Dashboard UI Controller
+// ===== DASHBOARD UI CONTROLLER =====
 class DashboardUI {
     constructor() {
         this.data = new DashboardData();
@@ -147,122 +95,158 @@ class DashboardUI {
             avgDepth: document.getElementById('avgDepth'),
             liveUsers: document.getElementById('liveUsers'),
             liveFeed: document.getElementById('liveFeed'),
-            chartContainer: document.getElementById('chartContainer')
+            // Grup elementleri
+            navbarCount: document.getElementById('navbarCount'),
+            formCount: document.getElementById('formCount'),
+            productCount: document.getElementById('productCount'),
+            scrollCount: document.getElementById('scrollCount'),
+            whatsappCount: document.getElementById('whatsappCount'),
+            socialCount: document.getElementById('socialCount'),
+            // Grup last activity
+            navbarLast: document.getElementById('navbarLast'),
+            formLast: document.getElementById('formLast'),
+            productLast: document.getElementById('productLast'),
+            scrollLast: document.getElementById('scrollLast'),
+            whatsappLast: document.getElementById('whatsappLast'),
+            socialLast: document.getElementById('socialLast')
         };
 
         this.init();
     }
 
     init() {
-        this.renderChart();
-        this.setupRealDataListener(); // Gerçek veri dinleyicisi
-        this.updateStatsDisplay(); // İlk render
+        this.updateStatsDisplay();
+        console.log('✅ Dashboard UI hazır - Gruplandırılmış tracking aktif');
     }
 
-    // Update stat cards with animation
-    updateStats(views, depth, users) {
-        this.animateValue(this.elements.totalViews, this.data.totalViews, views, 800);
-        this.animateValue(this.elements.avgDepth, this.data.avgDepth, depth, 800);
-        this.animateValue(this.elements.liveUsers, this.data.liveUsers, users, 800);
+    // Grup sayacını artır
+    incrementGroupCounter(category) {
+        if (this.data.groupCounters.hasOwnProperty(category)) {
+            this.data.groupCounters[category]++;
 
-        this.data.updateStats(views, depth, users);
+            // DOM'u güncelle
+            const counterElement = document.getElementById(`${category}Count`);
+            if (counterElement) {
+                this.animateCounter(counterElement, this.data.groupCounters[category]);
+
+                // Grup kartına pulse efekti
+                const groupCard = counterElement.closest('.group-card');
+                if (groupCard) {
+                    groupCard.classList.add('pulse-active');
+                    setTimeout(() => groupCard.classList.remove('pulse-active'), 600);
+                }
+            }
+        }
     }
 
+    // Counter animasyonu
+    animateCounter(element, newValue) {
+        element.classList.add('counter-update');
+        element.textContent = newValue;
+        setTimeout(() => element.classList.remove('counter-update'), 300);
+    }
+
+    // Son aktiviteyi güncelle
+    updateLastActivity(category, item) {
+        const lastElement = document.getElementById(`${category}Last`);
+        if (lastElement) {
+            lastElement.textContent = item.length > 25 ? item.substring(0, 25) + '...' : item;
+            lastElement.classList.add('activity-flash');
+            setTimeout(() => lastElement.classList.remove('activity-flash'), 500);
+        }
+    }
+
+    // İstatistikleri güncelle
     updateStatsDisplay() {
-        this.elements.totalViews.textContent = this.data.totalViews.toLocaleString('tr-TR');
-        this.elements.avgDepth.textContent = this.data.avgDepth.toFixed(1);
-        this.elements.liveUsers.textContent = this.data.liveUsers;
+        if (this.elements.totalViews) {
+            this.elements.totalViews.textContent = this.data.totalViews.toLocaleString('tr-TR');
+        }
+        if (this.elements.avgDepth) {
+            const depth = Object.values(this.data.groupCounters).reduce((a, b) => a + b, 0) / 6;
+            this.elements.avgDepth.textContent = depth.toFixed(1);
+        }
+        if (this.elements.liveUsers) {
+            this.elements.liveUsers.textContent = this.data.liveUsers;
+        }
     }
 
-    animateValue(element, start, end, duration) {
-        const range = end - start;
-        const increment = range / (duration / 16);
-        let current = start;
+    // Canlı akışa öğe ekle
+    addFeedItem(item, action = "etkileşim", category = "other") {
+        const timestamp = new Date();
+        const feedData = {
+            id: Date.now(),
+            item: item,
+            action: action,
+            category: category,
+            time: this.data.formatTime(timestamp)
+        };
 
-        const timer = setInterval(() => {
-            current += increment;
-            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-                current = end;
-                clearInterval(timer);
-            }
+        this.data.feedItems.unshift(feedData);
+        if (this.data.feedItems.length > 30) {
+            this.data.feedItems.pop();
+        }
 
-            if (element === this.elements.avgDepth) {
-                element.textContent = current.toFixed(1);
-            } else {
-                element.textContent = Math.round(current).toLocaleString('tr-TR');
-            }
-        }, 16);
-    }
+        // Son aktiviteyi güncelle
+        this.updateLastActivity(category, item);
 
-    // Add item to live feed
-    addFeedItem(page, action = "inceledi") {
-        const item = this.data.addFeedItem(page, action);
-
+        // Feed DOM'a ekle
         const feedElement = document.createElement('div');
-        feedElement.className = 'feed-item';
+        feedElement.className = `feed-item feed-${category}`;
+
+        const categoryIcons = {
+            navbar: '🧭',
+            form: '📝',
+            product: '📦',
+            scroll: '📜',
+            whatsapp: '💬',
+            social: '🌐',
+            page: '🏠'
+        };
+
+        const categoryColors = {
+            navbar: '#00d4ff',
+            form: '#ff6b00',
+            product: '#00ff88',
+            scroll: '#a855f7',
+            whatsapp: '#25d366',
+            social: '#e91e63',
+            page: '#ffd700'
+        };
+
         feedElement.innerHTML = `
             <div class="feed-item-header">
-                <span class="feed-item-time">${item.time}</span>
+                <span class="feed-category-badge" style="background: ${categoryColors[category] || '#666'}">
+                    ${categoryIcons[category] || '📌'} ${category.toUpperCase()}
+                </span>
+                <span class="feed-item-time">${feedData.time}</span>
             </div>
             <div class="feed-item-text">
-                Az önce bir kullanıcı <span class="feed-item-page">${item.page}</span> ${item.action}
+                <span class="feed-item-page">${feedData.item}</span>
+                <span class="feed-action">${feedData.action}</span>
             </div>
         `;
 
-        this.elements.liveFeed.insertBefore(feedElement, this.elements.liveFeed.firstChild);
+        if (this.elements.liveFeed) {
+            this.elements.liveFeed.insertBefore(feedElement, this.elements.liveFeed.firstChild);
 
-        // Remove excess items
-        while (this.elements.liveFeed.children.length > 20) {
-            this.elements.liveFeed.removeChild(this.elements.liveFeed.lastChild);
+            // Fazla öğeleri kaldır
+            while (this.elements.liveFeed.children.length > 30) {
+                this.elements.liveFeed.removeChild(this.elements.liveFeed.lastChild);
+            }
         }
     }
 
-    // Render chart
-    renderChart() {
-        this.elements.chartContainer.innerHTML = '';
-
-        const maxValue = Math.max(...this.data.chartData.map(d => d.value), 1);
-
-        this.data.chartData.forEach((item, index) => {
-            const barContainer = document.createElement('div');
-            barContainer.className = 'chart-bar';
-
-            const heightPercent = (item.value / maxValue) * 100;
-
-            barContainer.innerHTML = `
-                <div class="bar-wrapper">
-                    <div class="bar bar-animate" style="height: ${heightPercent}%; animation-delay: ${index * 0.1}s">
-                        <span class="bar-value">${item.value}</span>
-                    </div>
-                </div>
-                <div class="bar-label">${item.label}</div>
-            `;
-
-            this.elements.chartContainer.appendChild(barContainer);
-        });
-    }
-
-    // Update chart data and re-render
-    updateChart(pageIndex, increment = 1) {
-        if (pageIndex >= 0 && pageIndex < this.data.chartData.length) {
-            this.data.chartData[pageIndex].value += increment;
-            this.renderChart();
-        }
-    }
-
-    // ===== HOT LEAD ALERT SİSTEMİ =====
+    // HOT LEAD Alert
     showHotLeadAlert(data) {
-        // Ses çal (tarayıcı izin verirse)
         this.playAlertSound();
 
-        // Ekranda büyük bir uyarı göster
         const alert = document.createElement('div');
         alert.className = 'hot-lead-alert';
         alert.innerHTML = `
             <div class="hot-lead-content">
                 <div class="hot-lead-icon">🔥</div>
                 <div class="hot-lead-title">HOT LEAD TESPİT EDİLDİ!</div>
-                <div class="hot-lead-product">${data.title}</div>
+                <div class="hot-lead-product">${data.item || data.title}</div>
                 <div class="hot-lead-time">${data.timestamp}</div>
                 <button class="hot-lead-close">Kapat</button>
             </div>
@@ -270,25 +254,17 @@ class DashboardUI {
 
         document.body.appendChild(alert);
 
-        // Otomatik kapanma - 10 saniye
-        const autoCloseTimer = setTimeout(() => {
-            alert.remove();
-        }, 10000);
+        const autoCloseTimer = setTimeout(() => alert.remove(), 10000);
 
-        // Manuel kapama
         alert.querySelector('.hot-lead-close').addEventListener('click', () => {
             clearTimeout(autoCloseTimer);
             alert.remove();
         });
-
-        // Feed'e özel vurgu ile ekle
-        this.addFeedItem(`🔥 HOT LEAD: ${data.title}`, '10 saniye baktı!');
     }
 
-    // Uyarı sesi çal
+    // Alert sesi
     playAlertSound() {
         try {
-            // Web Audio API ile basit beep sesi
             const audioContext = new (window.AudioContext || window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
@@ -296,43 +272,19 @@ class DashboardUI {
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
 
-            oscillator.frequency.value = 800; // 800Hz
+            oscillator.frequency.value = 800;
             oscillator.type = 'sine';
             gainNode.gain.value = 0.3;
 
             oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.2); // 200ms beep
+            oscillator.stop(audioContext.currentTime + 0.2);
         } catch (e) {
-            console.log('Ses çalınamadı (izin yok):', e);
+            console.log('Ses çalınamadı:', e);
         }
-    }
-
-    // Manuel API çağrıları için backup listener (eski sistem uyumluluğu)
-    setupRealDataListener() {
-        window.addEventListener('message', (event) => {
-            // Manuel API çağrıları için eski sistem de çalışsın
-            if (event.data.type === 'stats') {
-                this.updateStats(event.data.totalViews, event.data.avgDepth, event.data.liveUsers);
-            } else if (event.data.type === 'feed') {
-                this.addFeedItem(event.data.page, event.data.action);
-            } else if (event.data.type === 'chart') {
-                this.updateChart(event.data.pageIndex, event.data.value);
-            }
-        });
-
-        console.log('✅ Dashboard hazır - Manuel API ve KATALOG_TRACKER dinleniyor...');
-    }
-
-    // Ortalama okuma derinliğini hesapla
-    calculateAvgDepth() {
-        const totalPages = Object.keys(this.data.pageViews).length;
-        if (totalPages === 0 || this.data.totalViews === 0) return 0;
-
-        return (this.data.totalViews / totalPages).toFixed(1);
     }
 }
 
-// Initialize dashboard when DOM is ready
+// ===== DASHBOARD BAŞLAT =====
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         window.dashboard = new DashboardUI();
@@ -341,21 +293,16 @@ if (document.readyState === 'loading') {
     window.dashboard = new DashboardUI();
 }
 
-// Expose API for external control (backward compatibility)
+// API (geriye uyumluluk)
 window.DashboardAPI = {
-    updateStats: (views, depth, users) => {
+    addFeedItem: (item, action, category) => {
         if (window.dashboard) {
-            window.dashboard.updateStats(views, depth, users);
+            window.dashboard.addFeedItem(item, action, category);
         }
     },
-    addFeedItem: (page, action) => {
+    incrementGroup: (category) => {
         if (window.dashboard) {
-            window.dashboard.addFeedItem(page, action);
-        }
-    },
-    updateChart: (pageIndex, value) => {
-        if (window.dashboard) {
-            window.dashboard.updateChart(pageIndex, value);
+            window.dashboard.incrementGroupCounter(category);
         }
     }
 };

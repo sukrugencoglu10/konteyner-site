@@ -52,6 +52,46 @@ body {
     min-height: 100px;
 }
 
+/* Navbar Sağ Taraf - Toggle Button */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Navbar Telefon - Menü İçinde */
+.nav-phone-item {
+    margin-left: 1.5rem;
+}
+
+.nav-phone-item a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-phone-item a:hover {
+    color: var(--secondary-color);
+}
+
+.phone-icon {
+    font-size: 1rem;
+}
+
+.phone-number {
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.3px;
+}
+
+.logo {
+    margin-right: 6rem;
+}
+
 .logo a {
     display: flex;
     align-items: center;
@@ -88,6 +128,7 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-menu a::after {
@@ -110,9 +151,9 @@ body {
 }
 
 .lang-switch {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: baseline;
     gap: 0.5rem;
 }
 
@@ -894,6 +935,11 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Mobilde telefon numarasını gizle */
+    .nav-phone-item {
+        display: none;
+    }
+
     .nav-menu {
         position: fixed;
         left: -100%;
@@ -913,6 +959,12 @@ body {
 
     .nav-toggle {
         display: flex;
+    }
+
+    /* Mobilde WhatsApp balonu daha küçük */
+    .whatsapp-bubble {
+        min-width: 180px;
+        right: -10px;
     }
 
     .hero-wrapper {
@@ -1041,26 +1093,98 @@ html {
     scroll-behavior: smooth;
 }
 
-/* WhatsApp Floating Button */
-.whatsapp-float {
+/* WhatsApp Container */
+.whatsapp-container {
     position: fixed;
-    width: 60px;
-    height: 60px;
     bottom: 20px;
     right: 20px;
+    z-index: 999;
+}
+
+/* WhatsApp Floating Button */
+.whatsapp-float {
+    position: relative;
+    width: 60px;
+    height: 60px;
     background-color: #25d366;
     color: white;
     border-radius: 50%;
     text-align: center;
     font-size: 30px;
     box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
     text-decoration: none;
     animation: pulse 2s infinite;
+}
+
+/* WhatsApp Konuşma Balonu */
+.whatsapp-bubble {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: white;
+    border-radius: 16px;
+    padding: 14px 18px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px) scale(0.95);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    min-width: 280px;
+    white-space: nowrap;
+    border: 2px solid rgba(37, 211, 102, 0.2);
+}
+
+.whatsapp-container:hover .whatsapp-bubble {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.bubble-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bubble-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.bubble-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bubble-title {
+    font-size: 0.75rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.bubble-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #25d366;
+    letter-spacing: 0.5px;
+}
+
+/* Balon Ok İşareti */
+.bubble-arrow {
+    position: absolute;
+    bottom: -10px;
+    right: 24px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid white;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
 }
 
 .whatsapp-float:hover {
