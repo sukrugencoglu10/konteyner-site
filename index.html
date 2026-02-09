@@ -82,11 +82,11 @@
     
     <div class="hero-form-header">
         <h3>Hızlı Fiyat Teklifi Al</h3>
-        <p style="font-size: 0.9rem; color: #eee; margin-top:5px; opacity: 0.8;">Endüstriyel Çözümler</p>
+        <p>Endüstriyel Çözümler</p>
     </div>
 
     <div class="form-group">
-        <select id="transactionType" name="transactionType" required title="İşlem Türü" style="background:#fff;">
+        <select id="transactionType" name="transactionType" required title="İşlem Türü">
             <option value="" disabled selected>İşlem Türü Seçiniz...</option>
             <option value="Satin_Alma">Satın Alma</option>
             <option value="Kiralama">Kiralama</option>
@@ -94,7 +94,7 @@
     </div>
 
     <div class="form-group">
-        <select id="productCategory" name="productCategory" required title="Konteyner Tipi" style="background:#fff;">
+        <select id="productCategory" name="productCategory" required title="Konteyner Tipi">
             <option value="" disabled selected>İhtiyacınız Olan Yapı...</option>
             <option value="Standart_Konteyner">Standart Yük Konteyner</option>
             <option value="Birlesimli_Ofis">Birleşimli / Ofis Konteyner</option>
@@ -105,8 +105,8 @@
         </select>
     </div>
 
-    <div class="form-group" id="cargo-container-options" style="display: none;">
-        <select id="cargoType" name="cargoType" title="Yük Konteyner Tipi" style="background:#fff;">
+    <div class="form-group" id="cargo-container-options">
+        <select id="cargoType" name="cargoType" title="Yük Konteyner Tipi">
             <option value="" disabled selected>Yük Konteyner Tipi Seçin...</option>
             <option value="20DC">20 DC (Dry Container)</option>
             <option value="40DC">40 DC (Dry Container)</option>
@@ -130,10 +130,10 @@
     <!-- Google Click ID Tracking -->
     <input type="hidden" id="gclid_field" name="gclid_field" value="">
 
-    <button type="submit" class="btn btn-primary btn-block" style="font-weight: 700;">
+    <button type="submit" class="btn btn-primary btn-block">
         TEKLİF GÖNDER 
     </button>
-    <div id="statusMessage" style="text-align: center; margin-top: 15px; font-weight: 600; color: #fff; min-height: 20px;"></div>
+    <div id="statusMessage"></div>
 </form>
                 </div>
             </div>
@@ -443,7 +443,7 @@
            target="_blank"
            rel="noopener noreferrer"
            aria-label="WhatsApp ile iletişime geç"
-           onclick="gtag('event', 'conversion', {'send_to': 'AW-10974974305/3AH9COjd9OcbEOGio_Eo'});">
+           >
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="white">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
             </svg>
@@ -472,270 +472,7 @@
 
     <!-- Dashboard stilleri kaldırıldı - butonlar gizli -->
 
-    <script>
-    console.log("🚀 Pekcon Growth Engine Başlatıldı v3.0");
 
-    // ==========================================
-    // 🎯 GCLID TRACKING - Google Ads Conversion Tracking
-    // ==========================================
-    function captureGclid() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const gclid = urlParams.get('gclid');
-
-        if (gclid) {
-            // URL'den gclid geldi, kaydet
-            document.getElementById('gclid_field').value = gclid;
-            localStorage.setItem('gclid', gclid);
-            console.log('✅ GCLID captured from URL:', gclid);
-        } else if (localStorage.getItem('gclid')) {
-            // Önceden kaydedilmiş gclid var, kullan
-            document.getElementById('gclid_field').value = localStorage.getItem('gclid');
-            console.log('✅ GCLID loaded from storage:', localStorage.getItem('gclid'));
-        } else {
-            console.log('ℹ️ No GCLID found (organic traffic)');
-        }
-    }
-
-    // Sayfa yüklendiğinde gclid'yi yakala
-    window.addEventListener('DOMContentLoaded', captureGclid);
-
-    // --- NAVBAR ve UI İŞLEMLERİ (Mevcut kodların korundu) ---
-    const navToggle = document.getElementById('navToggle');
-    const navMenu = document.querySelector('.nav-menu');
-    if (navToggle) {
-        navToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
-    }
-    document.querySelectorAll('.nav-menu a').forEach(link => {
-        link.addEventListener('click', () => navMenu.classList.remove('active'));
-    });
-    const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 100) navbar.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-    });
-
-    // ==========================================
-    // 🔥 DİNAMİK KONTEYNER SEÇİMİ
-    // ==========================================
-    const productCategorySelect = document.getElementById('productCategory');
-    const cargoContainerOptions = document.getElementById('cargo-container-options');
-    const cargoTypeSelect = document.getElementById('cargoType');
-
-    if (productCategorySelect && cargoContainerOptions) {
-        productCategorySelect.addEventListener('change', function() {
-            if (this.value === 'Standart_Konteyner') {
-                cargoContainerOptions.style.display = 'block';
-                cargoTypeSelect.setAttribute('required', 'required');
-            } else {
-                cargoContainerOptions.style.display = 'none';
-                cargoTypeSelect.removeAttribute('required');
-                cargoTypeSelect.value = '';
-            }
-        });
-    }
-
-    // ==========================================
-    // 🔥 YENİ NESİL FORM TAKİBİ (HIGH-TICKET)
-    // ==========================================
-    const highTicketForm = document.getElementById('pekconHighTicketForm');
-
-    if (highTicketForm) {
-        highTicketForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Varsayılan gönderimi durdur (kontrol bizde)
-            console.log("🖱️ Form Tetiklendi! Veriler işleniyor...");
-
-            const submitBtn = highTicketForm.querySelector('button[type="submit"]');
-            const statusMsg = document.getElementById('statusMessage');
-            
-            // 1. Verileri Değişkenlere Al
-            const transaction = document.getElementById('transactionType').value;
-            const category = document.getElementById('productCategory').value;
-            // Yük konteyner detayını da al (varsa)
-            const cargoDetail = document.getElementById('cargoType') ? document.getElementById('cargoType').value : '';
-            
-            const name = document.getElementById('userName').value;
-            const phone = document.getElementById('userPhone').value;
-            const email = document.getElementById('userEmail').value;
-
-            // Butonu kilitle (Çift tıklamayı önle)
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "Gönderiliyor...";
-
-            // 2. GOOGLE'A SİNYAL ÇAK (DATA LAYER PUSH) 📡
-            // GTM'de kurduğumuz 'lead_form_submit' tetikleyicisi bunu bekliyor!
-            window.dataLayer = window.dataLayer || [];
-            window.dataLayer.push({
-                'event': 'lead_form_submit',
-                'user_data': {
-                    'email': email,
-                    'phone_number': phone
-                },
-                'lead_details': {
-                    'transaction_type': transaction,
-                    'product_category': category,
-                    'cargo_type_detail': cargoDetail // Yük konteyner detayı
-                },
-                'value': 1000 // Dönüşüm değeri
-            });
-            console.log("✅ DataLayer Başarılı: " + transaction + " | " + category);
-
-            // 3. GOOGLE SHEETS'E GÖNDER 📨
-            const formData = new FormData(highTicketForm);
-            // Cargo detail'i manuel ekle (eğer boş değilse)
-            if (cargoDetail) {
-                formData.set('cargoType', cargoDetail);
-            }
-
-            // Debug: Gönderilen verileri konsola yazdır
-            console.log("📤 Gönderilen form verileri:");
-            for (let [key, value] of formData.entries()) {
-                console.log(`   ${key}: ${value}`);
-            }
-
-            fetch("https://script.google.com/macros/s/AKfycbx_uZADVuE5OClW55vVlG3i_bV9szVll5ROgyKJSGOdrUDNXDw8ayXmL3-bdCwpOSwo/exec", {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: new URLSearchParams(formData).toString()
-            })
-            .then(() => {
-                // Başarılı Oldu
-                statusMsg.innerHTML = "✅ Talebiniz Alındı! Uzmanlarımız size dönüş yapacak.";
-                statusMsg.style.color = "#4ade80"; // Yeşil renk
-                highTicketForm.reset();
-                setTimeout(() => { submitBtn.innerHTML = "TEKLİF GÖNDER"; submitBtn.disabled = false; }, 3000);
-            })
-            .catch((error) => {
-                // Hata Olursa
-                console.error("Form Hatası:", error);
-                statusMsg.innerHTML = "⚠️ Bir hata oluştu, lütfen WhatsApp'tan yazın.";
-                statusMsg.style.color = "#fb7185"; // Kırmızımsı
-                submitBtn.disabled = false;
-            });
-        });
-    }
-
-    // --- LIGHTBOX (Resim Büyütme) ---
-    // (Mevcut Lightbox kodun aynen çalışsın diye buraya ekledim)
-    window.addEventListener('load', function() {
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxClose = document.querySelector('.lightbox-close');
-        
-        document.querySelectorAll('.product-img').forEach(img => {
-            img.style.cursor = 'zoom-in';
-            img.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (lightbox && lightboxImg) {
-                    lightbox.style.display = 'block';
-                    lightboxImg.src = this.src;
-                    lightboxImg.alt = this.alt;
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-        });
-        
-        if (lightboxClose) {
-            lightboxClose.addEventListener('click', () => {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-        }
-        if (lightbox) {
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) {
-                    lightbox.style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            });
-        }
-    });
-</script>
-
-    <div id="lightbox" class="lightbox">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img" alt="Konteyner Görsel">
-    </div>
-
-    <script>
-        // 🖼️ LIGHTBOX - Ürün resimlerini büyütmek için
-        window.addEventListener('load', function() {
-            console.log('🚀 Lightbox başlatılıyor...');
-            
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.querySelector('.lightbox-close');
-            
-            setTimeout(() => {
-                const productImages = document.querySelectorAll('.product-img');
-                console.log('🖼️ Bulunan ürün resimleri:', productImages.length);
-                
-                if (productImages.length === 0) {
-                    console.warn('⚠️ Hiç .product-img bulunamadı!');
-                    return;
-                }
-
-                // Ürün resimlerine tıklandığında lightbox'ı aç
-                productImages.forEach((img, index) => {
-                    console.log(`✅ Resim ${index + 1} için event eklendi`);
-                    
-                    img.style.cursor = 'zoom-in';
-                    
-                    img.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        console.log(`📸 TIKLANDI - Resim ${index + 1}:`, this.src);
-                        
-                        if (lightbox && lightboxImg) {
-                            lightbox.style.display = 'block';
-                            lightboxImg.src = this.src;
-                            lightboxImg.alt = this.alt;
-                            document.body.style.overflow = 'hidden';
-                            console.log('✅ Lightbox açıldı!');
-                        }
-                    });
-                });
-
-                // Kapatma butonu
-                if (lightboxClose) {
-                    lightboxClose.addEventListener('click', () => {
-                        console.log('❌ Kapatma butonu tıklandı');
-                        lightbox.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    });
-                }
-
-                // Lightbox dışına tıklama
-                if (lightbox) {
-                    lightbox.addEventListener('click', (e) => {
-                        if (e.target === lightbox) {
-                            console.log('❌ Dışarı tıklandı');
-                            lightbox.style.display = 'none';
-                            document.body.style.overflow = 'auto';
-                        }
-                    });
-                }
-
-                // ESC tuşu
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && lightbox && lightbox.style.display === 'block') {
-                        e.preventDefault(); // Sadece ESC için engelle
-                        console.log('❌ ESC basıldı');
-                        lightbox.style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                    }
-                    // Ctrl+A ve diğer tuşlar normal çalışsın
-                });
-                
-                console.log('✅ Lightbox kurulumu tamamlandı!');
-            }, 500);
-        });
-
-        // ===== KÖSTEBEK TÜNELİ 2.0 - Ayrı Pencere Modu =====
-        // Dashboard artık ayrı pencerede açılıyor (openExecutiveDashboard butonu ile)
-        // Embedded iframe kaldırıldı - sadece popup dashboard kullanılıyor
-    </script>
 
     <!-- Dashboard Tracker Script -->
     <script src="script.js"></script>
