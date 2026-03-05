@@ -251,13 +251,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     sending: "Gönderiliyor...",
                     success: "✅ Talebiniz Alındı! Uzmanlarımız size dönüş yapacak.",
                     error: "⚠️ Bir hata oluştu, lütfen WhatsApp'tan yazın.",
-                    btnNormal: "TEKLİF GÖNDER"
+                    btnNormal: "GÖNDER"
                 },
                 en: {
                     sending: "Sending...",
                     success: "✅ We received your request! Our team will contact you shortly.",
                     error: "⚠️ An error occurred. Please contact us via WhatsApp.",
-                    btnNormal: "SEND QUOTE"
+                    btnNormal: "SEND"
                 }
             };
             const t = messages[lang] || messages.tr;
