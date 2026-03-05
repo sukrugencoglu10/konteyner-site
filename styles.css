@@ -170,6 +170,8 @@ body {
   display: flex;
   list-style: none;
   gap: 1.25rem;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .nav-menu a {
