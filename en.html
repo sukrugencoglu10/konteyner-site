@@ -105,6 +105,110 @@
     </div>
 
     <div class="form-group">
+        <select id="containerQuantity" name="containerQuantity" required title="Container Quantity">
+            <option value="" disabled selected>How Many Containers?</option>
+            <option value="1">1 Unit</option>
+            <option value="2-5">2 - 5 Units</option>
+            <option value="6-10">6 - 10 Units</option>
+            <option value="11-20">11 - 20 Units</option>
+            <option value="20+">20+ Units</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <select id="deliveryRegion" name="deliveryRegion" required title="Delivery Region">
+            <option value="" disabled selected>Delivery City / Region...</option>
+            <optgroup label="Marmara">
+                <option value="Istanbul">Istanbul</option>
+                <option value="Bursa">Bursa</option>
+                <option value="Kocaeli">Kocaeli</option>
+                <option value="Tekirdag">Tekirdağ</option>
+                <option value="Sakarya">Sakarya</option>
+                <option value="Edirne">Edirne</option>
+                <option value="Canakkale">Çanakkale</option>
+            </optgroup>
+            <optgroup label="Aegean">
+                <option value="Izmir">Izmir</option>
+                <option value="Manisa">Manisa</option>
+                <option value="Denizli">Denizli</option>
+                <option value="Mugla">Muğla</option>
+                <option value="Aydin">Aydın</option>
+                <option value="Balikesir">Balıkesir</option>
+                <option value="Usak">Uşak</option>
+                <option value="Kutahya">Kütahya</option>
+                <option value="Afyonkarahisar">Afyonkarahisar</option>
+            </optgroup>
+            <optgroup label="Mediterranean">
+                <option value="Antalya">Antalya</option>
+                <option value="Adana">Adana</option>
+                <option value="Mersin">Mersin</option>
+                <option value="Hatay">Hatay</option>
+                <option value="Isparta">Isparta</option>
+                <option value="Burdur">Burdur</option>
+                <option value="Kahramanmaras">Kahramanmaraş</option>
+                <option value="Osmaniye">Osmaniye</option>
+            </optgroup>
+            <optgroup label="Central Anatolia">
+                <option value="Ankara">Ankara</option>
+                <option value="Konya">Konya</option>
+                <option value="Kayseri">Kayseri</option>
+                <option value="Eskisehir">Eskişehir</option>
+                <option value="Sivas">Sivas</option>
+                <option value="Aksaray">Aksaray</option>
+                <option value="Corum">Çorum</option>
+                <option value="Kirikkale">Kırıkkale</option>
+                <option value="Kirsehir">Kırşehir</option>
+                <option value="Nevsehir">Nevşehir</option>
+                <option value="Nigde">Niğde</option>
+                <option value="Yozgat">Yozgat</option>
+            </optgroup>
+            <optgroup label="Black Sea">
+                <option value="Samsun">Samsun</option>
+                <option value="Trabzon">Trabzon</option>
+                <option value="Zonguldak">Zonguldak</option>
+                <option value="Ordu">Ordu</option>
+                <option value="Giresun">Giresun</option>
+                <option value="Rize">Rize</option>
+                <option value="Kastamonu">Kastamonu</option>
+                <option value="Sinop">Sinop</option>
+                <option value="Amasya">Amasya</option>
+                <option value="Tokat">Tokat</option>
+                <option value="Bolu">Bolu</option>
+                <option value="Karabuk">Karabük</option>
+            </optgroup>
+            <optgroup label="Eastern Anatolia">
+                <option value="Erzurum">Erzurum</option>
+                <option value="Malatya">Malatya</option>
+                <option value="Elazig">Elazığ</option>
+                <option value="Van">Van</option>
+                <option value="Erzincan">Erzincan</option>
+                <option value="Agri">Ağrı</option>
+                <option value="Bingol">Bingöl</option>
+                <option value="Bitlis">Bitlis</option>
+                <option value="Hakkari">Hakkari</option>
+                <option value="Igdir">Iğdır</option>
+                <option value="Kars">Kars</option>
+                <option value="Mus">Muş</option>
+                <option value="Tunceli">Tunceli</option>
+            </optgroup>
+            <optgroup label="Southeastern Anatolia">
+                <option value="Gaziantep">Gaziantep</option>
+                <option value="Diyarbakir">Diyarbakır</option>
+                <option value="Sanliurfa">Şanlıurfa</option>
+                <option value="Mardin">Mardin</option>
+                <option value="Batman">Batman</option>
+                <option value="Adiyaman">Adıyaman</option>
+                <option value="Kilis">Kilis</option>
+                <option value="Siirt">Siirt</option>
+                <option value="Sirnak">Şırnak</option>
+            </optgroup>
+            <optgroup label="Other">
+                <option value="Diger">Other / Not Specified</option>
+            </optgroup>
+        </select>
+    </div>
+
+    <div class="form-group">
         <input type="text" id="userName" name="userName" placeholder="Your Full Name" required>
     </div>
     <div class="form-group">
