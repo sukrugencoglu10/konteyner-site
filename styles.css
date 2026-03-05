@@ -200,6 +200,9 @@ body {
   display: inline-flex;
   align-items: baseline;
   gap: 0.5rem;
+  margin-left: 2.5rem;
+  padding-left: 2.5rem;
+  border-left: 1px solid var(--border-color);
 }
 
 .lang-switch a {
