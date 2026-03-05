@@ -719,7 +719,18 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: stretch;
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-text .section-header {
+  text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .about-description {
