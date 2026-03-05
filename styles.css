@@ -97,9 +97,9 @@ body {
   min-height: 100px;
 }
 
-/* Navbar Sağ Taraf - Toggle Button */
+/* Navbar Sağ Taraf - Toggle Button (sadece mobilde görünür) */
 .nav-right {
-  display: flex;
+  display: none;
   align-items: center;
 }
 
@@ -1016,6 +1016,10 @@ body {
 
   .nav-menu.active {
     left: 0;
+  }
+
+  .nav-right {
+    display: flex;
   }
 
   .nav-toggle {
