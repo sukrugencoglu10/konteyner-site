@@ -191,6 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = highTicketForm ? highTicketForm.querySelector('button[type="submit"]') : null;
     
     // Dynamic Selection Logic
+    const quantityOptions = document.getElementById('quantity-options');
+    const containerQuantity = document.getElementById('containerQuantity');
+
     if (productCategory && cargoContainerOptions && cargoType) {
         productCategory.addEventListener('change', function() {
             const selectedText = this.options[this.selectedIndex].text;
@@ -203,6 +206,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 cargoContainerOptions.style.display = 'none';
                 cargoType.removeAttribute('required');
                 cargoType.value = '';
+            }
+
+            // Adet alanını konteyner tipi seçilince göster
+            if (this.value) {
+                if (quantityOptions) quantityOptions.style.display = 'block';
+                if (containerQuantity) containerQuantity.setAttribute('required', 'required');
+            } else {
+                if (quantityOptions) quantityOptions.style.display = 'none';
+                if (containerQuantity) {
+                    containerQuantity.removeAttribute('required');
+                    containerQuantity.value = '';
+                }
             }
         });
     }
