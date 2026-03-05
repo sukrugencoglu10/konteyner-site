@@ -99,7 +99,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0;
-  min-height: 55px;
+  min-height: 75px;
 }
 
 /* Navbar Sağ Taraf - Toggle Button (sadece mobilde görünür) */
