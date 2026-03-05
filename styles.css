@@ -1415,15 +1415,15 @@ html {
 
 @media (max-width: 768px) {
   .whatsapp-float {
-    width: 56px;
-    height: 56px;
+    width: 70px;
+    height: 70px;
     bottom: 15px;
     right: 15px;
   }
 
   .whatsapp-float svg {
-    width: 28px;
-    height: 28px;
+    width: 35px;
+    height: 35px;
   }
 
   .whatsapp-tooltip {
