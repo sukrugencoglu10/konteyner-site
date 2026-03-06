@@ -1435,3 +1435,10 @@ html {
   min-height: 20px;
 }
 
+
+/* Desktop: Hero section %20 taller */
+@media (min-width: 769px) {
+  .hero {
+    min-height: 120vh;
+  }
+}
