@@ -104,12 +104,10 @@ body {
   top: 36px;
   left: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.98);
   box-shadow: var(--shadow);
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-wrapper {
@@ -278,16 +276,6 @@ body {
   z-index: 0;
 }
 
-.hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-  opacity: 0.3;
-}
 
 .hero-overlay {
   position: absolute;
@@ -652,9 +640,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.9);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.92);
 }
 
 .lightbox-content {
@@ -826,9 +812,7 @@ body {
 }
 
 .contact-form {
-  background: rgba(255, 255, 255, 0.95);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.97);
   padding: 1.7rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -1158,10 +1142,16 @@ body {
 
   .hero-title {
     font-size: 2rem;
+    animation: none;
   }
 
   .hero-subtitle {
     font-size: 1rem;
+    animation: none;
+  }
+
+  .hero-buttons {
+    animation: none;
   }
 
   .section-header h2 {
@@ -1371,38 +1361,6 @@ html {
   height: 32px;
 }
 
-.whatsapp-tooltip {
-  position: absolute;
-  right: 70px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--text-dark);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: var(--shadow);
-}
-
-.whatsapp-tooltip::after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 6px solid transparent;
-  border-left-color: var(--text-dark);
-}
-
-.whatsapp-float:hover .whatsapp-tooltip {
-  opacity: 1;
-  visibility: visible;
-}
 
 @keyframes pulse {
   0%, 100% {
@@ -1426,83 +1384,6 @@ html {
   }
 }
 
-/* Dashboard Floating Button (Turuncu) */
-.dashboard-float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 90px; /* WhatsApp butonunun üstünde */
-  right: 20px;
-  background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
-  color: white;
-  border: none;
-  border-radius: 50%;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  animation: pulse-orange 2s infinite;
-}
-
-.dashboard-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
-  background: linear-gradient(135deg, #ff8c42 0%, #ff6b35 100%);
-}
-
-.dashboard-float svg {
-  width: 32px;
-  height: 32px;
-}
-
-.dashboard-tooltip {
-  position: absolute;
-  right: 70px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--text-dark);
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: var(--shadow);
-}
-
-.dashboard-tooltip::after {
-  content: "";
-  position: absolute;
-  left: 100%;
-  top: 50%;
-  transform: translateY(-50%);
-  border: 6px solid transparent;
-  border-left-color: var(--text-dark);
-}
-
-.dashboard-float:hover .dashboard-tooltip {
-  opacity: 1;
-  visibility: visible;
-}
-
-@keyframes pulse-orange {
-  0% {
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-  }
-  50% {
-    box-shadow: 0 4px 20px rgba(255, 107, 53, 0.6);
-  }
-  100% {
-    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.4);
-  }
-}
 
 @media (max-width: 768px) {
   .whatsapp-float {
@@ -1510,225 +1391,19 @@ html {
     height: 70px;
     bottom: 15px;
     right: 15px;
+    animation: none;
+  }
+
+  .whatsapp-float::before {
+    display: none;
   }
 
   .whatsapp-float svg {
     width: 35px;
     height: 35px;
   }
-
-  .whatsapp-tooltip {
-    display: none;
-  }
-
-  .dashboard-float {
-    width: 56px;
-    height: 56px;
-    bottom: 80px;
-    right: 15px;
-  }
-
-  .dashboard-float svg {
-    width: 28px;
-    height: 28px;
-  }
-
-  .dashboard-tooltip {
-    display: none;
-  }
-}
-/* =======================================================
-   📱 MOBİL V6 - GARANTİ YERLEŞİM (Metin Üstte, Footer Dolu)
-   ======================================================= */
-@media screen and (max-width: 768px) {
-  /* --- 1. HERO BÖLÜMÜ (Metin Üstte, Form Altta) --- */
-
-  /* Ana Taşıyıcıyı Esnek Yap */
-  .hero {
-    height: auto !important;
-    padding-top: 80px !important; /* Header ile arayı aç */
-    padding-bottom: 50px !important;
-    background-attachment: scroll !important; /* Arka planı sabitleme */
-  }
-
-  .hero-row {
-    display: flex !important;
-    flex-direction: column !important; /* Alt alta diz */
-    align-items: center !important;
-  }
-
-  /* METİN KISMI (1. Sırada) */
-  .hero-text {
-    order: 1 !important; /* KESİN: İlk sırada bu olacak */
-    width: 100% !important;
-    text-align: center !important;
-    margin-bottom: 20px !important; /* Formun tepesine yapışmasın */
-    padding: 0 15px !important;
-    background: transparent !important;
-  }
-
-  /* Metin Renklerini Düzelt (Arka plan açıksa yazı koyu olsun) */
-  .hero-text h1 {
-    color: #1a2530 !important; /* Koyu lacivert yap ki okunsun */
-    font-size: 24px !important;
-    text-shadow: none !important;
-    margin-bottom: 10px !important;
-  }
-
-  .hero-text p {
-    color: #333 !important;
-    font-size: 16px !important;
-    text-shadow: none !important;
-  }
-
-  /* FORM KISMI (2. Sırada) */
-  .form-container,
-  .contact-form {
-    order: 2 !important; /* KESİN: İkinci sırada bu olacak */
-    width: 95% !important;
-    margin: 0 auto !important;
-    background-color: #fff !important;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15) !important;
-    /* Absolute ayarlarını sıfırla */
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
-  }
-
-  /* --- 2. FOOTER KURTARMA OPERASYONU --- */
-
-  footer {
-    position: relative !important;
-    width: 100% !important;
-    background-color: #1a2530 !important; /* Koyu zemin */
-    padding: 50px 20px 100px 20px !important; /* Alttan boşluk (Whatsapp için) */
-    color: #ffffff !important;
-    text-align: center !important;
-    z-index: 100 !important;
-  }
-
-  footer .row {
-    display: flex !important;
-    flex-direction: column !important;
-  }
-
-  footer .col,
-  footer div[class*="col"] {
-    width: 100% !important;
-    margin-bottom: 30px !important;
-  }
-
-  /* İKONLARI ZORLA GÖSTER (Linkedin, Instagram vb.) */
-  footer .social-icons,
-  .social-links,
-  footer ul {
-    display: block !important;
-    width: 100% !important;
-    margin-top: 15px !important;
-    padding: 0 !important;
-  }
-
-  footer a,
-  footer i,
-  footer .fa {
-    color: #ffffff !important; /* İkonları BEYAZ yap */
-    font-size: 24px !important; /* Boyutu büyüt */
-    display: inline-block !important;
-    margin: 0 10px !important; /* Aralarını aç */
-    visibility: visible !important;
-    opacity: 1 !important;
-  }
-
-  /* Gereksiz GIF ve Okları Kaldır */
-  .scroll-down,
-  .hero img[src*="gif"] {
-    display: none !important;
-  }
 }
 
-/* Lightbox Styles */
-.lightbox {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.9);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
-}
-
-.lightbox-content {
-  margin: auto;
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 95%;
-  max-height: 95vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: zoom 0.3s ease;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes zoom {
-  from {
-    transform: translate(-50%, -50%) scale(0.7);
-    opacity: 0;
-  }
-  to {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-}
-
-.lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 40px;
-  color: #fff;
-  font-size: 40px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 10000;
-}
-
-.lightbox-close:hover,
-.lightbox-close:focus {
-  color: #bbb;
-}
-
-.product-img {
-  cursor: zoom-in;
-  transition: all 0.3s ease;
-}
-
-.product-img:hover {
-  transform: scale(1.05);
-  filter: brightness(1.1);
-}
-
-/* Mobil için lightbox ayarları */
-@media (max-width: 768px) {
-  .lightbox-content {
-    max-width: 98%;
-    max-height: 90vh;
-  }
-
-  .lightbox-close {
-    top: 10px;
-    right: 15px;
-    font-size: 35px;
-  }
-}
 
 /* ==========================================
    MOVED FROM INLINE HTML (CLEANUP)
@@ -1760,56 +1435,3 @@ html {
   min-height: 20px;
 }
 
-/* Dashboard Launch Button */
-.dashboard-launch-btn {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #FF6B00, #ff8c3a);
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 9998;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.4);
-    transition: all 0.3s ease;
-}
-
-.dashboard-launch-btn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
-    background: linear-gradient(135deg, #ff8c3a, #FF6B00);
-}
-
-.dashboard-launch-btn:active {
-    transform: scale(0.95);
-}
-
-.dashboard-tooltip {
-    position: absolute;
-    right: 70px;
-    background: #1a1a1a;
-    color: white;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    white-space: nowrap;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-}
-
-.dashboard-launch-btn:hover .dashboard-tooltip {
-    opacity: 1;
-}
-
-@media (max-width: 768px) {
-    .dashboard-launch-btn {
-        display: none;
-    }
-}
