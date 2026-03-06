@@ -20,7 +20,9 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="images/anasayfa.webp" type="image/webp">
 </head>
 
 <body>
@@ -46,8 +48,11 @@
             <div class="nav-wrapper">
                 <div class="logo">
                     <a href="#anasayfa">
-                        <img src="./images/pekcon-logo.png" alt="PEKCON Logo" class="logo-img"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        <picture>
+                            <source srcset="./images/pekcon-logo.webp" type="image/webp">
+                            <img src="./images/pekcon-logo.png" alt="PEKCON Logo" class="logo-img" width="160" height="50" fetchpriority="high"
+                                onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';">
+                        </picture>
                     </a>
                 </div>
                 <ul class="nav-menu">
@@ -347,7 +352,10 @@
                 <div class="product-card">
                     <div class="product-badge">Popular</div>
                     <div class="product-image">
-                        <img src="images/20 dc.jpg" alt="20ft Standard Container" class="product-img">
+                        <picture>
+                            <source srcset="images/20-dc.webp" type="image/webp">
+                            <img src="images/20 dc.jpg" alt="20ft Standard Container" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                        </picture>
                     </div>
                     <div class="product-info">
                         <h3>20ft Standard Container</h3>
@@ -361,7 +369,10 @@
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="images/40 dc.jpg" alt="40ft Standard Container" class="product-img">
+                        <picture>
+                            <source srcset="images/40-dc.webp" type="image/webp">
+                            <img src="images/40 dc.jpg" alt="40ft Standard Container" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                        </picture>
                     </div>
                     <div class="product-info">
                         <h3>40ft Standard Container</h3>
@@ -375,7 +386,10 @@
                 </div>
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="images/40 hc.jpg" alt="40ft High Cube" class="product-img">
+                        <picture>
+                            <source srcset="images/40-hc.webp" type="image/webp">
+                            <img src="images/40 hc.jpg" alt="40ft High Cube" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                        </picture>
                     </div>
                     <div class="product-info">
                         <h3>40ft High Cube (HC)</h3>
@@ -472,7 +486,10 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="images/hakkımızda.jpeg" alt="About Us" class="about-img">
+                    <picture>
+                        <source srcset="images/hakkimizda.webp" type="image/webp">
+                        <img src="images/hakkımızda.jpeg" alt="About Us" class="about-img" loading="lazy" width="600" height="450" decoding="async">
+                    </picture>
                 </div>
             </div>
         </div>
@@ -520,7 +537,10 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <img src="images/pekcon-logo.png" alt="PEKCON Logo" class="footer-logo-img">
+                        <picture>
+                            <source srcset="images/pekcon-logo.webp" type="image/webp">
+                            <img src="images/pekcon-logo.png" alt="PEKCON Logo" class="footer-logo-img" loading="lazy" width="160" height="50" decoding="async">
+                        </picture>
                     </div>
                 </div>
                 <div class="footer-section footer-services">
@@ -602,7 +622,7 @@
     </div>
 
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
