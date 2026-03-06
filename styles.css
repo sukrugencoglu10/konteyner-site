@@ -1439,6 +1439,6 @@ html {
 /* Desktop: Hero section %20 taller */
 @media (min-width: 769px) {
   .hero {
-    min-height: 144vh;
+    min-height: 125vh;
   }
 }
