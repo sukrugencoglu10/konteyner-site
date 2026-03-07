@@ -1075,17 +1075,25 @@ body {
 /* Responsive Design */
 @media (max-width: 768px) {
   .top-bar {
-    display: none;
+    display: flex;
   }
 
   .navbar {
-    top: 0;
+    top: 36px;
+  }
+
+  .nav-wrapper {
+    min-height: 104px;
+  }
+
+  .logo-img {
+    height: 104px;
   }
 
   .nav-menu {
     position: fixed;
     left: -100%;
-    top: 70px;
+    top: 104px;
     flex-direction: column;
     background: white;
     width: 100%;
@@ -1141,12 +1149,12 @@ body {
   }
 
   .hero-title {
-    font-size: 2.4rem;
+    font-size: 2.6rem;
     animation: none;
   }
 
   .hero-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.35rem;
     animation: none;
   }
 
@@ -1230,7 +1238,7 @@ body {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 2.1rem;
+    font-size: 2.3rem;
   }
 
   .features-grid,
