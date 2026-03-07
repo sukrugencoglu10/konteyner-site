@@ -319,7 +319,7 @@ body {
 }
 
 .hero-title {
-  font-size: 3rem;
+  font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
   line-height: 1.2;
@@ -329,7 +329,7 @@ body {
 }
 
 .hero-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
   opacity: 0.95;
   animation: fadeInUp 0.8s ease 0.2s both;
@@ -817,7 +817,7 @@ body {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transform: scale(0.70);
-  transform-origin: center;
+  transform-origin: top center;
 }
 
 .form-row {
@@ -1115,7 +1115,7 @@ body {
 
   .hero-wrapper {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 1.5rem;
     text-align: center;
     padding: 2rem 0;
     margin-top: 80px;
@@ -1128,7 +1128,7 @@ body {
   .hero-content {
     text-align: center;
     order: 1;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
   }
 
   .hero-form {
@@ -1141,12 +1141,12 @@ body {
   }
 
   .hero-title {
-    font-size: 2rem;
+    font-size: 2.4rem;
     animation: none;
   }
 
   .hero-subtitle {
-    font-size: 1rem;
+    font-size: 1.2rem;
     animation: none;
   }
 
@@ -1230,7 +1230,7 @@ body {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: 1.75rem;
+    font-size: 2.1rem;
   }
 
   .features-grid,
