@@ -1393,17 +1393,24 @@ html {
 }
 
 
+@keyframes whatsapp-pulse {
+  0%   { transform: scale(1);    box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+  50%  { transform: scale(1.12); box-shadow: 0 6px 22px rgba(37,211,102,0.7); }
+  100% { transform: scale(1);    box-shadow: 0 4px 12px rgba(37,211,102,0.4); }
+}
+
 @media (max-width: 768px) {
   .whatsapp-float {
     width: 70px;
     height: 70px;
     bottom: 15px;
     right: 15px;
-    animation: none;
+    animation: whatsapp-pulse 1.5s ease-in-out infinite;
   }
 
   .whatsapp-float::before {
-    display: none;
+    display: block;
+    animation: whatsapp-ping 1.8s ease-out infinite;
   }
 
   .whatsapp-float svg {
