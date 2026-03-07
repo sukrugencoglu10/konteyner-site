@@ -54,25 +54,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ── ESSENTIAL UI: Form dynamic fields ──
-    const productCategory      = document.getElementById('productCategory');
-    const cargoContainerOptions= document.getElementById('cargo-container-options');
     const cargoType            = document.getElementById('cargoType');
     const quantityOptions      = document.getElementById('quantity-options');
     const containerQuantity    = document.getElementById('containerQuantity');
     const highTicketForm       = document.getElementById('pekconHighTicketForm');
 
-    if (productCategory && cargoContainerOptions && cargoType) {
-        productCategory.addEventListener('change', function() {
-            const isStandart = this.value === 'Standart_Konteyner';
-            cargoContainerOptions.style.display = isStandart ? 'block' : 'none';
-            isStandart ? cargoType.setAttribute('required', 'required') : cargoType.removeAttribute('required');
-            if (!isStandart) cargoType.value = '';
-            if (quantityOptions) quantityOptions.style.display = this.value ? 'block' : 'none';
+    if (cargoType && quantityOptions) {
+        cargoType.addEventListener('change', function() {
+            quantityOptions.style.display = this.value ? 'block' : 'none';
             if (containerQuantity) {
                 this.value ? containerQuantity.setAttribute('required', 'required') : containerQuantity.removeAttribute('required');
                 if (!this.value) containerQuantity.value = '';
             }
-            sendDataToDashboard('form', 'Ürün: ' + this.options[this.selectedIndex].text, 'seçildi');
+            sendDataToDashboard('form', 'Konteyner: ' + this.options[this.selectedIndex].text, 'seçildi');
         });
     }
 
@@ -89,13 +83,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const email       = document.getElementById('userEmail')?.value || '';
             const phone       = document.getElementById('userPhone')?.value || '';
             const transaction = document.getElementById('transactionType')?.value || '';
-            const cat         = document.getElementById('productCategory')?.value || '';
             const cargoDetail = document.getElementById('cargoType')?.value || '';
             if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = t.sending; }
             (window.dataLayer = window.dataLayer || []).push({
                 event: 'lead_form_submit',
                 user_data: { email, phone_number: phone },
-                lead_details: { transaction_type: transaction, product_category: cat, cargo_type_detail: cargoDetail },
+                lead_details: { transaction_type: transaction, cargo_type: cargoDetail },
                 value: 1000
             });
             const fd = new FormData(highTicketForm);
