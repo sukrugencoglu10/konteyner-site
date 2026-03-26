@@ -136,7 +136,8 @@
     </button>
     <div id="statusMessage" style="text-align: center; margin-top: 15px; font-weight: 600; color: #fff; min-height: 20px;"></div>
 </form>
-                <!-- Konteyner Önizleme - formun sağında -->
+                </div>
+                <!-- Konteyner Önizleme - formun sağında 3. kolon -->
                 <div id="container-preview-box" style="display:none;">
                     <div class="cpb-inner">
                         <div class="cpb-visual">
@@ -164,7 +165,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
         </div>
@@ -624,10 +624,16 @@
         const specWeight    = document.getElementById('spec-weight');
         const specPallets   = document.getElementById('spec-pallets');
         const heroWrapper   = document.querySelector('.hero-wrapper');
+        const heroSection   = document.querySelector('section.hero');
 
         function showPreview(key) {
             const cfg   = containerConfig[key];
-            if (!cfg) { previewBox.style.display = 'none'; heroWrapper.classList.remove('has-preview'); return; }
+            if (!cfg) {
+                previewBox.style.display = 'none';
+                heroWrapper.classList.remove('has-preview');
+                heroSection?.classList.remove('has-preview');
+                return;
+            }
             const specs = containerSpecs[cfg.specsKey] || {};
 
             // CSS sınıfını güncelle
@@ -643,6 +649,7 @@
 
             // Göster + animasyon yenile
             heroWrapper.classList.add('has-preview');
+            heroSection?.classList.add('has-preview');
             previewBox.style.display   = 'block';
             previewBox.style.animation = 'none';
             previewBox.offsetHeight;

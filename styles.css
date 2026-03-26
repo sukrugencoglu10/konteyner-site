@@ -283,22 +283,15 @@ body {
     transition: grid-template-columns 0.35s ease;
 }
 
-.hero-wrapper.has-preview .hero-form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1.5rem;
+/* Hero container tam genişliğe geçer, 3 kolon için yer açılır */
+section.hero.has-preview .container {
+    max-width: none;
+    padding: 0 1.5rem;
 }
 
-.hero-wrapper.has-preview .contact-form {
-    flex: 1;
-    min-width: 0;
-}
-
-.hero-wrapper.has-preview #container-preview-box {
-    flex: 0 0 220px;
-    width: 220px;
-    margin-bottom: 0;
+.hero-wrapper.has-preview {
+    grid-template-columns: 2.5fr 1fr 1fr;
+    gap: 0.75rem;
 }
 
 .hero-image {
@@ -319,6 +312,7 @@ body {
     position: relative;
     text-align: left;
     max-width: 100%;
+    min-width: 0;
 }
 
 .hero-title {
@@ -1350,20 +1344,23 @@ body {
         width: 100%;
     }
 
-    /* Mobilde has-preview: form dikey, preview üstte */
-    .hero-wrapper.has-preview .hero-form {
-        flex-direction: column;
+    /* Mobilde has-preview: tek kolon */
+    .hero-wrapper.has-preview {
+        grid-template-columns: 1fr;
     }
 
-    .hero-wrapper.has-preview .contact-form {
+    section.hero.has-preview .container {
+        max-width: none;
+        padding: 0 1rem;
+    }
+
+    #container-preview-box {
         order: 2;
         width: 100%;
     }
 
-    .hero-wrapper.has-preview #container-preview-box {
-        order: 1;
-        width: 100%;
-        flex: unset;
+    .hero-form {
+        order: 3;
     }
 
     .hero-form-header {
