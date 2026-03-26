@@ -716,6 +716,7 @@ body {
     margin-bottom: 0;
     color: #1e3a8a;
     text-align: center;
+    white-space: nowrap;
 }
 
 .hero-form-header p {
@@ -1050,6 +1051,10 @@ body {
 
     .hero-form-header {
         text-align: center;
+    }
+
+    .hero-form-header h3 {
+        font-size: 1.35rem;
     }
 
     .hero-title {
