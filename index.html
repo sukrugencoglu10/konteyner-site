@@ -103,13 +103,12 @@
 
     <div class="form-group">
         <select id="productCategory" name="productCategory" required title="Konteyner Tipi" style="background:#fff;">
-            <option value="" disabled selected>İhtiyacınız Olan Yapı...</option>
-            <option value="Standart_Konteyner">Standart Yük Konteyner</option>
-            <option value="Birlesimli_Ofis">Birleşimli / Ofis Konteyner</option>
-            <option value="Demonte_Flatpack">Demonte (Flatpack) Konteyner</option>
-            <option value="Metropol_Kabin">Metropol / Lüks Kabin</option>
-            <option value="WC_Dus_Konteyner">WC / Duş Konteyneri</option>
-            <option value="Ozel_Uretim">Özel Üretim / Proje Bazlı</option>
+            <option value="" disabled selected>Konteyner Tipi...</option>
+            <option value="Standart_Konteyner">Standart Yük Konteyneri</option>
+            <option value="Reefer_Konteyner">Reefer Konteyneri</option>
+            <option value="Flat_Rack_Konteyner">Flat Rack Konteyneri</option>
+            <option value="Open_Top_Konteyner">Open Top Konteyneri</option>
+            <option value="Ozel_Uretim">Özel Üretim</option>
         </select>
     </div>
 
@@ -530,7 +529,7 @@
 
     if (productCategorySelect && cargoContainerOptions) {
         productCategorySelect.addEventListener('change', function() {
-            if (this.value === 'Standart_Konteyner') {
+            if (this.value === 'Standart_Konteyner' || this.value === 'Reefer_Konteyner' || this.value === 'Flat_Rack_Konteyner' || this.value === 'Open_Top_Konteyner') {
                 cargoContainerOptions.style.display = 'block';
                 cargoTypeSelect.setAttribute('required', 'required');
             } else {
