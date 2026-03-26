@@ -195,15 +195,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('🔥 HOT LEAD:', productTitle);
                 sendDataToDashboard('product', productTitle, '🔥 HOT LEAD', { dwell_time: 10, lead_quality: 'hot' });
 
-                // Google Ads Yumuşak Dönüşüm (Soft Conversion)
-                // GTM'de "hot_lead" event'i için ayrı bir Google Ads dönüşümü tanımla
+                // 1️⃣ GTM dataLayer push (GTM tetikleyicisi için)
                 window.dataLayer.push({
                     'event': 'hot_lead',
                     'product_name': productTitle,
                     'lead_quality': 'hot',
-                    'dwell_seconds': 10
+                    'dwell_seconds': 10,
+                    'gclid': localStorage.getItem('gclid') || ''
                 });
-                console.log('📡 Soft Conversion gönderildi:', productTitle);
+
+                // 2️⃣ GA4'e doğrudan soft conversion eventi
+                // GA4 → Conversions ekranında 'hot_lead' eventi dönüşüm olarak işaretle
+                if (typeof gtag === 'function') {
+                    gtag('event', 'hot_lead', {
+                        'product_name': productTitle,
+                        'lead_quality': 'hot',
+                        'dwell_seconds': 10,
+                        'value': 50,       // Yumuşak dönüşüm değeri (TL)
+                        'currency': 'TRY'
+                    });
+                }
+
+                console.log('📡 Hot Lead Soft Conversion → GA4 + GTM gönderildi:', productTitle);
             }, HOT_LEAD_THRESHOLD);
         });
 
