@@ -282,7 +282,7 @@ body {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 580px 350px 1fr;
+    grid-template-columns: 1fr 400px 400px;
     gap: 0.75rem;
     align-items: center;
     width: 100%;
