@@ -93,38 +93,6 @@
         <p style="font-size: 0.9rem; color: #eee; margin-top:5px; opacity: 0.8;">Endüstriyel Çözümler</p>
     </div>
 
-    <!-- Konteyner Görsel Önizleme -->
-    <div id="container-preview-box" style="display:none;">
-        <div class="cpb-inner">
-            <!-- Sol: CSS animasyonlu çizim -->
-            <div class="cpb-visual">
-                <div id="container-drawing">
-                    <div class="ctr-body">
-                        <div class="ctr-ribs"></div>
-                        <div class="ctr-door"></div>
-                        <div class="ctr-icon"></div>
-                    </div>
-                </div>
-                <div id="container-preview-label"></div>
-            </div>
-            <!-- Sağ: Teknik bilgi kutusu -->
-            <div class="cpb-specs">
-                <div class="spec-item">
-                    <span class="spec-icon">📐</span>
-                    <div><small>İç Ebat</small><strong id="spec-dims">-</strong></div>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-icon">⚖️</span>
-                    <div><small>Max Yük</small><strong id="spec-weight">-</strong></div>
-                </div>
-                <div class="spec-item">
-                    <span class="spec-icon">📦</span>
-                    <div><small>Max Palet</small><strong id="spec-pallets">-</strong></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="form-group">
         <select id="transactionType" name="transactionType" required title="İşlem Türü" style="background:#fff;">
             <option value="" disabled selected>İşlem Türü Seçiniz...</option>
@@ -168,6 +136,35 @@
     </button>
     <div id="statusMessage" style="text-align: center; margin-top: 15px; font-weight: 600; color: #fff; min-height: 20px;"></div>
 </form>
+                </div>
+                <!-- Konteyner Önizleme - formun sağında 3. kolon -->
+                <div id="container-preview-box" style="display:none;">
+                    <div class="cpb-inner">
+                        <div class="cpb-visual">
+                            <div id="container-drawing">
+                                <div class="ctr-body">
+                                    <div class="ctr-ribs"></div>
+                                    <div class="ctr-door"></div>
+                                    <div class="ctr-icon"></div>
+                                </div>
+                            </div>
+                            <div id="container-preview-label"></div>
+                        </div>
+                        <div class="cpb-specs">
+                            <div class="spec-item">
+                                <span class="spec-icon">📐</span>
+                                <div><small>İç Ebat</small><strong id="spec-dims">-</strong></div>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-icon">⚖️</span>
+                                <div><small>Max Yük</small><strong id="spec-weight">-</strong></div>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-icon">📦</span>
+                                <div><small>Max Palet</small><strong id="spec-pallets">-</strong></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -626,10 +623,11 @@
         const specDims      = document.getElementById('spec-dims');
         const specWeight    = document.getElementById('spec-weight');
         const specPallets   = document.getElementById('spec-pallets');
+        const heroWrapper   = document.querySelector('.hero-wrapper');
 
         function showPreview(key) {
             const cfg   = containerConfig[key];
-            if (!cfg) { previewBox.style.display = 'none'; return; }
+            if (!cfg) { previewBox.style.display = 'none'; heroWrapper.classList.remove('has-preview'); return; }
             const specs = containerSpecs[cfg.specsKey] || {};
 
             // CSS sınıfını güncelle
@@ -644,6 +642,7 @@
             specPallets.textContent = specs.pallets || '-';
 
             // Göster + animasyon yenile
+            heroWrapper.classList.add('has-preview');
             previewBox.style.display   = 'block';
             previewBox.style.animation = 'none';
             previewBox.offsetHeight;
