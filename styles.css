@@ -723,8 +723,8 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255,255,255,0.28);
-    border-radius: 16px;
-    padding: 20px 16px;
+    border-radius: 20px;
+    padding: 25px 20px;
     animation: previewFadeIn 0.4s ease;
     align-self: center;
 }
@@ -751,15 +751,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 110px;
+    height: 138px;
 }
 
 #container-preview-label {
     text-align: center;
-    font-size: 0.72rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: #fff;
-    padding: 8px 0 0;
+    padding: 10px 0 0;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     text-shadow: 0 1px 3px rgba(0,0,0,0.4);
@@ -795,14 +795,14 @@ body {
 }
 
 .spec-item small {
-    font-size: 0.63rem;
+    font-size: 0.79rem;
     color: rgba(255,255,255,0.65);
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
 
 .spec-item strong {
-    font-size: 0.82rem;
+    font-size: 1.0rem;
     color: #fff;
     font-weight: 700;
     text-shadow: 0 1px 2px rgba(0,0,0,0.3);
@@ -815,7 +815,7 @@ body {
 /* Ortak gövde */
 .ctr-body {
     position: relative;
-    height: 56px;
+    height: 70px;
     border-radius: 3px 3px 3px 3px;
     border: 2px solid rgba(0,0,0,0.25);
     overflow: visible;
@@ -870,14 +870,14 @@ body {
 /* ── Standart DC (mavi) ── */
 #container-drawing.ctr-dc .ctr-body,
 #container-drawing.ctr-dc-40 .ctr-body { background: #4a7ab5; }
-#container-drawing.ctr-dc .ctr-body    { width: 120px; }
-#container-drawing.ctr-dc-40 .ctr-body { width: 160px; }
+#container-drawing.ctr-dc .ctr-body    { width: 150px; }
+#container-drawing.ctr-dc-40 .ctr-body { width: 200px; }
 
 /* ── High Cube HC (koyu mavi, daha uzun) ── */
 #container-drawing.ctr-hc .ctr-body,
-#container-drawing.ctr-hc-45 .ctr-body { background: #2563eb; height: 68px; }
-#container-drawing.ctr-hc .ctr-body    { width: 160px; }
-#container-drawing.ctr-hc-45 .ctr-body { width: 185px; }
+#container-drawing.ctr-hc-45 .ctr-body { background: #2563eb; height: 85px; }
+#container-drawing.ctr-hc .ctr-body    { width: 200px; }
+#container-drawing.ctr-hc-45 .ctr-body { width: 231px; }
 
 /* ── Reefer (buz mavisi) ── */
 #container-drawing.ctr-rf .ctr-body,
@@ -886,8 +886,8 @@ body {
     border-color: #3b82f6;
     animation: ctr-float 3s ease-in-out infinite, ctr-freeze 2.5s ease-in-out infinite;
 }
-#container-drawing.ctr-rf .ctr-body    { width: 110px; }
-#container-drawing.ctr-rf-40 .ctr-body { width: 155px; }
+#container-drawing.ctr-rf .ctr-body    { width: 138px; }
+#container-drawing.ctr-rf-40 .ctr-body { width: 194px; }
 /* Cooling ünit */
 #container-drawing.ctr-rf .ctr-body::before,
 #container-drawing.ctr-rf-40 .ctr-body::before {
@@ -909,8 +909,8 @@ body {
     border-color: transparent;
     animation: ctr-float 3s ease-in-out infinite;
 }
-#container-drawing.ctr-fr .ctr-body    { width: 130px; }
-#container-drawing.ctr-fr-40 .ctr-body { width: 175px; }
+#container-drawing.ctr-fr .ctr-body    { width: 163px; }
+#container-drawing.ctr-fr-40 .ctr-body { width: 219px; }
 /* Platform tabanı */
 #container-drawing.ctr-fr .ctr-body::after,
 #container-drawing.ctr-fr-40 .ctr-body::after {
@@ -956,12 +956,12 @@ body {
     border-top: 2px dashed rgba(255,255,255,0.5);
     animation: ctr-float 3s ease-in-out infinite, ctr-wave 4s ease-in-out infinite;
 }
-#container-drawing.ctr-ot .ctr-body    { width: 120px; }
-#container-drawing.ctr-ot-40 .ctr-body { width: 160px; }
+#container-drawing.ctr-ot .ctr-body    { width: 150px; }
+#container-drawing.ctr-ot-40 .ctr-body { width: 200px; }
 
 /* ── Özel Üretim (mor, shimmer) ── */
 #container-drawing.ctr-custom .ctr-body {
-    width: 130px;
+    width: 163px;
     background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #7c3aed 100%);
     background-size: 200% 100%;
     animation: ctr-float 3s ease-in-out infinite, ctr-shine 2.5s linear infinite;
@@ -1321,7 +1321,7 @@ body {
     }
 
     #container-preview-box {
-        order: 3;
+        order: 2;
     }
 
     .hero-image {
@@ -1335,7 +1335,7 @@ body {
     }
 
     .hero-form {
-        order: 2;
+        order: 3;
         width: 100%;
     }
 
