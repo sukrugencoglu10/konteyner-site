@@ -39,24 +39,26 @@ body {
     z-index: 1001;
     background: #1e3a5f;
     color: #cbd5e1;
-    font-size: 0.8rem;
-    height: 36px;
+    font-size: 0.9rem;
+    height: 40px;
 }
 
 .top-bar-inner {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    gap: 2rem;
+    justify-content: center;
+    gap: 3rem;
     height: 100%;
 }
 
 .top-bar-item {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    color: #cbd5e1;
+    gap: 0.5rem;
+    color: #e2e8f0;
     text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
     transition: color 0.2s;
     white-space: nowrap;
 }
@@ -74,7 +76,7 @@ body {
 /* Navigation */
 .navbar {
     position: fixed;
-    top: 36px;
+    top: 40px;
     left: 0;
     right: 0;
     background: rgba(255, 255, 255, 0.95);
