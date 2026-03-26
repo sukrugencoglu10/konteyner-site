@@ -1427,7 +1427,7 @@ html {
     /* Ana Taşıyıcıyı Esnek Yap */
     .hero {
         height: auto !important;
-        padding-top: 140px !important; /* 32px top-bar + 70px navbar + buffer */
+        padding-top: 220px !important; /* 32px top-bar + ~150px navbar + 38px boşluk */
         padding-bottom: 50px !important;
         background-attachment: scroll !important; /* Arka planı sabitleme */
     }
