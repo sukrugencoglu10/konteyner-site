@@ -113,14 +113,8 @@
     </div>
 
     <div class="form-group" id="cargo-container-options" style="display: none;">
-        <select id="cargoType" name="cargoType" title="Yük Konteyner Tipi" style="background:#fff;">
-            <option value="" disabled selected>Yük Konteyner Tipi Seçin...</option>
-            <option value="20DC">20 DC (Dry Container)</option>
-            <option value="40DC">40 DC (Dry Container)</option>
-            <option value="40HC">40 HC (High Cube)</option>
-            <option value="45HC">45 HC (High Cube)</option>
-            <option value="20OT">20 OT (Open Top)</option>
-            <option value="40OT">40 OT (Open Top)</option>
+        <select id="cargoType" name="cargoType" title="Konteyner Tipi" style="background:#fff;">
+            <option value="" disabled selected>Tip Seçin...</option>
         </select>
     </div>
 
@@ -527,11 +521,48 @@
     const cargoContainerOptions = document.getElementById('cargo-container-options');
     const cargoTypeSelect = document.getElementById('cargoType');
 
+    const cargoOptions = {
+        'Standart_Konteyner': {
+            placeholder: 'Standart Yük Konteyner Boyutu Seçin...',
+            options: [
+                { value: '20DC', text: "20' DC (Dry Container)" },
+                { value: '40DC', text: "40' DC (Dry Container)" },
+                { value: '40HC', text: "40' HC (High Cube)" },
+                { value: '45HC', text: "45' HC (High Cube)" }
+            ]
+        },
+        'Reefer_Konteyner': {
+            placeholder: 'Reefer Konteyner Boyutu Seçin...',
+            options: [
+                { value: '20RF', text: "20' RF (Reefer)" },
+                { value: '40RF', text: "40' RF (Reefer High Cube)" }
+            ]
+        },
+        'Flat_Rack_Konteyner': {
+            placeholder: 'Flat Rack Boyutu Seçin...',
+            options: [
+                { value: '20FR', text: "20' FR (Flat Rack)" },
+                { value: '40FR', text: "40' FR (Flat Rack)" }
+            ]
+        },
+        'Open_Top_Konteyner': {
+            placeholder: 'Open Top Boyutu Seçin...',
+            options: [
+                { value: '20OT', text: "20' OT (Open Top)" },
+                { value: '40OT', text: "40' OT (Open Top)" }
+            ]
+        }
+    };
+
     if (productCategorySelect && cargoContainerOptions) {
         productCategorySelect.addEventListener('change', function() {
-            if (this.value === 'Standart_Konteyner' || this.value === 'Reefer_Konteyner' || this.value === 'Flat_Rack_Konteyner' || this.value === 'Open_Top_Konteyner') {
+            const config = cargoOptions[this.value];
+            if (config) {
+                cargoTypeSelect.innerHTML = `<option value="" disabled selected>${config.placeholder}</option>` +
+                    config.options.map(o => `<option value="${o.value}">${o.text}</option>`).join('');
                 cargoContainerOptions.style.display = 'block';
                 cargoTypeSelect.setAttribute('required', 'required');
+                cargoTypeSelect.value = '';
             } else {
                 cargoContainerOptions.style.display = 'none';
                 cargoTypeSelect.removeAttribute('required');
