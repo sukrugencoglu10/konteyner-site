@@ -293,6 +293,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
+    // 📱 MOBİL HOT LEAD - 3x Görüntüleme
+    // Kullanıcı bir ürün kartını 3 kez görünüme getirirse = yüksek niyet
+    // ==========================================
+    const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+    if (isTouchDevice && 'IntersectionObserver' in window) {
+        const viewCounts = {};
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+
+                const card = entry.target;
+                const cardId = card.dataset.mobileId;
+                const productTitle = card.querySelector('h3')?.textContent?.trim() || 'Ürün';
+
+                viewCounts[cardId] = (viewCounts[cardId] || 0) + 1;
+
+                if (viewCounts[cardId] === 3) {
+                    console.log('📱🔥 MOBİL HOT LEAD (3x görüntüleme):', productTitle);
+
+                    sendDataToDashboard('product', productTitle, '🔥 HOT LEAD (Mobil)', {
+                        view_count: 3,
+                        lead_quality: 'hot',
+                        trigger: 'mobile_3x_view'
+                    });
+
+                    window.dataLayer = window.dataLayer || [];
+                    window.dataLayer.push({
+                        'event': 'hot_lead',
+                        'product_name': productTitle,
+                        'lead_quality': 'hot',
+                        'trigger': 'mobile_3x_view',
+                        'gclid': localStorage.getItem('gclid') || ''
+                    });
+
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'hot_lead', {
+                            'product_name': productTitle,
+                            'lead_quality': 'hot',
+                            'trigger': 'mobile_3x_view',
+                            'value': 50,
+                            'currency': 'TRY'
+                        });
+                    }
+                }
+            });
+        }, { threshold: 0.6 }); // Kartın %60'ı ekranda olduğunda say
+
+        productCards.forEach((card, index) => {
+            card.dataset.mobileId = `mobile_card_${index}`;
+            cardObserver.observe(card);
+        });
+
+        console.log(`✅ Mobil Hot Lead tracking aktif (${productCards.length} kart izleniyor)`);
+    }
+
+    // ==========================================
     // 🌐 SOSYAL MEDYA TRACKING
     // ==========================================
     const socialLinks = document.querySelectorAll('.social-link');
