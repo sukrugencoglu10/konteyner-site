@@ -282,10 +282,16 @@ body {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 2.5fr 1fr 1fr;
-    gap: 0.75rem;
+    grid-template-columns: 663px 1fr;
+    gap: 1.5rem;
     align-items: center;
     width: 100%;
+}
+
+/* Preview açılınca form sağa pay bırakır, sol kolon DEĞİŞMEZ */
+.hero-wrapper.has-preview {
+    grid-template-columns: 663px 1fr 1fr;
+    gap: 0.75rem;
 }
 
 .hero-image {
@@ -1312,7 +1318,8 @@ body {
         right: -10px;
     }
 
-    .hero-wrapper {
+    .hero-wrapper,
+    .hero-wrapper.has-preview {
         grid-template-columns: 1fr;
         gap: 3rem;
         text-align: center;
