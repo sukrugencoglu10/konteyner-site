@@ -317,6 +317,7 @@ body {
     animation: fadeInUp 0.8s ease;
     max-width: 100%;
     width: 100%;
+    text-transform: capitalize;
 }
 
 .hero-subtitle {
