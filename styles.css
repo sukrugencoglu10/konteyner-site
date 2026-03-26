@@ -46,6 +46,7 @@ body {
 .top-bar-inner {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 2rem;
     height: 100%;
 }
