@@ -95,8 +95,34 @@
 
     <!-- Konteyner Görsel Önizleme -->
     <div id="container-preview-box" style="display:none;">
-        <img id="container-preview-img" src="" alt="Konteyner Görseli">
-        <div id="container-preview-label"></div>
+        <div class="cpb-inner">
+            <!-- Sol: CSS animasyonlu çizim -->
+            <div class="cpb-visual">
+                <div id="container-drawing">
+                    <div class="ctr-body">
+                        <div class="ctr-ribs"></div>
+                        <div class="ctr-door"></div>
+                        <div class="ctr-icon"></div>
+                    </div>
+                </div>
+                <div id="container-preview-label"></div>
+            </div>
+            <!-- Sağ: Teknik bilgi kutusu -->
+            <div class="cpb-specs">
+                <div class="spec-item">
+                    <span class="spec-icon">📐</span>
+                    <div><small>İç Ebat</small><strong id="spec-dims">-</strong></div>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-icon">⚖️</span>
+                    <div><small>Max Yük</small><strong id="spec-weight">-</strong></div>
+                </div>
+                <div class="spec-item">
+                    <span class="spec-icon">📦</span>
+                    <div><small>Max Palet</small><strong id="spec-pallets">-</strong></div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
@@ -561,41 +587,66 @@
     };
 
     if (productCategorySelect && cargoContainerOptions) {
-        // Görsel önizleme haritası
-        const previewImages = {
-            // Konteyner tipi → varsayılan görsel
-            'Standart_Konteyner': { src: 'images/20-dc.webp',  label: 'Standart Yük Konteyneri' },
-            'Reefer_Konteyner':   { src: 'images/40-hc.webp',  label: 'Reefer Konteyneri' },       // ⚠️ Reefer görseli eklenince güncelle
-            'Flat_Rack_Konteyner':{ src: 'images/40-dc.webp',  label: 'Flat Rack Konteyneri' },    // ⚠️ Flat Rack görseli eklenince güncelle
-            'Open_Top_Konteyner': { src: 'images/40-hc.webp',  label: 'Open Top Konteyneri' },     // ⚠️ Open Top görseli eklenince güncelle
-            'Ozel_Uretim':        { src: 'images/anasayfa.webp', label: 'Özel Üretim / Proje Bazlı' },
-            // Boyut seçimi → spesifik görsel
-            '20DC': { src: 'images/20-dc.webp', label: "20' DC Dry Container" },
-            '40DC': { src: 'images/40-dc.webp', label: "40' DC Dry Container" },
-            '40HC': { src: 'images/40-hc.webp', label: "40' HC High Cube" },
-            '45HC': { src: 'images/40-hc.webp', label: "45' HC High Cube" },
-            '20RF': { src: 'images/20-dc.webp', label: "20' RF Reefer" },
-            '40RF': { src: 'images/40-hc.webp', label: "40' RF Reefer High Cube" },
-            '20FR': { src: 'images/20-dc.webp', label: "20' FR Flat Rack" },
-            '40FR': { src: 'images/40-dc.webp', label: "40' FR Flat Rack" },
-            '20OT': { src: 'images/20-dc.webp', label: "20' OT Open Top" },
-            '40OT': { src: 'images/40-dc.webp', label: "40' OT Open Top" },
+        // Konteyner konfigürasyonu: CSS sınıfı + etiket + teknik specs
+        const containerConfig = {
+            'Standart_Konteyner': { css: 'ctr-dc',     label: 'Standart Yük Konteyneri',  specsKey: '20DC' },
+            'Reefer_Konteyner':   { css: 'ctr-rf',     label: 'Reefer Konteyneri',         specsKey: '20RF' },
+            'Flat_Rack_Konteyner':{ css: 'ctr-fr',     label: 'Flat Rack Konteyneri',      specsKey: '20FR' },
+            'Open_Top_Konteyner': { css: 'ctr-ot',     label: 'Open Top Konteyneri',       specsKey: '20OT' },
+            'Ozel_Uretim':        { css: 'ctr-custom', label: 'Özel Üretim / Proje Bazlı', specsKey: 'Ozel_Uretim' },
+            '20DC': { css: 'ctr-dc',     label: "20' DC Dry Container",   specsKey: '20DC' },
+            '40DC': { css: 'ctr-dc-40',  label: "40' DC Dry Container",   specsKey: '40DC' },
+            '40HC': { css: 'ctr-hc',     label: "40' HC High Cube",       specsKey: '40HC' },
+            '45HC': { css: 'ctr-hc-45',  label: "45' HC High Cube",       specsKey: '45HC' },
+            '20RF': { css: 'ctr-rf',     label: "20' RF Reefer",          specsKey: '20RF' },
+            '40RF': { css: 'ctr-rf-40',  label: "40' RF Reefer High Cube",specsKey: '40RF' },
+            '20FR': { css: 'ctr-fr',     label: "20' FR Flat Rack",       specsKey: '20FR' },
+            '40FR': { css: 'ctr-fr-40',  label: "40' FR Flat Rack",       specsKey: '40FR' },
+            '20OT': { css: 'ctr-ot',     label: "20' OT Open Top",        specsKey: '20OT' },
+            '40OT': { css: 'ctr-ot-40',  label: "40' OT Open Top",        specsKey: '40OT' },
         };
 
-        const previewBox   = document.getElementById('container-preview-box');
-        const previewImg   = document.getElementById('container-preview-img');
-        const previewLabel = document.getElementById('container-preview-label');
+        const containerSpecs = {
+            '20DC':         { dims: '5.9 × 2.35 × 2.39m',      weight: '21,700 kg', pallets: '11 Euro' },
+            '40DC':         { dims: '12.0 × 2.35 × 2.39m',     weight: '26,500 kg', pallets: '23 Euro' },
+            '40HC':         { dims: '12.0 × 2.35 × 2.70m',     weight: '26,500 kg', pallets: '23 Euro' },
+            '45HC':         { dims: '13.6 × 2.35 × 2.70m',     weight: '27,600 kg', pallets: '27 Euro' },
+            '20RF':         { dims: '5.4 × 2.27 × 2.23m',      weight: '27,400 kg', pallets: '9 Euro' },
+            '40RF':         { dims: '11.6 × 2.29 × 2.55m',     weight: '29,000 kg', pallets: '20 Euro' },
+            '20FR':         { dims: '6.0 × 2.44m (platform)',   weight: '28,000 kg', pallets: 'Açık yük' },
+            '40FR':         { dims: '12.1 × 2.44m (platform)',  weight: '40,000 kg', pallets: 'Açık yük' },
+            '20OT':         { dims: '5.9 × 2.35 × 2.36m',      weight: '22,100 kg', pallets: '11 Euro' },
+            '40OT':         { dims: '12.0 × 2.35 × 2.35m',     weight: '26,500 kg', pallets: '23 Euro' },
+            'Ozel_Uretim':  { dims: 'Projeye göre',             weight: 'Projeye göre', pallets: 'Projeye göre' },
+        };
+
+        const previewBox    = document.getElementById('container-preview-box');
+        const drawing       = document.getElementById('container-drawing');
+        const previewLabel  = document.getElementById('container-preview-label');
+        const specDims      = document.getElementById('spec-dims');
+        const specWeight    = document.getElementById('spec-weight');
+        const specPallets   = document.getElementById('spec-pallets');
 
         function showPreview(key) {
-            const data = previewImages[key];
-            if (!data) { previewBox.style.display = 'none'; return; }
-            previewImg.src        = data.src;
-            previewImg.alt        = data.label;
-            previewLabel.textContent = data.label;
-            previewBox.style.display  = 'block';
-            // Fade yenile
+            const cfg   = containerConfig[key];
+            if (!cfg) { previewBox.style.display = 'none'; return; }
+            const specs = containerSpecs[cfg.specsKey] || {};
+
+            // CSS sınıfını güncelle
+            drawing.className = cfg.css;
+
+            // Etiket
+            previewLabel.textContent = cfg.label;
+
+            // Specs
+            specDims.textContent    = specs.dims    || '-';
+            specWeight.textContent  = specs.weight  || '-';
+            specPallets.textContent = specs.pallets || '-';
+
+            // Göster + animasyon yenile
+            previewBox.style.display   = 'block';
             previewBox.style.animation = 'none';
-            previewBox.offsetHeight;   // reflow
+            previewBox.offsetHeight;
             previewBox.style.animation = 'previewFadeIn 0.4s ease';
         }
 

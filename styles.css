@@ -710,31 +710,277 @@ body {
     padding: 0;
 }
 
-/* Konteyner Görsel Önizleme */
+/* =============================================
+   KONTEYNER ÖNIZLEME KUTUSU
+   ============================================= */
 #container-preview-box {
     margin-bottom: 1rem;
     border-radius: 10px;
-    overflow: hidden;
-    animation: previewFadeIn 0.4s ease;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.15);
+    animation: previewFadeIn 0.4s ease;
+    overflow: hidden;
 }
 
-#container-preview-img {
+.cpb-inner {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+
+/* Sol: çizim alanı */
+.cpb-visual {
+    flex: 1.1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 10px 8px;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+#container-drawing {
     width: 100%;
-    height: 140px;
-    object-fit: cover;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
 }
 
 #container-preview-label {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 600;
     color: #e2e8f0;
-    padding: 6px 0 8px;
-    letter-spacing: 0.04em;
+    padding: 5px 0 0;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
+}
+
+/* Sağ: specs */
+.cpb-specs {
+    flex: 0.9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 12px;
+}
+
+.spec-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.spec-icon {
+    font-size: 1rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.spec-item div {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.spec-item small {
+    font-size: 0.65rem;
+    color: rgba(226,232,240,0.65);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.spec-item strong {
+    font-size: 0.78rem;
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+/* Mobilde alt alta */
+@media (max-width: 480px) {
+    .cpb-inner { flex-direction: column; }
+    .cpb-visual { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+}
+
+/* =============================================
+   CSS KONTEYNER ÇİZİMLERİ
+   ============================================= */
+
+/* Ortak gövde */
+.ctr-body {
+    position: relative;
+    height: 56px;
+    border-radius: 3px 3px 3px 3px;
+    border: 2px solid rgba(0,0,0,0.25);
+    overflow: visible;
+    animation: ctr-float 3s ease-in-out infinite;
+}
+
+/* Ribler (yatay çizgiler) */
+.ctr-ribs {
+    position: absolute;
+    inset: 4px 28px 4px 4px;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.08) 0px, rgba(0,0,0,0.08) 1px,
+        transparent 1px, transparent 8px
+    );
+}
+
+/* Kapı */
+.ctr-door {
+    position: absolute;
+    right: 2px;
+    top: 3px;
+    bottom: 3px;
+    width: 24px;
+    border-left: 2px solid rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.08);
+    border-radius: 0 2px 2px 0;
+}
+.ctr-door::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 12px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 2px;
+}
+
+/* İkon alanı */
+.ctr-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.1rem;
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* ── Standart DC (mavi) ── */
+#container-drawing.ctr-dc .ctr-body,
+#container-drawing.ctr-dc-40 .ctr-body { background: #4a7ab5; }
+#container-drawing.ctr-dc .ctr-body    { width: 120px; }
+#container-drawing.ctr-dc-40 .ctr-body { width: 160px; }
+
+/* ── High Cube HC (koyu mavi, daha uzun) ── */
+#container-drawing.ctr-hc .ctr-body,
+#container-drawing.ctr-hc-45 .ctr-body { background: #2563eb; height: 68px; }
+#container-drawing.ctr-hc .ctr-body    { width: 160px; }
+#container-drawing.ctr-hc-45 .ctr-body { width: 185px; }
+
+/* ── Reefer (buz mavisi) ── */
+#container-drawing.ctr-rf .ctr-body,
+#container-drawing.ctr-rf-40 .ctr-body {
+    background: #bfdbfe;
+    border-color: #3b82f6;
+    animation: ctr-float 3s ease-in-out infinite, ctr-freeze 2.5s ease-in-out infinite;
+}
+#container-drawing.ctr-rf .ctr-body    { width: 110px; }
+#container-drawing.ctr-rf-40 .ctr-body { width: 155px; }
+/* Cooling ünit */
+#container-drawing.ctr-rf .ctr-body::before,
+#container-drawing.ctr-rf-40 .ctr-body::before {
+    content: '';
+    position: absolute;
+    left: -10px;
+    top: 8px;
+    bottom: 8px;
+    width: 10px;
+    background: #93c5fd;
+    border: 1px solid #3b82f6;
+    border-radius: 2px 0 0 2px;
+}
+
+/* ── Flat Rack (gri-kahve, platform) ── */
+#container-drawing.ctr-fr .ctr-body,
+#container-drawing.ctr-fr-40 .ctr-body {
+    background: transparent;
+    border-color: transparent;
+    animation: ctr-float 3s ease-in-out infinite;
+}
+#container-drawing.ctr-fr .ctr-body    { width: 130px; }
+#container-drawing.ctr-fr-40 .ctr-body { width: 175px; }
+/* Platform tabanı */
+#container-drawing.ctr-fr .ctr-body::after,
+#container-drawing.ctr-fr-40 .ctr-body::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+    height: 14px;
+    background: #78716c;
+    border-radius: 2px;
+    border: 2px solid rgba(0,0,0,0.2);
+}
+/* Sol direk */
+#container-drawing.ctr-fr .ctr-body .ctr-ribs,
+#container-drawing.ctr-fr-40 .ctr-body .ctr-ribs {
+    background: none;
+    left: 4px; right: auto;
+    top: 0; bottom: 14px;
+    width: 8px;
+    border: 2px solid #78716c;
+    border-bottom: none;
+    border-radius: 2px 2px 0 0;
+}
+/* Sağ direk (kapı yeniden kullan) */
+#container-drawing.ctr-fr .ctr-body .ctr-door,
+#container-drawing.ctr-fr-40 .ctr-body .ctr-door {
+    right: 4px; left: auto;
+    top: 0; bottom: 14px;
+    width: 8px;
+    background: none;
+    border: 2px solid #78716c;
+    border-bottom: none;
+    border-left: 2px solid #78716c;
+    border-radius: 2px 2px 0 0;
+}
+#container-drawing.ctr-fr .ctr-body .ctr-door::after,
+#container-drawing.ctr-fr-40 .ctr-body .ctr-door::after { display: none; }
+
+/* ── Open Top (yeşil, üst kesik) ── */
+#container-drawing.ctr-ot .ctr-body,
+#container-drawing.ctr-ot-40 .ctr-body {
+    background: #059669;
+    border-top: 2px dashed rgba(255,255,255,0.5);
+    animation: ctr-float 3s ease-in-out infinite, ctr-wave 4s ease-in-out infinite;
+}
+#container-drawing.ctr-ot .ctr-body    { width: 120px; }
+#container-drawing.ctr-ot-40 .ctr-body { width: 160px; }
+
+/* ── Özel Üretim (mor, shimmer) ── */
+#container-drawing.ctr-custom .ctr-body {
+    width: 130px;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #7c3aed 100%);
+    background-size: 200% 100%;
+    animation: ctr-float 3s ease-in-out infinite, ctr-shine 2.5s linear infinite;
+}
+
+/* =============================================
+   ANIMASYON KEYFRAMES
+   ============================================= */
+@keyframes ctr-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-5px); }
+}
+@keyframes ctr-freeze {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(147,210,255,0.5); }
+    50%       { box-shadow: 0 0 0 10px rgba(147,210,255,0); }
+}
+@keyframes ctr-wave {
+    0%, 100% { clip-path: inset(0 0 0 0 round 3px); }
+    50%       { clip-path: inset(3px 0 0 0 round 3px); }
+}
+@keyframes ctr-shine {
+    0%   { background-position: -100% 0; }
+    100% { background-position: 200% 0; }
 }
 
 @keyframes previewFadeIn {
