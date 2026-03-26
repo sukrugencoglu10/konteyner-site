@@ -272,26 +272,20 @@ body {
     background: rgba(0, 0, 0, 0.3);
 }
 
-.hero-wrapper {
-    position: relative;
-    z-index: 2;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 2.5rem;
-    align-items: center;
-    width: 100%;
-    transition: grid-template-columns 0.35s ease;
-}
-
-/* Hero container tam genişliğe geçer, 3 kolon için yer açılır */
-section.hero.has-preview .container {
+/* Hero container her zaman tam genişlik — sol kolon hiç kaymasın */
+.hero .container {
     max-width: none;
     padding: 0 1.5rem;
 }
 
-.hero-wrapper.has-preview {
+.hero-wrapper {
+    position: relative;
+    z-index: 2;
+    display: grid;
     grid-template-columns: 2.5fr 1fr 1fr;
     gap: 0.75rem;
+    align-items: center;
+    width: 100%;
 }
 
 .hero-image {
@@ -1344,13 +1338,7 @@ section.hero.has-preview .container {
         width: 100%;
     }
 
-    /* Mobilde has-preview: tek kolon */
-    .hero-wrapper.has-preview {
-        grid-template-columns: 1fr;
-    }
-
-    section.hero.has-preview .container {
-        max-width: none;
+    .hero .container {
         padding: 0 1rem;
     }
 
