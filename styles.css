@@ -710,6 +710,38 @@ body {
     padding: 0;
 }
 
+/* Konteyner Görsel Önizleme */
+#container-preview-box {
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: previewFadeIn 0.4s ease;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+#container-preview-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    display: block;
+}
+
+#container-preview-label {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    padding: 6px 0 8px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+@keyframes previewFadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 .hero-form-header h3 {
     font-size: 1.75rem;
     font-weight: 700;

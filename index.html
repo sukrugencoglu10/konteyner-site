@@ -93,6 +93,12 @@
         <p style="font-size: 0.9rem; color: #eee; margin-top:5px; opacity: 0.8;">Endüstriyel Çözümler</p>
     </div>
 
+    <!-- Konteyner Görsel Önizleme -->
+    <div id="container-preview-box" style="display:none;">
+        <img id="container-preview-img" src="" alt="Konteyner Görseli">
+        <div id="container-preview-label"></div>
+    </div>
+
     <div class="form-group">
         <select id="transactionType" name="transactionType" required title="İşlem Türü" style="background:#fff;">
             <option value="" disabled selected>İşlem Türü Seçiniz...</option>
@@ -555,6 +561,44 @@
     };
 
     if (productCategorySelect && cargoContainerOptions) {
+        // Görsel önizleme haritası
+        const previewImages = {
+            // Konteyner tipi → varsayılan görsel
+            'Standart_Konteyner': { src: 'images/20-dc.webp',  label: 'Standart Yük Konteyneri' },
+            'Reefer_Konteyner':   { src: 'images/40-hc.webp',  label: 'Reefer Konteyneri' },       // ⚠️ Reefer görseli eklenince güncelle
+            'Flat_Rack_Konteyner':{ src: 'images/40-dc.webp',  label: 'Flat Rack Konteyneri' },    // ⚠️ Flat Rack görseli eklenince güncelle
+            'Open_Top_Konteyner': { src: 'images/40-hc.webp',  label: 'Open Top Konteyneri' },     // ⚠️ Open Top görseli eklenince güncelle
+            'Ozel_Uretim':        { src: 'images/anasayfa.webp', label: 'Özel Üretim / Proje Bazlı' },
+            // Boyut seçimi → spesifik görsel
+            '20DC': { src: 'images/20-dc.webp', label: "20' DC Dry Container" },
+            '40DC': { src: 'images/40-dc.webp', label: "40' DC Dry Container" },
+            '40HC': { src: 'images/40-hc.webp', label: "40' HC High Cube" },
+            '45HC': { src: 'images/40-hc.webp', label: "45' HC High Cube" },
+            '20RF': { src: 'images/20-dc.webp', label: "20' RF Reefer" },
+            '40RF': { src: 'images/40-hc.webp', label: "40' RF Reefer High Cube" },
+            '20FR': { src: 'images/20-dc.webp', label: "20' FR Flat Rack" },
+            '40FR': { src: 'images/40-dc.webp', label: "40' FR Flat Rack" },
+            '20OT': { src: 'images/20-dc.webp', label: "20' OT Open Top" },
+            '40OT': { src: 'images/40-dc.webp', label: "40' OT Open Top" },
+        };
+
+        const previewBox   = document.getElementById('container-preview-box');
+        const previewImg   = document.getElementById('container-preview-img');
+        const previewLabel = document.getElementById('container-preview-label');
+
+        function showPreview(key) {
+            const data = previewImages[key];
+            if (!data) { previewBox.style.display = 'none'; return; }
+            previewImg.src        = data.src;
+            previewImg.alt        = data.label;
+            previewLabel.textContent = data.label;
+            previewBox.style.display  = 'block';
+            // Fade yenile
+            previewBox.style.animation = 'none';
+            previewBox.offsetHeight;   // reflow
+            previewBox.style.animation = 'previewFadeIn 0.4s ease';
+        }
+
         productCategorySelect.addEventListener('change', function() {
             const config = cargoOptions[this.value];
             if (config) {
@@ -568,6 +612,11 @@
                 cargoTypeSelect.removeAttribute('required');
                 cargoTypeSelect.value = '';
             }
+            showPreview(this.value);
+        });
+
+        cargoTypeSelect.addEventListener('change', function() {
+            if (this.value) showPreview(this.value);
         });
     }
 
