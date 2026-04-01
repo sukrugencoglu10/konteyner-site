@@ -118,6 +118,17 @@
         </select>
     </div>
 
+    <div class="form-group" id="quantity-options" style="display: none;">
+        <select id="containerQuantity" name="containerQuantity" title="Konteyner Adedi" style="background:#fff;">
+            <option value="" disabled selected>Kaç Adet Konteyner?</option>
+            <option value="1">1 Adet</option>
+            <option value="2-5">2 - 5 Adet</option>
+            <option value="6-10">6 - 10 Adet</option>
+            <option value="11-20">11 - 20 Adet</option>
+            <option value="20+">20+ Adet</option>
+        </select>
+    </div>
+
     <div class="form-group">
         <input type="text" id="userName" name="userName" placeholder="Adınız Soyadınız" required>
     </div>
@@ -658,22 +669,46 @@
 
         productCategorySelect.addEventListener('change', function() {
             const config = cargoOptions[this.value];
+            const quantityOptions = document.getElementById('quantity-options');
+            const containerQuantity = document.getElementById('containerQuantity');
+            
             if (config) {
                 cargoTypeSelect.innerHTML = `<option value="" disabled selected>${config.placeholder}</option>` +
                     config.options.map(o => `<option value="${o.value}">${o.text}</option>`).join('');
                 cargoContainerOptions.style.display = 'block';
                 cargoTypeSelect.setAttribute('required', 'required');
                 cargoTypeSelect.value = '';
+                
+                // Tip seçildiğinde Adet de gerekecek ama önce tip seçmesi lazım o yüzden burayı hala kapalı tutalım
+                if (quantityOptions) quantityOptions.style.display = 'none';
             } else {
                 cargoContainerOptions.style.display = 'none';
                 cargoTypeSelect.removeAttribute('required');
                 cargoTypeSelect.value = '';
+                
+                // Özel Üretim veya Seçilmemiş durumu
+                if (this.value === 'Ozel_Uretim') {
+                    if (quantityOptions) {
+                        quantityOptions.style.display = 'block';
+                        containerQuantity?.setAttribute('required', 'required');
+                    }
+                } else {
+                    if (quantityOptions) quantityOptions.style.display = 'none';
+                }
             }
             showPreview(this.value);
         });
 
         cargoTypeSelect.addEventListener('change', function() {
-            if (this.value) showPreview(this.value);
+            if (this.value) {
+                showPreview(this.value);
+                const quantityOptions = document.getElementById('quantity-options');
+                const containerQuantity = document.getElementById('containerQuantity');
+                if (quantityOptions) {
+                    quantityOptions.style.display = 'block';
+                    containerQuantity?.setAttribute('required', 'required');
+                }
+            }
         });
     }
 
@@ -695,6 +730,7 @@
             const category = document.getElementById('productCategory').value;
             // Yük konteyner detayını da al (varsa)
             const cargoDetail = document.getElementById('cargoType') ? document.getElementById('cargoType').value : '';
+            const quantity = document.getElementById('containerQuantity') ? document.getElementById('containerQuantity').value : '';
             
             const name = document.getElementById('userName').value;
             const phone = document.getElementById('userPhone').value;
@@ -724,7 +760,8 @@
                 'lead_details': {
                     'transaction_type': transaction,
                     'product_category': category,
-                    'cargo_type_detail': cargoDetail // Yük konteyner detayı
+                    'cargo_type_detail': cargoDetail, // Yük konteyner detayı
+                    'quantity': quantity
                 },
                 'value': 1000 // Dönüşüm değeri
             });

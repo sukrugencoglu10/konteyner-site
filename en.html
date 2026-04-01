@@ -614,6 +614,72 @@
     </div>
 
 
+    <script>
+        const cargoTypeSelect = document.getElementById('cargoType');
+        const quantityOptions = document.getElementById('quantity-options');
+        const containerQuantity = document.getElementById('containerQuantity');
+
+        if (cargoTypeSelect && quantityOptions) {
+            cargoTypeSelect.addEventListener('change', function() {
+                if (this.value) {
+                    quantityOptions.style.display = 'block';
+                    containerQuantity?.setAttribute('required', 'required');
+                }
+            });
+        }
+
+        // Form Submission logic for English version
+        const highTicketForm = document.getElementById('pekconHighTicketForm');
+        if (highTicketForm) {
+            highTicketForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const submitBtn = highTicketForm.querySelector('button[type="submit"]');
+                const statusMsg = document.getElementById('statusMessage');
+
+                const transaction = document.getElementById('transactionType').value;
+                const cargoDetail = document.getElementById('cargoType').value;
+                const quantity = document.getElementById('containerQuantity').value;
+                const name = document.getElementById('userName').value;
+                const phone = document.getElementById('userPhone').value;
+                const email = document.getElementById('userEmail').value;
+
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = "Sending...";
+
+                // DataLayer push
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'lead_form_submit',
+                    'user_data': { 'email': email, 'phone_number': phone },
+                    'lead_details': {
+                        'transaction_type': transaction,
+                        'cargo_type_detail': cargoDetail,
+                        'quantity': quantity
+                    }
+                });
+
+                const formData = new FormData(highTicketForm);
+                fetch(highTicketForm.action, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(() => {
+                    statusMsg.innerHTML = "✅ We have received your request! Our experts will contact you soon.";
+                    statusMsg.style.color = "#4ade80";
+                    highTicketForm.reset();
+                    quantityOptions.style.display = 'none';
+                    setTimeout(() => { submitBtn.innerHTML = "SEND"; submitBtn.disabled = false; }, 3000);
+                })
+                .catch((error) => {
+                    console.error("Form Error:", error);
+                    statusMsg.innerHTML = "⚠️ An error occurred, please contact us via WhatsApp.";
+                    statusMsg.style.color = "#fb7185";
+                    submitBtn.disabled = false;
+                });
+            });
+        }
+    </script>
     <script src="script.js" defer></script>
 </body>
 

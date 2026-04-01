@@ -239,7 +239,7 @@ body {
 /* Hero Section */
 .hero {
     position: relative;
-    min-height: 100vh;
+    min-height: 105vh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -248,7 +248,8 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     color: white;
-    padding-top: 236px; /* 200 + 36px top-bar */
+    padding-top: 260px; /* 224 + 36px top-bar */
+    padding-bottom: 80px;
     overflow: hidden;
 }
 
@@ -1751,8 +1752,9 @@ html {
     /* Ana Taşıyıcıyı Esnek Yap */
     .hero {
         height: auto !important;
-        padding-top: 220px !important; /* 32px top-bar + ~150px navbar + 38px boşluk */
-        padding-bottom: 50px !important;
+        min-height: 105vh !important;
+        padding-top: 250px !important; /* 32px top-bar + ~150px navbar + Ekstra boşluk */
+        padding-bottom: 100px !important;
         background-attachment: scroll !important; /* Arka planı sabitleme */
     }
 

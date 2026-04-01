@@ -153,6 +153,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const containerQuantity = document.getElementById('containerQuantity');
+    if (containerQuantity) {
+        containerQuantity.addEventListener('change', function() {
+            const selectedText = this.options[this.selectedIndex].text;
+            sendDataToDashboard('form', `Adet: ${selectedText}`, 'seçildi');
+        });
+    }
+
     console.log('✅ Form tracking aktif (ilk 3 seçenek)');
 
     // ==========================================
