@@ -5,7 +5,7 @@
       "has": [
         {
           "type": "host",
-          "value": "(?!www\\.pekcon\\.com).*"
+          "value": "(?!container\\.pekcon\\.com).*"
         }
       ],
       "headers": [
