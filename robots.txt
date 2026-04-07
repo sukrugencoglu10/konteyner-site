@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://container.pekcon.com/sitemap.xml
