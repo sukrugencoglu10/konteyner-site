@@ -10,7 +10,8 @@
       "Read(//c/Program Files/nodejs//**)",
       "Read(//c/Users/sukru/AppData/Roaming/npm//**)",
       "Bash(where npx.cmd)",
-      "Read(//c/Users/sukru/**)"
+      "Read(//c/Users/sukru/**)",
+      "Bash(git add *)"
     ]
   }
 }
