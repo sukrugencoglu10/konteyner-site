@@ -430,15 +430,71 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(`✅ ${socialLinks.length} adet sosyal medya linki tracking aktif`);
 
     // ==========================================
-    // 🖼️ LIGHTBOX TRACKING
+    // 🖼️ LIGHTBOX (ürün resmine tıklayınca büyüt)
     // ==========================================
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxClose = document.querySelector('.lightbox-close');
     const productImages = document.querySelectorAll('.product-img');
+
     productImages.forEach((img, index) => {
         img.addEventListener('click', function() {
             const productTitle = this.alt || `Ürün Görseli ${index + 1}`;
             sendDataToDashboard('product', productTitle, 'lightbox açıldı');
+            if (lightbox && lightboxImg) {
+                lightboxImg.src = this.src;
+                lightboxImg.alt = this.alt || '';
+                lightbox.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
         });
     });
+
+    function closeLightbox() {
+        if (lightbox) {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    }
+
+    if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+    if (lightbox) {
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) closeLightbox();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox && lightbox.style.display === 'block') closeLightbox();
+    });
+    console.log('✅ Lightbox aktif');
+
+    // ==========================================
+    // 🍔 MOBİL HAMBURGER MENÜ
+    // ==========================================
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.querySelector('.nav-menu');
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+        // Link tıklanınca menüyü kapat
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            });
+        });
+        // Dışarı tıklanınca kapat
+        document.addEventListener('click', function(e) {
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
+        console.log('✅ Hamburger menü aktif');
+    }
 
     console.log('✅ PEKCON Ultimate Tracker v3.0 tam aktif! 🚀');
 });
