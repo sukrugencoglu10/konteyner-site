@@ -1015,12 +1015,23 @@ body {
     background: rgba(255, 255, 255, 0.95);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    padding: 1.7rem;
+    padding: 2.2rem;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    transform: scale(0.85);
-    transform-origin: center;
+    transform: none;
     min-height: 689px;
+    margin-top: 3rem;
+}
+
+.contact-form .form-group input,
+.contact-form .form-group select {
+    padding: 1rem 1.1rem;
+    font-size: 1.05rem;
+}
+
+.contact-form .btn-block {
+    padding: 1rem;
+    font-size: 1.1rem;
 }
 
 .form-row {
@@ -1385,7 +1396,27 @@ body {
     }
 
     .hero-form-header h3 {
-        font-size: 1.35rem;
+        font-size: 1.6rem;
+    }
+
+    .contact-form {
+        padding: 1.8rem 1.4rem !important;
+        margin-top: 1rem;
+    }
+
+    .contact-form .form-group {
+        margin-bottom: 1.1rem;
+    }
+
+    .contact-form .form-group input,
+    .contact-form .form-group select {
+        padding: 1rem 1rem !important;
+        font-size: 1rem !important;
+    }
+
+    .contact-form .btn-block {
+        padding: 1rem !important;
+        font-size: 1.05rem !important;
     }
 
     .hero-title {
