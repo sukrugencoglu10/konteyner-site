@@ -147,9 +147,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (cargoType) {
+        const quantityOptions = document.getElementById('quantity-options');
         cargoType.addEventListener('change', function() {
             const selectedText = this.options[this.selectedIndex].text;
             sendDataToDashboard('form', `Konteyner: ${selectedText}`, 'seçildi');
+            if (quantityOptions && this.value) {
+                quantityOptions.style.display = 'block';
+            }
         });
     }
 
