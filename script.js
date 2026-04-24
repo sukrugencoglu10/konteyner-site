@@ -142,19 +142,44 @@ document.addEventListener('DOMContentLoaded', () => {
     const cargoContainerOptions = document.getElementById('cargo-container-options');
     const quantityOptions = document.getElementById('quantity-options');
 
+    const CARGO_OPTIONS = {
+        'Standart_Yuk': [
+            ['20DC', '20\' DC (Dry Container)'],
+            ['40DC', '40\' DC (Dry Container)'],
+            ['40HC', '40\' HC (High Cube)'],
+            ['45HC', '45\' HC (High Cube)']
+        ],
+        'Reefer': [
+            ['20RF', '20\' RF (Reefer)'],
+            ['40RF', '40\' RF (Reefer)'],
+            ['40HRF', '40\' HRF (High Cube Reefer)']
+        ],
+        'Flat_Rack': [
+            ['20FR', '20\' FR (Flat Rack)'],
+            ['40FR', '40\' FR (Flat Rack)']
+        ],
+        'Open_Top': [
+            ['20OT', '20\' OT (Open Top)'],
+            ['40OT', '40\' OT (Open Top)']
+        ]
+    };
+
     if (productCategory) {
         productCategory.addEventListener('change', function() {
             const selectedText = this.options[this.selectedIndex].text;
             sendDataToDashboard('form', `Ürün Tipi: ${selectedText}`, 'seçildi');
             if (cargoContainerOptions) {
-                if (this.value && this.value !== 'Ozel_Uretim') {
+                const opts = CARGO_OPTIONS[this.value];
+                if (opts) {
+                    cargoType.innerHTML = '<option value="" disabled selected>Konteyner Tipi Seçin...</option>'
+                        + opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('');
                     cargoContainerOptions.style.display = 'block';
                 } else {
                     cargoContainerOptions.style.display = 'none';
                     if (cargoType) cargoType.value = '';
-                    if (quantityOptions) quantityOptions.style.display = 'none';
-                    if (document.getElementById('containerQuantity')) document.getElementById('containerQuantity').value = '';
                 }
+                if (quantityOptions) quantityOptions.style.display = 'none';
+                if (document.getElementById('containerQuantity')) document.getElementById('containerQuantity').value = '';
             }
         });
     }
