@@ -142,6 +142,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cargoContainerOptions = document.getElementById('cargo-container-options');
     const quantityOptions = document.getElementById('quantity-options');
 
+    const CARGO_PLACEHOLDERS = {
+        'Standart_Yuk': 'Yük Konteyner Tipi Seçin...',
+        'Reefer': 'Reefer Konteyner Tipi Seçin...',
+        'Flat_Rack': 'Flat Rack Tipi Seçin...',
+        'Open_Top': 'Open Top Tipi Seçin...'
+    };
     const CARGO_OPTIONS = {
         'Standart_Yuk': [
             ['20DC', '20\' DC (Dry Container)'],
@@ -171,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cargoContainerOptions) {
                 const opts = CARGO_OPTIONS[this.value];
                 if (opts) {
-                    cargoType.innerHTML = '<option value="" disabled selected>Konteyner Tipi Seçin...</option>'
+                    const ph = CARGO_PLACEHOLDERS[this.value] || 'Konteyner Tipi Seçin...';
+                    cargoType.innerHTML = `<option value="" disabled selected>${ph}</option>`
                         + opts.map(o => `<option value="${o[0]}">${o[1]}</option>`).join('');
                     cargoContainerOptions.style.display = 'block';
                 } else {
