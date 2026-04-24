@@ -139,15 +139,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const cargoContainerOptions = document.getElementById('cargo-container-options');
+    const quantityOptions = document.getElementById('quantity-options');
+
     if (productCategory) {
         productCategory.addEventListener('change', function() {
             const selectedText = this.options[this.selectedIndex].text;
             sendDataToDashboard('form', `Ürün Tipi: ${selectedText}`, 'seçildi');
+            if (cargoContainerOptions) {
+                if (this.value === 'Standart_Konteyner') {
+                    cargoContainerOptions.style.display = 'block';
+                } else {
+                    cargoContainerOptions.style.display = 'none';
+                    if (cargoType) cargoType.value = '';
+                    if (quantityOptions) quantityOptions.style.display = 'none';
+                    if (document.getElementById('containerQuantity')) document.getElementById('containerQuantity').value = '';
+                }
+            }
         });
     }
 
     if (cargoType) {
-        const quantityOptions = document.getElementById('quantity-options');
         cargoType.addEventListener('change', function() {
             const selectedText = this.options[this.selectedIndex].text;
             sendDataToDashboard('form', `Konteyner: ${selectedText}`, 'seçildi');
