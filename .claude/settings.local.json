@@ -11,7 +11,10 @@
       "Read(//c/Users/sukru/AppData/Roaming/npm//**)",
       "Bash(where npx.cmd)",
       "Read(//c/Users/sukru/**)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m 'ui: hero yüksekliği web'\\\\''de arttırıldı \\(105vh → 125vh\\) *)",
+      "Bash(git push *)",
+      "Bash(git commit -m 'form: Konteyner Kategorisi etiketi ve seçenekleri güncellendi *)"
     ]
   }
 }

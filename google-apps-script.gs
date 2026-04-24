@@ -11,12 +11,11 @@ var ISLEM_LABELS = {
 };
 
 var URUN_LABELS = {
-  'Standart_Konteyner': 'Standart Yük Konteyner',
-  'Birlesimli_Ofis':    'Birleşimli / Ofis Konteyner',
-  'Demonte_Flatpack':   'Demonte (Flatpack) Konteyner',
-  'Metropol_Kabin':     'Metropol / Lüks Kabin',
-  'WC_Dus_Konteyner':   'WC / Duş Konteyneri',
-  'Ozel_Uretim':        'Özel Üretim / Proje Bazlı'
+  'Standart_Yuk': 'Standart Yük Konteyner',
+  'Reefer':       'Reefer Konteyner',
+  'Flat_Rack':    'Flat Rack Konteyner',
+  'Open_Top':     'Open Top Konteyner',
+  'Ozel_Uretim':  'Özel Üretim'
 };
 
 function getLabel(map, v) { return map[v] || v || '—'; }
