@@ -17,7 +17,8 @@
       "Bash(git commit -m 'form: Konteyner Kategorisi etiketi ve seçenekleri güncellendi *)",
       "Bash(git commit -m 'form: Özel Üretim hariç tüm kategorilerde tip seçenekleri gösteriliyor *)",
       "Bash(git commit -m 'form: kategoriye göre dinamik konteyner tipi seçenekleri *)",
-      "Bash(git commit -m 'form: cargoType placeholder kategoriye göre dinamik *)"
+      "Bash(git commit -m 'form: cargoType placeholder kategoriye göre dinamik *)",
+      "Bash(git commit -m 'seo: hero başlık hiyerarşisi \\(H1/H2/H3\\) güncellendi *)"
     ]
   }
 }
