@@ -3,13 +3,17 @@
 <head>
     <script>
     // Kullanıcının tarayıcı dilini öğren (tr, en, de vs.)
-    var userLang = navigator.language || navigator.userLanguage; 
-    
+    var userLang = navigator.language || navigator.userLanguage;
+
     // Linkte "?lang=tr" var mı diye bak (Manuel mi seçmiş?)
     var params = new URLSearchParams(window.location.search);
-    
-    // KURAL: Dil Türkçe DEĞİLSE ve adam özel olarak "TR istiyorum" DEMEDİYSE -> İngilizceye postala
-    if (!userLang.startsWith('tr') && !params.has('lang')) {
+
+    // Bot kontrolü: Google/Bing botları yönlendirme YAPMA, indeksleme bozulmasın
+    var ua = (navigator.userAgent || '').toLowerCase();
+    var isBot = /bot|crawl|spider|slurp|googlebot|bingbot|yandex|baidu|duckduckbot|facebot|ia_archiver/i.test(ua);
+
+    // KURAL: Bot DEĞİLSE, dil Türkçe DEĞİLSE ve adam özel olarak "TR istiyorum" DEMEDİYSE -> İngilizceye postala
+    if (!isBot && !userLang.startsWith('tr') && !params.has('lang')) {
         window.location.replace('en.html');
     }
     </script>
@@ -20,7 +24,65 @@
     })(window,document,'script','dataLayer','GTM-KVBBRD4K');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pekcon | Yük Konteyner & Container Solutions</title>
+    <meta name="description" content="Satılık yük konteyneri Pekcon'da. 20DC, 40HC, Reefer, Open Top ve Flat Rack modelleri uygun fiyatla, Türkiye geneli hızlı teslimat. Hemen teklif al!">
+    <link rel="canonical" href="https://container.pekcon.com/">
+    <link rel="alternate" hreflang="tr" href="https://container.pekcon.com/">
+    <link rel="alternate" hreflang="en" href="https://container.pekcon.com/en.html">
+    <link rel="alternate" hreflang="x-default" href="https://container.pekcon.com/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Pekcon Container">
+    <meta property="og:locale" content="tr_TR">
+    <meta property="og:title" content="Satılık Yük Konteynerleri | Pekcon - Türkiye'nin Lider Konteyner Tedarikçisi">
+    <meta property="og:description" content="Satılık yük konteyneri Pekcon'da. 20DC, 40HC, Reefer, Open Top ve Flat Rack modelleri uygun fiyatla, Türkiye geneli hızlı teslimat.">
+    <meta property="og:url" content="https://container.pekcon.com/">
+    <meta property="og:image" content="https://container.pekcon.com/images/anasayfa.webp">
+    <meta property="og:image:width" content="702">
+    <meta property="og:image:height" content="1201">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Satılık Yük Konteynerleri | Pekcon">
+    <meta name="twitter:description" content="Satılık yük konteyneri Pekcon'da. 20DC, 40HC, Reefer, Open Top ve Flat Rack modelleri Türkiye geneli hızlı teslimat.">
+    <meta name="twitter:image" content="https://container.pekcon.com/images/anasayfa.webp">
+
+    <title>Satılık Yük Konteyner | 20DC, 40HC, Reefer Open Top Flat Rack | Pekcon Container</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": "https://container.pekcon.com/#organization",
+      "name": "Pekcon Container",
+      "alternateName": "Pekcon Container & Logistics",
+      "url": "https://container.pekcon.com/",
+      "logo": "https://container.pekcon.com/images/pekcon-logo.png",
+      "image": "https://container.pekcon.com/images/anasayfa.webp",
+      "description": "Satılık yük konteyneri tedarikçisi. 20DC, 40HC, Reefer, Open Top ve Flat Rack konteyner modelleri, Türkiye geneli hızlı teslimat.",
+      "telephone": "+902122979758",
+      "email": "info@pekcon.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Dap Vadi, Merkez Mh., Seçkin Sk. No:2-4A İç Kapı:172, Z Ofis",
+        "addressLocality": "Kağıthane",
+        "addressRegion": "İstanbul",
+        "postalCode": "34406",
+        "addressCountry": "TR"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:00",
+        "closes": "18:00"
+      }],
+      "sameAs": [
+        "https://www.linkedin.com/company/pekcon-container-logistics/"
+      ],
+      "areaServed": {
+        "@type": "Country",
+        "name": "Türkiye"
+      }
+    }
+    </script>
     <link rel="shortcut icon" href="favicon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
@@ -78,7 +140,7 @@
     </nav>
 
     <section id="anasayfa" class="hero">
-        <img src="images/anasayfa.webp" alt="" class="hero-bg" width="702" height="1201">
+        <img src="images/anasayfa.webp" alt="Satılık yük konteyner — Pekcon Container" class="hero-bg" width="702" height="1201">
         <div class="hero-overlay"></div>
         <div class="container">
             <div class="hero-wrapper">
@@ -300,7 +362,7 @@
                     <div class="product-image">
                         <picture>
                             <source srcset="images/20-dc.webp" type="image/webp">
-                            <img src="images/20 dc.jpg" alt="20ft Standart Konteyner" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                            <img src="images/20 dc.jpg" alt="20ft DC Standart Yük Konteyner Satılık - Pekcon" class="product-img" loading="lazy" width="400" height="280" decoding="async">
                         </picture>
                     </div>
                     <div class="product-info">
@@ -317,7 +379,7 @@
                     <div class="product-image">
                         <picture>
                             <source srcset="images/40-dc.webp" type="image/webp">
-                            <img src="images/40 dc.jpg" alt="40ft Standart Konteyner" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                            <img src="images/40 dc.jpg" alt="40ft DC Standart Yük Konteyner Satılık - Pekcon" class="product-img" loading="lazy" width="400" height="280" decoding="async">
                         </picture>
                     </div>
                     <div class="product-info">
@@ -334,7 +396,7 @@
                     <div class="product-image">
                         <picture>
                             <source srcset="images/40-hc.webp" type="image/webp">
-                            <img src="images/40 hc.jpg" alt="40ft Yüksek Küp" class="product-img" loading="lazy" width="400" height="280" decoding="async">
+                            <img src="images/40 hc.jpg" alt="40ft HC Yüksek Konteyner (High Cube) Satılık - Pekcon" class="product-img" loading="lazy" width="400" height="280" decoding="async">
                         </picture>
                     </div>
                     <div class="product-info">
