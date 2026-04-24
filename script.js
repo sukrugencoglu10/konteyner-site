@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const selectedText = this.options[this.selectedIndex].text;
             sendDataToDashboard('form', `Ürün Tipi: ${selectedText}`, 'seçildi');
             if (cargoContainerOptions) {
-                if (this.value === 'Standart_Yuk') {
+                if (this.value && this.value !== 'Ozel_Uretim') {
                     cargoContainerOptions.style.display = 'block';
                 } else {
                     cargoContainerOptions.style.display = 'none';
