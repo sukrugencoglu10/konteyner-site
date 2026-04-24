@@ -164,6 +164,49 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Form tracking aktif (ilk 3 seçenek)');
 
     // ==========================================
+    // 📤 FORM AJAX SUBMIT (sayfa yönlendirmeden gönderim)
+    // ==========================================
+    const pekconForm = document.getElementById('pekconHighTicketForm');
+    const statusMessage = document.getElementById('statusMessage');
+
+    if (pekconForm) {
+        pekconForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const submitBtn = pekconForm.querySelector('button[type="submit"]');
+            const originalBtnText = submitBtn.textContent;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'GÖNDERİLİYOR...';
+            statusMessage.innerHTML = '';
+            statusMessage.className = '';
+
+            const formData = new FormData(pekconForm);
+
+            fetch(pekconForm.action, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: formData
+            })
+            .then(() => {
+                statusMessage.innerHTML = '✅ Teklif talebiniz başarıyla gönderildi. En kısa sürede size dönüş yapacağız.';
+                statusMessage.className = 'status-success';
+                pekconForm.reset();
+                sendDataToDashboard('form', 'Teklif Formu Gönderildi', 'HOT LEAD - Form Submit');
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            })
+            .catch((err) => {
+                console.error('Form gönderim hatası:', err);
+                statusMessage.innerHTML = '❌ Bir hata oluştu. Lütfen tekrar deneyin veya bizi arayın.';
+                statusMessage.className = 'status-error';
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            });
+        });
+        console.log('✅ Form AJAX submit aktif');
+    }
+
+    // ==========================================
     // 📦 ÜRÜN KATEGORİLERİ TRACKING
     // ==========================================
     const productCards = document.querySelectorAll('.product-card');
