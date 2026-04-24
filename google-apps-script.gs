@@ -47,6 +47,7 @@ function buildEmailHtml(d) {
   var bolge = getVal(d.deliveryRegion);
   var isim  = getVal(d.userName);
   var tel   = getVal(d.userPhone);
+  var telClean = tel.replace(/\D/g,''); // Sadece rakamlar
   var email = getVal(d.userEmail);
   var gclid = getVal(d.gclid_field);
 
@@ -79,7 +80,7 @@ function buildEmailHtml(d) {
     + '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
     + '<td><p style="margin:0;font-size:18px;font-weight:700;color:#1a202c;">Yeni Teklif Talebi</p>'
     + '<p style="margin:4px 0 0;font-size:12px;color:#718096;">' + tarih + '</p></td>'
-    + '<td align="right"><span style="display:inline-block;background:' + badgeColor + ';color:#fff;font-size:11px;font-weight:700;padding:5px 16px;border-radius:20px;">' + islem + '</span></td>'
+    + '<td align="right"><span style="display:inline-block;background:' + badgeColor + ';color:#fff;font-size:11px;font-weight:700;padding:6px 14px;border-radius:20px;">' + islem + '</span></td>'
     + '</tr></table>'
     + '</td></tr>'
 
@@ -111,8 +112,9 @@ function buildEmailHtml(d) {
     // --- Aksiyon butonları ---
     + '<tr><td style="padding:16px 28px 24px;">'
     + '<table cellpadding="0" cellspacing="0"><tr>'
-    + '<td style="padding-right:10px;"><a href="tel:' + tel + '" style="display:inline-block;background:#c41e3a;color:#fff;font-size:12px;font-weight:700;padding:11px 22px;border-radius:6px;text-decoration:none;">📞 Hemen Ara</a></td>'
-    + '<td><a href="mailto:' + email + '?subject=Teklif Talebiniz - PEKCON" style="display:inline-block;background:#fff;color:#c41e3a;font-size:12px;font-weight:700;padding:9px 22px;border-radius:6px;text-decoration:none;border:2px solid #c41e3a;">✉ E-posta Gönder</a></td>'
+    + '<td style="padding-right:8px;"><a href="tel:+90' + telClean + '" style="display:inline-block;background:#c41e3a;color:#fff;font-size:12px;font-weight:700;padding:10px 16px;border-radius:6px;text-decoration:none;">📞 Ara</a></td>'
+    + '<td style="padding-right:8px;"><a href="https://wa.me/90' + telClean + '?text=Merhaba,%20teklif%20talebim%20hakkında%20konuşmak%20istiyorum." style="display:inline-block;background:#25d366;color:#fff;font-size:12px;font-weight:700;padding:10px 16px;border-radius:6px;text-decoration:none;">💬 WhatsApp</a></td>'
+    + '<td><a href="mailto:' + email + '?subject=Teklif Talebiniz - PEKCON" style="display:inline-block;background:#fff;color:#c41e3a;font-size:12px;font-weight:700;padding:8px 16px;border-radius:6px;text-decoration:none;border:2px solid #c41e3a;">✉ E-posta</a></td>'
     + '</tr></table>'
     + gclidRow
     + '</td></tr>'
