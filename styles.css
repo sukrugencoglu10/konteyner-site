@@ -2042,14 +2042,16 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 520px;
+    min-height: 640px;
+    overflow: hidden;
 }
 
 .hc-perspective {
     perspective: 1000px;
     width: 100%;
-    height: 450px;
+    height: 580px;
     position: relative;
+    overflow: hidden;
 }
 
 .hc-stage {
@@ -2061,11 +2063,11 @@ html {
 
 .hc-card {
     position: absolute;
-    left: 50%;
+    left: 65%;
     top: 50%;
-    width: 260px;
-    margin-left: -130px;
-    margin-top: -195px;
+    width: 364px;
+    margin-left: -182px;
+    margin-top: -215px;
     background: linear-gradient(145deg, rgba(30,58,138,0.92), rgba(67,56,202,0.85));
     border: 1px solid rgba(139,92,246,0.4);
     border-radius: 14px;
@@ -2079,7 +2081,7 @@ html {
 }
 
 .hc-img-wrap {
-    height: 230px;
+    height: 320px;
     overflow: hidden;
     display: flex;
     align-items: center;
