@@ -2063,9 +2063,9 @@ html {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 250px;
-    margin-left: -125px;
-    margin-top: -175px;
+    width: 260px;
+    margin-left: -130px;
+    margin-top: -195px;
     background: linear-gradient(145deg, rgba(30,58,138,0.92), rgba(67,56,202,0.85));
     border: 1px solid rgba(139,92,246,0.4);
     border-radius: 14px;
@@ -2079,7 +2079,7 @@ html {
 }
 
 .hc-img-wrap {
-    height: 170px;
+    height: 230px;
     overflow: hidden;
     display: flex;
     align-items: center;
