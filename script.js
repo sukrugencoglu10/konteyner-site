@@ -606,3 +606,61 @@ function throttle(func, limit) {
 window.addEventListener('load', function() {
     sendDataToDashboard('page', 'Ana Sayfa', 'yüklendi', { page_title: document.title });
 });
+
+// ==========================================
+// 🎠 3D KONTEYNER CAROUSEL
+// ==========================================
+(function() {
+    const stage = document.querySelector('.hc-stage');
+    if (!stage) return;
+    const cards = Array.from(stage.querySelectorAll('.hc-card'));
+    const dotsWrap = document.querySelector('.hc-dots');
+    let current = 0;
+    let timer;
+
+    cards.forEach((_, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'hc-dot' + (i === 0 ? ' active' : '');
+        btn.setAttribute('aria-label', 'Kart ' + (i + 1));
+        btn.addEventListener('click', () => goTo(i));
+        dotsWrap.appendChild(btn);
+    });
+
+    function goTo(idx) {
+        current = (idx + cards.length) % cards.length;
+        render();
+        resetTimer();
+    }
+
+    function render() {
+        const n = cards.length;
+        cards.forEach((card, i) => {
+            card.className = 'hc-card';
+            const offset = ((i - current) % n + n) % n;
+            const signed = offset <= n / 2 ? offset : offset - n;
+            if      (signed === 0)  card.classList.add('hc-active');
+            else if (signed === 1)  card.classList.add('hc-next');
+            else if (signed === -1) card.classList.add('hc-prev');
+            else if (signed === 2)  card.classList.add('hc-far-next');
+            else if (signed === -2) card.classList.add('hc-far-prev');
+            else                    card.classList.add('hc-hidden');
+        });
+        document.querySelectorAll('.hc-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === current);
+        });
+    }
+
+    function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 3500);
+    }
+
+    cards.forEach((card, i) => {
+        card.addEventListener('click', () => {
+            if (!card.classList.contains('hc-active')) goTo(i);
+        });
+    });
+
+    render();
+    resetTimer();
+})();
