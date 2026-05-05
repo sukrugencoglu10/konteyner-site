@@ -608,16 +608,25 @@ window.addEventListener('load', function() {
 });
 
 // ==========================================
-// 🎠 3D KONTEYNER CAROUSEL
+// 🎠 3D KONTEYNER CAROUSEL — Silindirik Stage Rotasyonu
 // ==========================================
 (function() {
     const stage = document.querySelector('.hc-stage');
     if (!stage) return;
     const cards = Array.from(stage.querySelectorAll('.hc-card'));
     const dotsWrap = document.querySelector('.hc-dots');
+    const TOTAL  = cards.length;
+    const ANGLE  = 360 / TOTAL;   // 60° aralık (6 kart)
+    const RADIUS = 270;            // silindir yarıçapı (px)
     let current = 0;
     let timer;
 
+    // Her kartı silindir üzerine yerleştir — sabit kalır, sahne döner
+    cards.forEach((card, i) => {
+        card.style.transform = `rotateY(${i * ANGLE}deg) translateZ(${RADIUS}px)`;
+    });
+
+    // Dot'ları oluştur
     cards.forEach((_, i) => {
         const btn = document.createElement('button');
         btn.className = 'hc-dot' + (i === 0 ? ' active' : '');
@@ -627,24 +636,14 @@ window.addEventListener('load', function() {
     });
 
     function goTo(idx) {
-        current = (idx + cards.length) % cards.length;
+        current = ((idx % TOTAL) + TOTAL) % TOTAL;
         render();
         resetTimer();
     }
 
     function render() {
-        const n = cards.length;
-        cards.forEach((card, i) => {
-            card.className = 'hc-card';
-            const offset = ((i - current) % n + n) % n;
-            const signed = offset <= n / 2 ? offset : offset - n;
-            if      (signed === 0)  card.classList.add('hc-active');
-            else if (signed === 1)  card.classList.add('hc-next');
-            else if (signed === -1) card.classList.add('hc-prev');
-            else if (signed === 2)  card.classList.add('hc-far-next');
-            else if (signed === -2) card.classList.add('hc-far-prev');
-            else                    card.classList.add('hc-hidden');
-        });
+        // Sahneyi döndür — aktif kart öne gelir
+        stage.style.transform = `rotateY(${-current * ANGLE}deg)`;
         document.querySelectorAll('.hc-dot').forEach((d, i) => {
             d.classList.toggle('active', i === current);
         });
@@ -655,10 +654,9 @@ window.addEventListener('load', function() {
         timer = setInterval(() => goTo(current + 1), 3500);
     }
 
+    // Karta tıkla → o kart öne gelsin
     cards.forEach((card, i) => {
-        card.addEventListener('click', () => {
-            if (!card.classList.contains('hc-active')) goTo(i);
-        });
+        card.addEventListener('click', () => goTo(i));
     });
 
     render();

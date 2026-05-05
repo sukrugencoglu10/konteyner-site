@@ -2034,7 +2034,7 @@ html {
 }
 
 /* ==========================================
-   3D KONTEYNER CAROUSEL
+   3D KONTEYNER CAROUSEL — Silindirik Stage Rotasyonu
    ========================================== */
 .hero-carousel {
     position: relative;
@@ -2042,51 +2042,52 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 640px;
-    overflow: hidden;
+    min-height: 600px;
 }
 
 .hc-perspective {
-    perspective: 1000px;
+    perspective: 650px;
+    perspective-origin: 50% 38%;
     width: 100%;
-    height: 580px;
+    height: 520px;
     position: relative;
-    overflow: hidden;
 }
 
 .hc-stage {
-    position: relative;
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    width: 230px;
+    height: 350px;
+    top: 50%;
+    left: 50%;
+    margin-left: -115px;
+    margin-top: -175px;
     transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .hc-card {
     position: absolute;
-    left: 65%;
-    top: 50%;
-    width: 364px;
-    margin-left: -182px;
-    margin-top: -215px;
-    background: linear-gradient(145deg, rgba(30,58,138,0.92), rgba(67,56,202,0.85));
-    border: 1px solid rgba(139,92,246,0.4);
-    border-radius: 14px;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 350px;
+    background: linear-gradient(145deg, rgba(30,58,138,0.95), rgba(67,56,202,0.88));
+    border: 1px solid rgba(139,92,246,0.45);
+    border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94),
-                opacity  0.55s ease,
-                box-shadow 0.55s ease;
     cursor: pointer;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    /* transform set by JS */
 }
 
 .hc-img-wrap {
-    height: 320px;
+    height: 195px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.25);
 }
 
 .hc-img-wrap img {
@@ -2101,74 +2102,37 @@ html {
 }
 
 .hc-body {
-    padding: 0.7rem 0.875rem 0.875rem;
+    padding: 0.75rem 1rem 1rem;
 }
 
 .hc-body h4 {
     color: #fff;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 700;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.3rem;
 }
 
 .hc-specs {
     color: rgba(196,181,253,0.9);
-    font-size: 0.72rem;
-    margin-bottom: 0.35rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
 }
 
 .hc-tag {
     display: inline-block;
     background: rgba(139,92,246,0.35);
     color: #c4b5fd;
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    padding: 3px 8px;
+    padding: 3px 10px;
     border-radius: 20px;
     border: 1px solid rgba(139,92,246,0.5);
-}
-
-.hc-card.hc-active {
-    transform: translateZ(80px) scale(1);
-    opacity: 1;
-    box-shadow: 0 12px 40px rgba(139,92,246,0.5);
-    z-index: 5;
-}
-
-.hc-card.hc-prev {
-    transform: translateX(-120%) translateZ(-100px) rotateY(28deg) scale(0.80);
-    opacity: 0.68;
-    z-index: 4;
-}
-
-.hc-card.hc-next {
-    transform: translateX(120%) translateZ(-100px) rotateY(-28deg) scale(0.80);
-    opacity: 0.68;
-    z-index: 4;
-}
-
-.hc-card.hc-far-prev {
-    transform: translateX(-220%) translateZ(-200px) rotateY(50deg) scale(0.58);
-    opacity: 0.22;
-    z-index: 3;
-}
-
-.hc-card.hc-far-next {
-    transform: translateX(220%) translateZ(-200px) rotateY(-50deg) scale(0.58);
-    opacity: 0.22;
-    z-index: 3;
-}
-
-.hc-card.hc-hidden {
-    opacity: 0;
-    pointer-events: none;
-    z-index: 1;
 }
 
 .hc-dots {
     display: flex;
     gap: 7px;
-    margin-top: 1rem;
+    margin-top: 1.2rem;
 }
 
 .hc-dot {
@@ -2184,7 +2148,7 @@ html {
 
 .hc-dot.active {
     background: #a78bfa;
-    transform: scale(1.3);
+    transform: scale(1.35);
 }
 
 @media (max-width: 768px) {
