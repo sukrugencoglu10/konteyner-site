@@ -217,6 +217,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const pekconForm = document.getElementById('pekconHighTicketForm');
     const statusMessage = document.getElementById('statusMessage');
 
+    // Telefon alanı: sadece rakam, max 10 karakter
+    const phoneInput = document.getElementById('userPhone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+    }
+
     if (pekconForm) {
         pekconForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -227,6 +235,15 @@ document.addEventListener('DOMContentLoaded', () => {
             submitBtn.textContent = 'GÖNDERİLİYOR...';
             statusMessage.innerHTML = '';
             statusMessage.className = '';
+
+            const phoneVal = (document.getElementById('userPhone').value || '').replace(/\D/g, '');
+            if (phoneVal.length !== 10) {
+                statusMessage.innerHTML = '❌ Lütfen geçerli bir telefon numarası girin (10 rakam, +90 sonrası).';
+                statusMessage.className = 'status-error';
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+                return;
+            }
 
             const formData = new FormData(pekconForm);
 

@@ -299,7 +299,11 @@
         <input type="text" id="userName" name="userName" placeholder="Adınız Soyadınız" required>
     </div>
     <div class="form-group">
-        <input type="tel" id="userPhone" name="userPhone" placeholder="Telefon (05XX...)" required>
+        <div class="phone-input-wrapper">
+            <span class="phone-prefix">+90</span>
+            <input type="tel" id="userPhone" name="userPhone"
+                   placeholder="5XX XXX XX XX" maxlength="10" required>
+        </div>
     </div>
     <div class="form-group">
         <input type="email" id="userEmail" name="userEmail" placeholder="E-posta Adresiniz" required>

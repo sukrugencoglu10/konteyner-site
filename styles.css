@@ -1077,6 +1077,32 @@ body {
     resize: vertical;
 }
 
+.phone-input-wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.phone-prefix {
+    display: flex;
+    align-items: center;
+    padding: 0.875rem 0.75rem;
+    background: #f1f5f9;
+    border: 2px solid var(--border-color);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #374151;
+    white-space: nowrap;
+    user-select: none;
+}
+
+.phone-input-wrapper input {
+    border-radius: 0 8px 8px 0 !important;
+    flex: 1;
+    min-width: 0;
+}
+
 #statusMessage {
     margin-top: 1rem;
     padding: 0;
