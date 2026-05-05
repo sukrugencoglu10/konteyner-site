@@ -1103,6 +1103,17 @@ body {
     min-width: 0;
 }
 
+.phone-input-wrapper.phone-error .phone-prefix {
+    border-color: #dc2626;
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.phone-input-wrapper.phone-error input {
+    border-color: #dc2626 !important;
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+}
+
 #statusMessage {
     margin-top: 1rem;
     padding: 0;

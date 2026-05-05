@@ -222,6 +222,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (phoneInput) {
         phoneInput.addEventListener('input', function() {
             this.value = this.value.replace(/\D/g, '').slice(0, 10);
+            if (this.value.length === 10) this.closest('.phone-input-wrapper').classList.remove('phone-error');
+        });
+        phoneInput.addEventListener('blur', function() {
+            const len = this.value.replace(/\D/g, '').length;
+            if (len > 0 && len < 10) {
+                this.closest('.phone-input-wrapper').classList.add('phone-error');
+            } else {
+                this.closest('.phone-input-wrapper').classList.remove('phone-error');
+            }
         });
     }
 
