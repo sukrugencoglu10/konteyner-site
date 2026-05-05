@@ -103,7 +103,7 @@ function buildEmailHtml(d) {
     + '<p style="margin:0 0 12px;font-size:11px;font-weight:700;color:#0069b4;text-transform:uppercase;letter-spacing:0.8px;">Müşteri İletişim Bilgileri</p>'
     + '<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse:collapse;border:1px solid #e2e8f0;border-radius:6px;">'
     + row('Ad Soyad', '<strong>' + isim + '</strong>')
-    + row('Telefon',  '<a href="tel:' + tel + '" style="color:#0069b4;font-weight:700;text-decoration:none;">' + tel + '</a>')
+    + row('Telefon',  '<a href="tel:+90' + telClean + '" style="color:#0069b4;font-weight:700;text-decoration:none;">0' + telClean + '</a>')
     + row('E-posta',  '<a href="mailto:' + email + '" style="color:#0069b4;text-decoration:none;">' + email + '</a>', true)
     + '</table>'
     + '</td></tr>'
