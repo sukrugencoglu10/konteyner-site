@@ -2128,32 +2128,32 @@ html {
 }
 
 .hc-card.hc-active {
-    transform: scale(1) translateZ(60px);
+    transform: translateZ(80px) scale(1);
     opacity: 1;
     box-shadow: 0 12px 40px rgba(139,92,246,0.5);
     z-index: 5;
 }
 
 .hc-card.hc-prev {
-    transform: translateX(-140%) rotateY(32deg) scale(0.78);
-    opacity: 0.65;
+    transform: translateX(-120%) translateZ(-100px) rotateY(28deg) scale(0.80);
+    opacity: 0.68;
     z-index: 4;
 }
 
 .hc-card.hc-next {
-    transform: translateX(140%) rotateY(-32deg) scale(0.78);
-    opacity: 0.65;
+    transform: translateX(120%) translateZ(-100px) rotateY(-28deg) scale(0.80);
+    opacity: 0.68;
     z-index: 4;
 }
 
 .hc-card.hc-far-prev {
-    transform: translateX(-250%) rotateY(52deg) scale(0.58);
+    transform: translateX(-220%) translateZ(-200px) rotateY(50deg) scale(0.58);
     opacity: 0.22;
     z-index: 3;
 }
 
 .hc-card.hc-far-next {
-    transform: translateX(250%) rotateY(-52deg) scale(0.58);
+    transform: translateX(220%) translateZ(-200px) rotateY(-50deg) scale(0.58);
     opacity: 0.22;
     z-index: 3;
 }
