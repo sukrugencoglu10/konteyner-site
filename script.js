@@ -617,8 +617,9 @@ window.addEventListener('load', function() {
     const dotsWrap = document.querySelector('.hc-dots');
     const TOTAL  = cards.length;
     const ANGLE  = 360 / TOTAL;   // 60° aralık (6 kart)
-    const RADIUS = 270;            // silindir yarıçapı (px)
-    let current = 0;
+    const RADIUS = 240;            // silindir yarıçapı (px)
+    let current  = 0;
+    let totalDeg = 0;              // birikimli açı — asla sıfırlanmaz
     let timer;
 
     // Her kartı silindir üzerine yerleştir — sabit kalır, sahne döner
@@ -636,29 +637,30 @@ window.addEventListener('load', function() {
     });
 
     function goTo(idx) {
-        current = ((idx % TOTAL) + TOTAL) % TOTAL;
-        render();
-        resetTimer();
-    }
-
-    function render() {
-        // Sahneyi döndür — aktif kart öne gelir
-        stage.style.transform = `rotateY(${-current * ANGLE}deg)`;
+        const target = ((idx % TOTAL) + TOTAL) % TOTAL;
+        // Her zaman ileri yön — geriye hiç dönme
+        let diff = ((target - current) % TOTAL + TOTAL) % TOTAL;
+        if (diff === 0) return;
+        totalDeg -= diff * ANGLE;
+        current = target;
+        stage.style.transform = `rotateY(${totalDeg}deg)`;
         document.querySelectorAll('.hc-dot').forEach((d, i) => {
             d.classList.toggle('active', i === current);
         });
+        resetTimer();
     }
 
     function resetTimer() {
         clearInterval(timer);
-        timer = setInterval(() => goTo(current + 1), 3500);
+        timer = setInterval(() => goTo((current + 1) % TOTAL), 3500);
     }
 
-    // Karta tıkla → o kart öne gelsin
+    // Karta tıkla → o kart öne gelsin (ileri yönde)
     cards.forEach((card, i) => {
         card.addEventListener('click', () => goTo(i));
     });
 
-    render();
+    // İlk render
+    stage.style.transform = `rotateY(${totalDeg}deg)`;
     resetTimer();
 })();
