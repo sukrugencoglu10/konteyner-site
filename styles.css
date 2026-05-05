@@ -283,7 +283,7 @@ body {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1fr 400px 340px;
+    grid-template-columns: 1.6fr 500px 420px;
     gap: 0.75rem;
     align-items: center;
     width: 100%;
@@ -2042,13 +2042,13 @@ html {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 420px;
+    min-height: 520px;
 }
 
 .hc-perspective {
-    perspective: 900px;
+    perspective: 1000px;
     width: 100%;
-    height: 360px;
+    height: 450px;
     position: relative;
 }
 
@@ -2063,9 +2063,9 @@ html {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 200px;
-    margin-left: -100px;
-    margin-top: -155px;
+    width: 250px;
+    margin-left: -125px;
+    margin-top: -175px;
     background: linear-gradient(145deg, rgba(30,58,138,0.92), rgba(67,56,202,0.85));
     border: 1px solid rgba(139,92,246,0.4);
     border-radius: 14px;
@@ -2079,7 +2079,7 @@ html {
 }
 
 .hc-img-wrap {
-    height: 130px;
+    height: 170px;
     overflow: hidden;
     display: flex;
     align-items: center;
