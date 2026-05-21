@@ -289,6 +289,14 @@ body {
     width: 100%;
 }
 
+/* Geniş ekran / zoom-out durumunda hero içeriği %20 küçülür (navbar etkilenmez) */
+@media (min-width: 1900px) {
+    .hero-wrapper {
+        transform: scale(0.8);
+        transform-origin: center center;
+    }
+}
+
 .hero-image {
     position: relative;
     z-index: 2;
