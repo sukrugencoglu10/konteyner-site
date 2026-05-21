@@ -495,8 +495,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxClose = document.querySelector('.lightbox-close');
     const productImages = document.querySelectorAll('.product-img');
+    const carouselImages = document.querySelectorAll('.hc-img-wrap img');
+    const allClickable = [...productImages, ...carouselImages];
 
-    productImages.forEach((img, index) => {
+    allClickable.forEach((img, index) => {
+        img.style.cursor = 'zoom-in';
         img.addEventListener('click', function() {
             const productTitle = this.alt || `Ürün Görseli ${index + 1}`;
             sendDataToDashboard('product', productTitle, 'lightbox açıldı');
