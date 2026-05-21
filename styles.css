@@ -1953,7 +1953,7 @@ html {
 /* Lightbox Styles */
 .lightbox,
 .lightbox-modal {
-    display: none;
+    display: none !important;
     position: fixed;
     z-index: 9999;
     left: 0;
