@@ -283,7 +283,7 @@ body {
     position: relative;
     z-index: 2;
     display: grid;
-    grid-template-columns: 1.76fr 500px 420px;
+    grid-template-columns: minmax(0, 2.5fr) 500px 340px;
     gap: 0.75rem;
     align-items: center;
     width: 100%;
@@ -321,19 +321,21 @@ body {
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 0.75rem;
     opacity: 0.95;
     animation: fadeInUp 0.8s ease 0.2s both;
+    white-space: nowrap;
 }
 
 .hero-models {
-    font-size: 1rem;
+    font-size: 1.15rem;
     font-weight: 400;
     margin-bottom: 2rem;
     opacity: 0.85;
     animation: fadeInUp 0.8s ease 0.3s both;
+    white-space: nowrap;
 }
 
 .hero-buttons {
