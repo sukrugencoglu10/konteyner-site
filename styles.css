@@ -2044,6 +2044,7 @@ html {
     align-items: center;
     justify-content: center;
     min-height: 600px;
+    margin-left: 4rem;
 }
 
 .hc-perspective {
