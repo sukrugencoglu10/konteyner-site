@@ -90,6 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('📢 PEKCON Ultimate Tracker v3.0 başlatılıyor...');
     console.log('🔐 Dashboard erişimi: Ctrl+Shift+D');
 
+    // Spam koruması: form ne zaman yüklendi, gönderim süresini ölçmek için
+    const formTsField = document.getElementById('form_ts');
+    if (formTsField) formTsField.value = Date.now();
+
     // ==========================================
     // 🧭 NAVBAR TRACKING
     // ==========================================

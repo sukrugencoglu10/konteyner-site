@@ -311,6 +311,12 @@
     <!-- Google Click ID Tracking -->
     <input type="hidden" id="gclid_field" name="gclid_field" value="">
 
+    <!-- Spam botları için honeypot: gerçek kullanıcılar bu alanı görmez/doldurmaz -->
+    <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+        <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="hidden" id="form_ts" name="form_ts" value="">
+
     <button type="submit" class="btn btn-primary btn-block">
         GÖNDER
     </button>

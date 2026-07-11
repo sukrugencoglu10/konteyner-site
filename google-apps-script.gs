@@ -136,9 +136,43 @@ function buildEmailHtml(d) {
 // ============================================================
 // doPost
 // ============================================================
+// Botlara "başarılı" gibi görünen ama hiçbir şey kaydetmeyen sessiz çıkış.
+// Amaç: bot script'inin hatayı görüp farklı verilerle tekrar denemesini engellemek.
+function silentOk() {
+  return ContentService
+    .createTextOutput(JSON.stringify({result:'success'}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
 function doPost(e) {
   try {
     var d = e.parameter;
+
+    // --- Spam filtreleri ---
+
+    // 1) Honeypot: gerçek kullanıcıların göremediği alan. Doluysa bot.
+    if (d.hp_field && String(d.hp_field).trim() !== '') {
+      return silentOk();
+    }
+
+    // 2) Zamanlama: form_ts alanı yoksa (JS hiç çalışmamış, endpoint'e doğrudan
+    //    POST atılmış) ya da form 3 saniyeden kısa sürede dolduruluyorsa bot kabul edilir.
+    var loadedAt = Number(d.form_ts);
+    if (!loadedAt || (Date.now() - loadedAt) < 3000) {
+      return silentOk();
+    }
+
+    // 3) Telefon formatı: geçerli TR cep numarası (5XXXXXXXXX, 10 hane).
+    var phoneDigits = String(d.userPhone || '').replace(/\D/g, '');
+    if (!/^5\d{9}$/.test(phoneDigits)) {
+      return silentOk();
+    }
+
+    // 4) E-posta formatı.
+    var emailVal = String(d.userEmail || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      return silentOk();
+    }
 
     // Sheets'e kaydet
     var ss    = SpreadsheetApp.getActiveSpreadsheet();

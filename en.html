@@ -297,6 +297,12 @@
     <!-- Google Click ID Tracking -->
     <input type="hidden" id="gclid_field" name="gclid_field" value="">
 
+    <!-- Honeypot for spam bots: hidden from real users -->
+    <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+        <input type="text" id="hp_field" name="hp_field" tabindex="-1" autocomplete="off">
+    </div>
+    <input type="hidden" id="form_ts" name="form_ts" value="">
+
     <button type="submit" class="btn btn-primary btn-block">
         SEND
     </button>
@@ -738,6 +744,9 @@
 
 
     <script>
+        const formTsField = document.getElementById('form_ts');
+        if (formTsField) formTsField.value = Date.now();
+
         const cargoTypeSelect = document.getElementById('cargoType');
         const quantityOptions = document.getElementById('quantity-options');
         const containerQuantity = document.getElementById('containerQuantity');
