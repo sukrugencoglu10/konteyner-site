@@ -14,7 +14,8 @@
 
     // KURAL: Bot DEĞİLSE, dil Türkçe DEĞİLSE ve adam özel olarak "TR istiyorum" DEMEDİYSE -> İngilizceye postala
     if (!isBot && !userLang.startsWith('tr') && !params.has('lang')) {
-        window.location.replace('en.html');
+        // Reklam parametrelerini (gclid, utm_*) koru — aksi halde dönüşüm ve kaynak bilgisi kaybolur
+        window.location.replace('en.html' + window.location.search + window.location.hash);
     }
     </script>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
