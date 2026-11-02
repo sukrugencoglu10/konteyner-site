@@ -4,6 +4,66 @@
 
 let dashboardWindow = null;
 
+// ===== REKLAM KAYNAĞI (ads_attribution) =====
+// URL'deki UTM / gclid değerlerini yakalar, oturum boyunca saklar ve GTM'deki
+// "tt-GA4 - Ads Attribution" tetikleyicisi için dataLayer'a gönderir.
+// Ayrıca gclid'i localStorage'a (hot_lead etkinlikleri) ve formdaki gizli
+// gclid_field alanına yazar.
+(function captureAdsAttribution() {
+    try {
+        const ATTR_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid'];
+        const params = new URLSearchParams(window.location.search);
+        const hasNewParams = ATTR_KEYS.some((k) => params.get(k));
+
+        let attr = {};
+        if (hasNewParams) {
+            ATTR_KEYS.forEach((k) => { attr[k] = params.get(k) || ''; });
+            try { sessionStorage.setItem('pekcon_attr', JSON.stringify(attr)); } catch (e) {}
+        } else {
+            try { attr = JSON.parse(sessionStorage.getItem('pekcon_attr') || '{}'); } catch (e) { attr = {}; }
+        }
+
+        if (attr.gclid) {
+            try { localStorage.setItem('gclid', attr.gclid); } catch (e) {}
+            document.addEventListener('DOMContentLoaded', () => {
+                const gclidField = document.getElementById('gclid_field');
+                if (gclidField) gclidField.value = attr.gclid;
+            });
+        }
+
+        const medium = (attr.utm_medium || '').toLowerCase();
+        const referrer = document.referrer || '';
+        let trafficType = 'direct';
+        if (attr.gclid || /cpc|ppc|paid/.test(medium)) {
+            trafficType = 'paid';
+        } else if (attr.utm_source) {
+            trafficType = 'campaign';
+        } else if (referrer && !referrer.includes(window.location.hostname)) {
+            trafficType = /google\.|bing\.|yandex\.|duckduckgo\./.test(referrer) ? 'organic' : 'referral';
+        }
+
+        // Oturum başına bir kez gönder; yeni reklam parametresiyle gelinirse tekrar gönder
+        let alreadySent = false;
+        try { alreadySent = sessionStorage.getItem('pekcon_attr_sent') === '1'; } catch (e) {}
+        if (hasNewParams || !alreadySent) {
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                'event': 'GA4 - Ads Attribution',
+                'utm_source': attr.utm_source || '(none)',
+                'utm_medium': attr.utm_medium || '(none)',
+                'utm_campaign': attr.utm_campaign || '(none)',
+                'utm_term': attr.utm_term || '(none)',
+                'utm_content': attr.utm_content || '(none)',
+                'gclid': attr.gclid || '',
+                'traffic_type': trafficType
+            });
+            try { sessionStorage.setItem('pekcon_attr_sent', '1'); } catch (e) {}
+        }
+    } catch (e) {
+        console.warn('Ads attribution yakalanamadı:', e);
+    }
+})();
+
 // ===== GİZLİ KLAVYE KISAYOLU =====
 // Ctrl+Shift+D ile dashboard aç
 document.addEventListener('keydown', function(e) {
